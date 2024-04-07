@@ -156,7 +156,7 @@ class Data:
         evals = 1 if a else 2
         a = a or utils.any(rows).neighbors(self, rows)[far]
         b = a.neighbors(self, rows)[far]
-        if sortp and b.d2h(self) < a.d2h(self):
+        if sortp and b.run_smo_with_config(self) < a.run_smo_with_config(self):
             a, b = b, a
         return a, b, a.dist(b, self), evals
 
