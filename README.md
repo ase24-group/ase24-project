@@ -1,5 +1,5 @@
-# submissions
-This repo houses submissions for CSC 591 (Automated Software Engineering), Spring 2024 @ NC State
+# ase24-project
+This repo houses the end semester project for CSC 591 (Automated Software Engineering), Group 17, Spring 2024 @ NC State
 
 ## Group Members
 <table>
