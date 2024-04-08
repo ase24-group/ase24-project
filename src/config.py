@@ -17,6 +17,7 @@ OPTIONS:
   -s --seed     random number seed              = 31210
   -t --todo     start up action                 = help
   -T --Top      best section                    = .5
+  -o --output   output file path                = ""
 """
 
 MYLO_DOC = """

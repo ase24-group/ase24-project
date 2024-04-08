@@ -242,6 +242,32 @@ class TestGate:
         print("\n#report" + str(len(stats)))
         eg0(stats)
 
+    def gen_params(self):
+        k_range = (1, 5)
+        m_range = (1, 5)
+        budget0_range = (3, 17)
+        Budget_range = (3, 17)
+
+        param_space = []
+        for k in range(*k_range):
+            for m in range(*m_range):
+                for budget0 in range(*budget0_range):
+                    for Budget in range(*Budget_range):
+                        param_space.append(map(str, [k, m, budget0, Budget]))
+
+        random.shuffle(param_space)
+        param_space.insert(0, ["k", "m", "budget0", "Budget"])
+
+        param_csv = ""
+        for params in param_space:
+            param_csv += f"{','.join(params)}\n"
+
+        if config.value.output is not None and len(config.value.output) > 0:
+            os.makedirs(os.path.dirname(config.value.output), exist_ok=True)
+            with open(config.value.output, "w") as file:
+                file.write(param_csv)
+
+        print(param_csv)
 
 def learn(data, row, my) -> None:
     my.n += 1
