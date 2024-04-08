@@ -20,10 +20,10 @@ jobs:
 
     - name: Run gate.py
       run: |
-        cd hw/src
+        cd src
         python3 gate.py -t all
 
     - name: Run mylo.py
       run: |
-        cd hw/src
+        cd src
         python3 mylo.py -t all
