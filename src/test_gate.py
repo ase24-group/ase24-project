@@ -269,6 +269,7 @@ class TestGate:
 
         print(param_csv)
 
+
 def learn(data, row, my) -> None:
     my.n += 1
     kl = row.cells[data.cols.klass.at]
