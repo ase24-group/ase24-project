@@ -20,6 +20,8 @@ class Data:
         if sortD2H:
             self.sortD2H()
 
+        self.training_data = None
+
     def sortD2H(self):
         self.rows = sorted(self.rows, key=lambda row: row.d2h(self))
 
@@ -156,7 +158,9 @@ class Data:
         evals = 1 if a else 2
         a = a or utils.any(rows).neighbors(self, rows)[far]
         b = a.neighbors(self, rows)[far]
-        if sortp and b.run_smo_with_config(self) < a.run_smo_with_config(self):
+        if sortp and b.run_smo_with_config(
+            self, self.training_data
+        ) < a.run_smo_with_config(self, self.training_data):
             a, b = b, a
         return a, b, a.dist(b, self), evals
 
