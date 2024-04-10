@@ -139,23 +139,27 @@ class TestGate:
         print(f"rows    : {len(data.rows)}")
         print(f"cols    : {len(data.cols.names)}")
 
-        names = f"{'names':{label_width}}{align_list(data.cols.names)}"
-        print(names)
+        # names = f"{'names':{label_width}}{align_list(data.cols.names)}"
+        # print(names)
+        print(data.cols.names)
 
-        mid = f"{'mid':{label_width}}{align_list(data.mid().cells)}"
-        print(mid)
+        # mid = f"{'mid':{label_width}}{align_list(data.mid().cells)}"
+        # print(mid)
+        print(data.mid().cells)
 
-        div = f"{'div':{label_width}}{align_list(data.div().cells)}"
-        print(div)
+        # div = f"{'div':{label_width}}{align_list(data.div().cells)}"
+        # print(div)
+        print(data.div().cells)
 
         print("#")
 
         smo9s = [data.smo(score=lambda b, r: 2 * b - r) for _ in range(repeats)]
         smo9s = sorted(smo9s, key=lambda row: row.d2h(data))
         for row in smo9s:
-            label = f"smo{config.value.budget0 + config.value.Budget}"
-            smo9 = f"{label:{label_width}}{align_list(row.cells)}"
-            print(smo9)
+            # label = f"smo{config.value.budget0 + config.value.Budget}"
+            # smo9 = f"{label:{label_width}}{align_list(row.cells)}"
+            # print(smo9)
+            print(row.cells)
 
         print("#")
 
@@ -164,14 +168,15 @@ class TestGate:
             random.shuffle(data.rows)
             any50s += [data.clone(data.rows[:50], sortD2H=True).rows[0]]
         for row in sorted(any50s, key=lambda row: row.d2h(data)):
-            label = "any50"
-            any50 = f"{label:{label_width}}{align_list(row.cells)}"
-            print(any50)
+            # label = "any50"
+            # any50 = f"{label:{label_width}}{align_list(row.cells)}"
+            # print(any50)
+            print(row.cells)
 
         print("#")
 
-        all = f"{'100%':{label_width}}{align_list(data.clone(data.rows, sortD2H=True).rows[0].cells)}"
-        print(all)
+        # all = f"{'100%':{label_width}}{align_list(data.clone(data.rows, sortD2H=True).rows[0].cells)}"
+        # print(all)
 
     def smo_stats(self):
         date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
@@ -212,6 +217,145 @@ class TestGate:
                     txt="#bonr" + str(budget),
                 )
             )
+            print("#rand" + str(budget), end=" ")
+            stats.append(
+                Sample(
+                    [
+                        data.clone(shuffle(data.rows[:budget]), sortD2H=True)
+                        .rows[0]
+                        .d2h(data)
+                        for _ in range(repeats)
+                    ],
+                    txt="#rand" + str(budget),
+                )
+            )
+        print("#rand" + str(int(0.9 * len(data.rows))), end=" ")
+        stats.append(
+            Sample(
+                [
+                    data.clone(
+                        shuffle(data.rows[: int(0.9 * len(data.rows))]), sortD2H=True
+                    )
+                    .rows[0]
+                    .d2h(data)
+                    for _ in range(repeats)
+                ],
+                txt="#rand" + str(int(0.9 * len(data.rows))),
+            )
+        )
+
+        print("\n#report" + str(len(stats)))
+        eg0(stats)
+
+    def smo_progressive_scorer_no_stats(self):
+        date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+        file = "../data/auto93.csv"
+        repeats = 20
+
+        data = Data(file, fun=None, sortD2H=False)
+
+        label_width = 10
+        print(f"date    : {date}")
+        print(f"file    : {file}")
+        print(f"repeats : {repeats}")
+        print(f"seed    : {config.value.seed}")
+        print(f"rows    : {len(data.rows)}")
+        print(f"cols    : {len(data.cols.names)}")
+
+        # names = f"{'names':{label_width}}{align_list(data.cols.names)}"
+        # print(names)
+        print(data.cols.names)
+
+        # mid = f"{'mid':{label_width}}{align_list(data.mid().cells)}"
+        # print(mid)
+        print(data.mid().cells)
+
+        # div = f"{'div':{label_width}}{align_list(data.div().cells)}"
+        # print(div)
+        print(data.div().cells)
+
+        print("#")
+
+        smo9s = [data.smo_progressive_scorer() for _ in range(repeats)]
+        smo9s = sorted(smo9s, key=lambda row: row.d2h(data))
+        for row in smo9s:
+            label = f"smo{config.value.budget0 + config.value.Budget}"
+            # smo9 = f"{label:{label_width}}{align_list(row.cells)}"
+            # print(smo9)
+            print(row.cells)
+
+        print("#")
+
+        any50s = []
+        for _ in range(repeats):
+            random.shuffle(data.rows)
+            any50s += [data.clone(data.rows[:50], sortD2H=True).rows[0]]
+        for row in sorted(any50s, key=lambda row: row.d2h(data)):
+            label = "any50"
+            # any50 = f"{label:{label_width}}{align_list(row.cells)}"
+            # print(any50)
+            print(row.cells)
+
+        print("#")
+
+        # all = f"{'100%':{label_width}}{align_list(data.clone(data.rows, sortD2H=True).rows[0].cells)}"
+        # print(all)
+
+    def smo_progressive_scorer_stats(self):
+        date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+        file = "../data/auto93.csv"
+        repeats = 20
+
+        data = Data(file, fun=None, sortD2H=False)
+        stats = []
+
+        print(f"date    : {date}")
+        print(f"file    : {file}")
+        print(f"repeats : {repeats}")
+        print(f"seed    : {config.value.seed}")
+        print(f"rows    : {len(data.rows)}")
+        print(f"cols    : {len(data.cols.names)}")
+
+        d2h_values = Num("d2h_values", 0)
+        for row in data.clone(data.rows, sortD2H=True).rows:
+            d2h_values.add(row.d2h(data))
+        print(f"best    : {round(d2h_values.lo, 2)}")
+        print(f"tiny    : {round(d2h_values.div() * config.value.cohen, 2)}")
+        sorted_d2hs = sorted([row.d2h(data) for row in data.rows])
+        print("#base", end=" ")
+        stats.append(Sample(sorted_d2hs, txt="base"))
+
+        for budget in [9, 15, 20, 30]:
+            config.value.Budget = budget - config.value.budget0
+
+            print("#progressive" + str(budget), end=" ")
+            stats.append(
+                Sample(
+                    [
+                        data.smo(
+                            score=lambda b, r: abs(b + r)
+                            / abs(b - r + sys.float_info.min)
+                        ).d2h(data)
+                        for _ in range(repeats)
+                    ],
+                    txt="#progressive" + str(budget),
+                )
+            )
+
+            print("#bonr" + str(budget), end=" ")
+            stats.append(
+                Sample(
+                    [
+                        data.smo(
+                            score=lambda b, r: abs(b + r)
+                            / abs(b - r + sys.float_info.min)
+                        ).d2h(data)
+                        for _ in range(repeats)
+                    ],
+                    txt="#bonr" + str(budget),
+                )
+            )
+
             print("#rand" + str(budget), end=" ")
             stats.append(
                 Sample(

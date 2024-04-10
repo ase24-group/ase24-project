@@ -6,6 +6,8 @@ from row import Row
 from cols import Cols
 from node import Node
 from config import config
+from typing import List
+from progressive_scorer import progressive_score
 
 
 class Data:
@@ -69,6 +71,31 @@ class Data:
                 selected.add(row)
 
             tmp = score(b, r)
+            if tmp > max:
+                out, max = i, tmp
+        return out, selected
+
+    def split_progressive_scorer(
+        self,
+        best,
+        rest,
+        lite,
+        dark,
+        past_best_d2hs,
+        progress: float,
+    ):
+        selected = Data(self.cols.names)
+        max = 1e30
+        out = 1
+
+        for i, row in enumerate(dark):
+            b = row.like(best, len(lite), 2)
+            r = row.like(rest, len(lite), 2)
+            if b > r:
+                selected.add(row)
+
+            tmp = b if progress >= 0.85 else progressive_score(b, r, past_best_d2hs)
+
             if tmp > max:
                 out, max = i, tmp
         return out, selected
@@ -145,6 +172,31 @@ class Data:
                 data.rows, int(len(data.rows) ** config.value.Top + 0.5)
             )
             todo, _ = self.split(best, rest, self.rows, dark, score=score)
+
+            lite.append(dark.pop(todo))
+            data = self.clone(lite, sortD2H=True)
+
+        return data.rows[0]
+
+    def smo_progressive_scorer(self):
+        random.shuffle(self.rows)
+
+        lite = utils.slice(self.rows, 0, config.value.budget0)
+        dark = utils.slice(self.rows, config.value.budget0 + 1)
+
+        data = self.clone(lite, sortD2H=True)
+
+        past_best_d2hs: List[float] = []
+
+        for i in range(config.value.Budget):
+            best, rest = self.best_rest(
+                data.rows, int(len(data.rows) ** config.value.Top + 0.5)
+            )
+            past_best_d2hs.append(best.rows[0].d2h(self))
+
+            todo, _ = self.split_progressive_scorer(
+                best, rest, self.rows, dark, past_best_d2hs, i / config.value.Budget
+            )
 
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
