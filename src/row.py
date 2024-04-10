@@ -47,19 +47,6 @@ class Row:
 
         return (d**0.5) / (n**0.5)
 
-    def run_smo_with_config(self, hyperparam_data, data) -> float:
-        # Set each of the hyperparameters
-        for col in hyperparam_data.cols.all.values():  # for each hyperparameter name
-            setattr(config.value, col, self.cells[col.at])  # set the config value
-
-        best_row = data.smo(score=None)
-
-        # Now we need to compile the results somewhere and include a scoring metric for each run
-        score = best_row.d2h(data)  # this score would tell us how good our "best" is
-        # But maybe we would rather have a score that incorporates both the best and rest of all samples?
-
-        return score
-
     def dist(self, other, data, d: int = 0, n: int = 0, p=config.value.p):
         for col in data.cols.x.values():
             n += 1
