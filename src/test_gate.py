@@ -331,11 +331,7 @@ class TestGate:
             print("#progressive" + str(budget), end=" ")
             stats.append(
                 Sample(
-                    [
-                        data.smo_progressive_scorer(
-                        ).d2h(data)
-                        for _ in range(repeats)
-                    ],
+                    [data.smo_progressive_scorer().d2h(data) for _ in range(repeats)],
                     txt="#progressive" + str(budget),
                 )
             )
