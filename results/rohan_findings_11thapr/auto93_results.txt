@@ -1,3 +1,13 @@
+date    : 04/11/2024 14:37:26
+file    : ../data/auto93.csv
+repeats : 20
+seed    : 31210
+rows    : 398
+cols    : 8
+best    : 0.17
+tiny    : 0.06
+#base #progressive9 #bonr9 #rand9 #progressive15 #bonr15 #rand15 #progressive20 #bonr20 #rand20 #progressive30 #bonr30 #rand30 #rand358 
+#report14
 #
  0,              #rand15,  0.17,  0.00, *                   |                   ,  0.17,  0.93
 #
@@ -19,3 +29,11 @@
  5,               #bonr9,  0.37,  0.12,        ---*--       |                   ,  0.17,  0.93
 #
  6,                 base,  0.55,  0.20,              -------*---                ,  0.17,  0.93
+✅ PASS smo_progressive_scorer_stats
+
+Observations:
+There are slight improvements in the samples selected by our new acquisition function. However, the improvements don't seem to be 
+significant enough to place the acquisition function at a higher rank than the regular exploratory acquisition function (bonr).
+
+Note that #progressive15 is placed at a higher rank than #bonr15 though.
+

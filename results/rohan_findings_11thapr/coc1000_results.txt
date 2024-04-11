@@ -1,0 +1,43 @@
+date    : 04/11/2024 14:45:34
+file    : ../data/coc1000.csv
+repeats : 20
+seed    : 31210
+rows    : 1000
+cols    : 25
+best    : 0.13
+tiny    : 0.04
+#base #progressive9 #bonr9 #rand9 #progressive15 #bonr15 #rand15 #progressive20 #bonr20 #rand20 #progressive30 #bonr30 #rand30 #progressive50 #bonr50 #rand50 #progressive100 #bonr100 #rand100 #rand900
+#report20
+#
+ 0,             #rand900,  0.13,  0.00, *                   |                   ,  0.13,  0.78
+#
+ 1,      #progressive100,  0.18,  0.03,  -*                 |                   ,  0.13,  0.78
+#
+ 2,             #bonr100,  0.19,  0.03,   -*                |                   ,  0.13,  0.78
+ 2,              #bonr50,  0.19,  0.03,   -*                |                   ,  0.13,  0.78
+#
+ 3,              #rand50,  0.19,  0.00,    *                |                   ,  0.13,  0.78
+ 3,       #progressive50,  0.21,  0.06,    -*-              |                   ,  0.13,  0.78
+ 3,             #rand100,  0.21,  0.00,     *               |                   ,  0.13,  0.78
+#
+ 4,       #progressive30,  0.21,  0.12,    -*-----          |                   ,  0.13,  0.78
+ 4,              #bonr30,  0.21,  0.09,    --*--            |                   ,  0.13,  0.78
+#
+ 5,              #rand30,  0.26,  0.00,        *            |                   ,  0.13,  0.78
+ 5,              #bonr15,  0.26,  0.10,     ----*-          |                   ,  0.13,  0.78
+ 5,              #rand15,  0.27,  0.00,         *           |                   ,  0.13,  0.78
+ 5,       #progressive20,  0.27,  0.09,     ----*           |                   ,  0.13,  0.78
+ 5,              #rand20,  0.28,  0.00,         *           |                   ,  0.13,  0.78
+#
+ 6,               #bonr9,  0.29,  0.14,        --*------    |                   ,  0.13,  0.78
+ 6,              #bonr20,  0.29,  0.10,     -----*          |                   ,  0.13,  0.78
+ 6,        #progressive9,  0.31,  0.16,        ---*-----    |                   ,  0.13,  0.78
+ 6,       #progressive15,  0.32,  0.10,         ---*--      |                   ,  0.13,  0.78
+#
+ 7,               #rand9,  0.34,  0.00,             *       |                   ,  0.13,  0.78
+#
+ 8,                 base,  0.46,  0.15,                -----*---                ,  0.13,  0.78
+✅ PASS smo_progressive_scorer_stats
+
+Observations:
+progressive appears to be better that bonr in some cases, while bonr appears to be better in other cases.

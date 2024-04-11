@@ -10,6 +10,7 @@ import math
 from statistics import mean
 from typing import List
 import sys
+from logger import logger
 
 
 def sigmoid(x):
@@ -33,7 +34,7 @@ def exploitation_score(b: float, r: float) -> float:
 def norm(x):
     x_min = 0
     x_max = max(x)
-    return [(i - x_min) / (x_max - x_min) for i in x]
+    return [(i - x_min) / (x_max - x_min + 1e-30) for i in x]
 
 
 def exponentially_weighted_rate(rate_of_change, decay_factor=0.5, lookback=-3):
@@ -78,6 +79,9 @@ def progressive_score(b: float, r: float, past_true_ys: List[float]) -> float:
 
     want_to_exploit = (want_to_exploit_based_on_roc + want_to_exploit_based_on_d2h) / 2
     want_to_explore = 1 - want_to_exploit
+    logger.info(
+        f"Want to exploit: {want_to_exploit}, want to explore: {want_to_explore}\n"
+    )
 
     return want_to_explore * exploration_score(
         b, r

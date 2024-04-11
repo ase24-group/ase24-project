@@ -1,0 +1,5 @@
+Contrary to what I was expecting, the weight of the exploitation function does not seem to increase in a monotonous manner with respect to iterations in the SMO.
+Instead, the weight appears to decrease or stay constant most of the time. 
+
+The weight of the exploitation function usually stays below 0.3 with the current criteria for updating the weights. 
+This could be why the results of our new approach are very similar to the existing bonr approach.
