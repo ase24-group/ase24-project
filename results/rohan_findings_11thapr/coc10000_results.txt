@@ -1,0 +1,34 @@
+date    : 04/11/2024 15:04:01
+file    : ../data/coc10000.csv
+repeats : 20
+seed    : 31210
+rows    : 10000
+cols    : 25
+best    : 0.01
+tiny    : 0.05
+#base #progressive9 #bonr9 #rand9 #progressive15 #bonr15 #rand15 #progressive20 #bonr20 #rand20 #progressive30 #bonr30 #rand30 #rand9000 
+#report14
+#
+ 0,            #rand9000,  0.01,  0.00, *                   |                   ,  0.01,  0.77
+#
+ 1,              #rand20,  0.05,  0.00,   *                 |                   ,  0.01,  0.77
+#
+ 2,              #rand15,  0.06,  0.00,   *                 |                   ,  0.01,  0.77
+#
+ 3,       #progressive30,  0.07,  0.05,  --*                |                   ,  0.01,  0.77
+ 3,       #progressive15,  0.08,  0.07,   -*--              |                   ,  0.01,  0.77
+ 3,              #bonr30,  0.08,  0.06,   -*-               |                   ,  0.01,  0.77
+ 3,              #rand30,  0.09,  0.00,     *               |                   ,  0.01,  0.77
+ 3,              #bonr15,  0.10,  0.08,   --*-              |                   ,  0.01,  0.77
+ 3,       #progressive20,  0.10,  0.08,    -*--             |                   ,  0.01,  0.77
+ 3,              #bonr20,  0.10,  0.07,   --*-              |                   ,  0.01,  0.77
+#
+ 4,        #progressive9,  0.14,  0.10,      --*--          |                   ,  0.01,  0.77
+#
+ 6,               #rand9,  0.27,  0.00,              *      |                   ,  0.01,  0.77
+#
+ 7,                 base,  0.32,  0.25,           ------*---|--                 ,  0.01,  0.77
+✅ PASS smo_progressive_scorer_stats
+
+Observations: 
+The new progressive scoring function appears to be performing better than bonr in this dataset.

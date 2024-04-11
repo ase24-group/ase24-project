@@ -1,0 +1,35 @@
+date    : 04/11/2024 14:13:29
+file    : ../data/china.csv
+repeats : 20
+seed    : 31210
+rows    : 499
+cols    : 19
+best    : 0.0
+tiny    : 0.05
+#base #progressive9 #bonr9 #rand9 #progressive15 #bonr15 #rand15 #progressive20 #bonr20 #rand20 #progressive30 #bonr30 #rand30 #rand449 
+#report14
+#
+ 0,             #rand449,  0.00,  0.00, *                   |                   ,  0.00,  1.00
+#
+ 1,       #progressive30,  0.00,  0.00, *                   |                   ,  0.00,  1.00
+ 1,              #rand20,  0.00,  0.00, *                   |                   ,  0.00,  1.00
+#
+ 2,              #bonr20,  0.00,  0.00, *                   |                   ,  0.00,  1.00
+ 2,       #progressive15,  0.00,  0.00, *                   |                   ,  0.00,  1.00
+ 2,       #progressive20,  0.00,  0.00, *                   |                   ,  0.00,  1.00
+ 2,              #bonr30,  0.00,  0.00, *                   |                   ,  0.00,  1.00
+ 2,              #bonr15,  0.00,  0.00, *                   |                   ,  0.00,  1.00
+ 2,               #rand9,  0.00,  0.00, *                   |                   ,  0.00,  1.00
+#
+ 3,              #rand30,  0.00,  0.00, *                   |                   ,  0.00,  1.00
+#
+ 4,               #bonr9,  0.00,  0.00, *                   |                   ,  0.00,  1.00
+ 4,              #rand15,  0.01,  0.00, *                   |                   ,  0.00,  1.00
+ 4,        #progressive9,  0.01,  0.01, *                   |                   ,  0.00,  1.00
+#
+ 5,                 base,  0.04,  0.06, -*-                 |                   ,  0.00,  1.00
+✅ PASS smo_progressive_scorer_stats
+
+Observations:
+Low d2h values in this case might be due to extreme (noisy) values for target variables for some samples in the data. 
+We might get better results after filtering out noisy samples from the dataset. #TODO
