@@ -8,6 +8,7 @@ from node import Node
 from config import config
 from typing import List
 from progressive_scorer import progressive_score
+from logger import logger
 
 
 class Data:
@@ -193,6 +194,8 @@ class Data:
                 data.rows, int(len(data.rows) ** config.value.Top + 0.5)
             )
             past_best_d2hs.append(best.rows[0].d2h(self))
+
+            logger.info(f"\n\nITERATION {i}\n\n")
 
             todo, _ = self.split_progressive_scorer(
                 best, rest, self.rows, dark, past_best_d2hs, i / config.value.Budget

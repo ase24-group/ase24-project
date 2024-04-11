@@ -180,7 +180,7 @@ class TestGate:
 
     def smo_stats(self):
         date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
-        file = "../data/auto93.csv"
+        file = "../data/coc1000.csv"
         repeats = 20
 
         data = Data(file, fun=None, sortD2H=False)
@@ -303,7 +303,7 @@ class TestGate:
 
     def smo_progressive_scorer_stats(self):
         date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
-        file = "../data/auto93.csv"
+        file = "../data/nasa93dem.csv"
         repeats = 20
 
         data = Data(file, fun=None, sortD2H=False)
@@ -332,9 +332,7 @@ class TestGate:
             stats.append(
                 Sample(
                     [
-                        data.smo(
-                            score=lambda b, r: abs(b + r)
-                            / abs(b - r + sys.float_info.min)
+                        data.smo_progressive_scorer(
                         ).d2h(data)
                         for _ in range(repeats)
                     ],
