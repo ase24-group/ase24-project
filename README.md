@@ -9,3 +9,6 @@ This repo houses the end semester project for CSC 591 (Automated Software Engine
     <td align="center"><a href="https://github.com/tackyunicorn"><img src="https://avatars.githubusercontent.com/u/26558907?v=4" width="75px;" alt=""/><br /><sub><b>Joshua Joseph</b></sub></a></td>
   </tr>
 </table>
+
+We are proposing an alternative acquisition function that incorporates exploitation in the later stages of the SMO
+algorithm rather than selecting new samples solely based on "interestingness".
