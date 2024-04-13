@@ -34,7 +34,7 @@ def exploitation_score(b: float, r: float) -> float:
 def norm(x):
     x_min = 0
     x_max = max(x)
-    return [(i - x_min) / (x_max - x_min + 1e-30) for i in x]
+    return [(i - x_min) / (x_max - x_min + sys.float_info.min) for i in x]
 
 
 def exponentially_weighted_rate(rate_of_change, decay_factor=0.5, lookback=-3):
