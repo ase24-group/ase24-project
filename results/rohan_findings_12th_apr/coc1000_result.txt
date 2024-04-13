@@ -1,0 +1,36 @@
+PS C:\Users\rohan\ase24-project\src> python gate.py -t smo_progressive_scorer_stats
+date    : 04/12/2024 20:17:49
+file    : ../data/coc1000.csv
+repeats : 20
+seed    : 31210
+rows    : 1000
+cols    : 25
+best    : 0.13
+tiny    : 0.04
+#base #progressive9 #bonr9 #rand9 #progressive15 #bonr15 #rand15 #progressive20 #bonr20 #rand20 #progressive30 #bonr30 #rand30 #rand900 
+#report14
+#
+ 0,             #rand900,  0.13,  0.00, *                   |                   ,  0.13,  0.78
+#
+ 1,              #bonr30,  0.23,  0.09,     --*---          |                   ,  0.13,  0.78
+#
+ 2,              #rand30,  0.24,  0.00,       *             |                   ,  0.13,  0.78
+#
+ 3,               #rand9,  0.26,  0.00,        *            |                   ,  0.13,  0.78
+ 3,       #progressive20,  0.26,  0.09,    ----*-           |                   ,  0.13,  0.78
+ 3,       #progressive30,  0.26,  0.06,     ----*           |                   ,  0.13,  0.78
+#
+ 4,       #progressive15,  0.27,  0.13,      ---*----       |                   ,  0.13,  0.78
+ 4,              #bonr15,  0.27,  0.07,        -*--         |                   ,  0.13,  0.78
+#
+ 5,              #rand20,  0.27,  0.00,         *           |                   ,  0.13,  0.78
+ 5,        #progressive9,  0.28,  0.11,     ----*--         |                   ,  0.13,  0.78
+ 5,               #bonr9,  0.28,  0.12,         -*-----     |                   ,  0.13,  0.78
+ 5,              #rand15,  0.29,  0.00,          *          |                   ,  0.13,  0.78
+ 5,              #bonr20,  0.30,  0.06,         --*         |                   ,  0.13,  0.78
+#
+ 6,                 base,  0.46,  0.15,                -----*---                ,  0.13,  0.78
+✅ PASS smo_progressive_scorer_stats
+
+Changes in testing scenario:
+Initialized `max` in split() and split_progressive() to -1e30 instead
