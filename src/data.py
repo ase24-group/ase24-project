@@ -62,7 +62,7 @@ class Data:
         score=lambda b, r: abs(b + r) / abs(b - r + 1e-300),
     ):
         selected = Data(self.cols.names)
-        max = 1e30
+        max = -1e30
         out = 1
 
         for i, row in enumerate(dark):
@@ -86,7 +86,7 @@ class Data:
         progress: float,
     ):
         selected = Data(self.cols.names)
-        max = 1e30
+        max = -1e30
         out = 1
 
         for i, row in enumerate(dark):
@@ -99,6 +99,7 @@ class Data:
 
             if tmp > max:
                 out, max = i, tmp
+        # logger.info(f"Selected row: {out}, Score: {max}")
         return out, selected
 
     def best_rest(self, rows, want, best=None, rest=None):
@@ -195,7 +196,7 @@ class Data:
             )
             past_best_d2hs.append(best.rows[0].d2h(self))
 
-            logger.info(f"\n\nITERATION {i}\n\n")
+            logger.info(f"\n\nSMO PROGRESSIVE ITERATION {i}\n\n")
 
             todo, _ = self.split_progressive_scorer(
                 best, rest, self.rows, dark, past_best_d2hs, i / config.value.Budget

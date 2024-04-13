@@ -1,0 +1,6 @@
+The results of 'progressive' and 'bonr' vary depending on the order in which they are called despite
+re-initializing the state of the randomizer each time.
+
+No improvements were noticed on the progressive scoring fn by using the complement of the `want_to_exploit_based_on_ruc` value instead 
+during progressive score calculation (under the assumption that we should explore more when the rate of change is 
+higher). Its performance is still comparable with bonr. 
