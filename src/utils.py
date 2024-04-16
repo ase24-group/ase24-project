@@ -141,3 +141,12 @@ def entropy(t: dict) -> Tuple[float]:
         e -= v / n * math.log2(v / n)
 
     return e, n
+
+
+def custom_normalize(values, start, end):
+    scale = end - start
+    normalized_data = [
+        ((x - min(values)) / (max(values) - min(values)) * scale) + start
+        for x in values
+    ]
+    return normalized_data
