@@ -6,6 +6,7 @@ from box import Box
 from num import Num
 from config import config
 from stats import Sample, eg0
+from logger import logger
 import sys
 
 
@@ -180,7 +181,7 @@ class TestGate:
 
     def smo_stats(self):
         date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
-        file = "../data/coc1000.csv"
+        file = "../data/auto93.csv"
         repeats = 20
 
         data = Data(file, fun=None, sortD2H=False)
@@ -303,7 +304,7 @@ class TestGate:
 
     def smo_progressive_scorer_stats(self):
         date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
-        file = "../data/nasa93dem.csv"
+        file = "../data/coc10000.csv"
         repeats = 20
 
         data = Data(file, fun=None, sortD2H=False)
@@ -325,9 +326,12 @@ class TestGate:
         print("#base", end=" ")
         stats.append(Sample(sorted_d2hs, txt="base"))
 
+        # Use formulas to compute the budgets
         for budget in [9, 15, 20, 30]:
             config.value.Budget = budget - config.value.budget0
 
+            random.seed(config.value.seed)
+            logger.info("Progressive")
             print("#progressive" + str(budget), end=" ")
             stats.append(
                 Sample(
@@ -336,6 +340,18 @@ class TestGate:
                 )
             )
 
+            random.seed(config.value.seed)
+            logger.info("SimAnnealing")
+            print("#SimAnnealing" + str(budget), end=" ")
+            stats.append(
+                Sample(
+                    [data.smo_sim_annealing().d2h(data) for _ in range(repeats)],
+                    txt="#SimAnnealing" + str(budget),
+                )
+            )
+
+            random.seed(config.value.seed)
+            logger.info("bonr")
             print("#bonr" + str(budget), end=" ")
             stats.append(
                 Sample(
@@ -350,6 +366,22 @@ class TestGate:
                 )
             )
 
+            # random.seed(config.value.seed)
+            # print("#progressive" + str(budget), end=" ")
+            # stats.append(
+            #     Sample(
+            #         [
+            #             data.smo(
+            #                 score=lambda b, r: abs(b + r)
+            #                 / abs(b - r + sys.float_info.min)
+            #             ).d2h(data)
+            #             for _ in range(repeats)
+            #         ],
+            #         txt="#progressive" + str(budget),
+            #     )
+            # )
+
+            random.seed(config.value.seed)
             print("#rand" + str(budget), end=" ")
             stats.append(
                 Sample(
@@ -362,6 +394,8 @@ class TestGate:
                     txt="#rand" + str(budget),
                 )
             )
+
+        random.seed(config.value.seed)
         print("#rand" + str(int(0.9 * len(data.rows))), end=" ")
         stats.append(
             Sample(
@@ -378,6 +412,7 @@ class TestGate:
         )
 
         print("\n#report" + str(len(stats)))
+        random.shuffle(stats)
         eg0(stats)
 
     def gen_params(self):
