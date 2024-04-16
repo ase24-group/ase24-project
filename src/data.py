@@ -218,7 +218,7 @@ class Data:
         data = self.clone(lite, sortD2H=True)
         exp_values = []
         for i in range(config.value.Budget):
-            exp_values.append(math.exp(0.25*i))
+            exp_values.append(math.exp(0.25 * i))
         norm_exp_values = custom_normalize(exp_values, 1, 2)
         # print("Norm exp values: ", norm_exp_values)
 
@@ -226,9 +226,13 @@ class Data:
             best, rest = self.best_rest(
                 data.rows, int(len(data.rows) ** config.value.Top + 0.5)
             )
-            linear_dec_score =  lambda b, r: abs(b**(1-i/config.value.Budget) + r) / abs(b - r + 1e-300)
-            exp_dec_score = lambda b, r: abs(((b+1)**norm_exp_values[i]) + (r+1)) / abs(b - r + 1e-300)
-            bonr_score = lambda b, r: abs(b+r) / abs(b-r + 1e-300)
+            linear_dec_score = lambda b, r: abs(
+                b ** (1 - i / config.value.Budget) + r
+            ) / abs(b - r + 1e-300)
+            exp_dec_score = lambda b, r: abs(
+                ((b + 1) ** norm_exp_values[i]) + (r + 1)
+            ) / abs(b - r + 1e-300)
+            bonr_score = lambda b, r: abs(b + r) / abs(b - r + 1e-300)
             b2_score = lambda b, r: abs(b**2) / abs(r + 1e-300)
             # if i/config.value.Budget < 0.5:
             #     todo, _ = self.split(best, rest, self.rows, dark, score=bonr_score)
@@ -240,7 +244,6 @@ class Data:
             data = self.clone(lite, sortD2H=True)
 
         return data.rows[0]
-
 
     def farapart(self, rows, sortp=None, a=None):
         far = int((len(rows) * config.value.Far))
