@@ -19,7 +19,7 @@ def delete_folder_contents(folder_path):
 
 
 def run_makefile(makefile_path, makefile_arg):
-    command = ["make", "-j", 10, makefile_arg]
+    command = ["make", "-j", "10", makefile_arg]
     try:
         subprocess.run(command, check=True)
         print("Makefile executed successfully.")
@@ -52,7 +52,7 @@ def find_csv_filename(makefile_arg):
     if "-f" not in arg_components:
         print("A '-f argument must be passed'")
         exit(1)
-    while arg_components[i] is not "-f":
+    while arg_components[i] != "-f" and i < len(arg_components):
         i += 1
 
     if i == len(arg_components) - 1:

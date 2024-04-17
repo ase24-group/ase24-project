@@ -327,7 +327,7 @@ class TestGate:
         stats.append(Sample(sorted_d2hs, txt="base"))
 
         # Use formulas to compute the budgets
-        for budget in [9, 15, 20, 30]:
+        for budget in [9, 15, math.ceil(math.sqrt(len(data.rows)))]:
             config.value.Budget = budget - config.value.budget0
 
             random.seed(config.value.seed)
