@@ -18,7 +18,7 @@ def delete_folder_contents(folder_path):
         print(f"Folder '{folder_path}' does not exist.")
 
 
-def run_makefile(makefile_path, makefile_arg):
+def run_makefile(makefile_arg):
     command = ["make", "-j", "10", makefile_arg]
     try:
         subprocess.run(command, check=True)
@@ -75,6 +75,6 @@ if __name__ == "__main__":
     csv_filename = find_csv_filename(makefile_arg[4:])
 
     delete_folder_contents("./stats")
-    run_makefile("Makefile", makefile_arg)
+    run_makefile(makefile_arg)
     combine_stats_files("./stats")
     egSlurp("./stats/stats.txt", csv_filename)
