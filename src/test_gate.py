@@ -428,79 +428,59 @@ class TestGate:
         repeats = 20
         os.makedirs("stats", exist_ok=True)
 
-        csv_budget = math.ceil(math.sqrt(len(data.rows)))
-        for budget in [9, 15, csv_budget]:
-            config.value.Budget = budget - config.value.budget0
+        budget = config.value.ExpBudget
+        config.value.Budget = budget - config.value.budget0
 
-            random.seed(config.value.seed)
-            stats = [data.smo_progressive_scorer().d2h(data) for _ in range(repeats)]
-            with open("stats/progressive.txt", "a") as file:
-                file.write(f"#progressive{str(budget)} {' '.join(map(str, stats))}\n\n")
+        stats = [data.smo_progressive_scorer().d2h(data) for _ in range(repeats)]
+        with open(f"stats/progressive{str(budget)}.txt", "w") as file:
+            file.write(f"#progressive{str(budget)} {' '.join(map(str, stats))}")
 
     def SimAnnealing_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         repeats = 20
         os.makedirs("stats", exist_ok=True)
 
-        csv_budget = math.ceil(math.sqrt(len(data.rows)))
-        for budget in [9, 15, csv_budget]:
-            config.value.Budget = budget - config.value.budget0
+        budget = config.value.ExpBudget
+        config.value.Budget = budget - config.value.budget0
 
-            random.seed(config.value.seed)
-            stats = [data.smo_sim_annealing().d2h(data) for _ in range(repeats)]
-            with open("stats/SimAnnealing.txt", "a") as file:
-                file.write(f"#SimAnnealing{str(budget)} {' '.join(map(str, stats))}\n\n")
+        stats = [data.smo_sim_annealing().d2h(data) for _ in range(repeats)]
+        with open(f"stats/SimAnnealing{str(budget)}.txt", "w") as file:
+            file.write(f"#SimAnnealing{str(budget)} {' '.join(map(str, stats))}")
 
     def bonr_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         repeats = 20
         os.makedirs("stats", exist_ok=True)
 
-        csv_budget = math.ceil(math.sqrt(len(data.rows)))
-        for budget in [9, 15, csv_budget]:
-            config.value.Budget = budget - config.value.budget0
+        budget = config.value.ExpBudget
+        config.value.Budget = budget - config.value.budget0
 
-            random.seed(config.value.seed)
-            stats = [
-                data.smo(
-                    score=lambda b, r: abs(b + r)
-                    / abs(b - r + sys.float_info.min)
-                ).d2h(data)
-                for _ in range(repeats)
-            ]
-            with open("stats/bonr.txt", "a") as file:
-                file.write(f"#bonr{str(budget)} {' '.join(map(str, stats))}\n\n")
+        stats = [
+            data.smo(
+                score=lambda b, r: abs(b + r)
+                / abs(b - r + sys.float_info.min)
+            ).d2h(data)
+            for _ in range(repeats)
+        ]
+        with open(f"stats/bonr{str(budget)}.txt", "w") as file:
+            file.write(f"#bonr{str(budget)} {' '.join(map(str, stats))}")
 
     def rand_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         repeats = 20
         os.makedirs("stats", exist_ok=True)
 
-        csv_budget = math.ceil(math.sqrt(len(data.rows)))
-        for budget in [9, 15, csv_budget]:
-            config.value.Budget = budget - config.value.budget0
+        budget = config.value.ExpBudget
+        config.value.Budget = budget - config.value.budget0
 
-            random.seed(config.value.seed)
-            stats = [
-                data.clone(shuffle(data.rows[:budget]), sortD2H=True)
-                .rows[0]
-                .d2h(data)
-                for _ in range(repeats)
-            ]
-            with open("stats/rand.txt", "a") as file:
-                file.write(f"#rand{str(budget)} {' '.join(map(str, stats))}\n\n")
-
-        random.seed(config.value.seed)
         stats = [
-            data.clone(
-                shuffle(data.rows[: int(0.9 * len(data.rows))]), sortD2H=True
-            )
+            data.clone(shuffle(data.rows[:budget]), sortD2H=True)
             .rows[0]
             .d2h(data)
             for _ in range(repeats)
         ]
-        with open("stats/rand.txt", "a") as file:
-            file.write(f"#rand{str(int(0.9 * len(data.rows)))} {' '.join(map(str, stats))}\n\n")
+        with open(f"stats/rand{str(budget)}.txt", "w") as file:
+            file.write(f"#rand{str(budget)} {' '.join(map(str, stats))}")
 
     def gen_params(self):
         k_range = (1, 5)

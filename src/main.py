@@ -2,6 +2,8 @@ import os
 import shutil
 import subprocess
 import sys
+import math
+from data import Data
 from stats import egSlurp
 
 
@@ -18,11 +20,45 @@ def delete_folder_contents(folder_path):
         print(f"Folder '{folder_path}' does not exist.")
 
 
+def generate_makefile(csv_filename):
+    data = Data(csv_filename, fun=None, sortD2H=False)
+
+    makefile_arg = "ARGUMENT := -f ../data/auto93.csv\n\nifdef ARG\n\tARGUMENT := $(ARG)\nendif"
+    all_targets = []
+    targets = {}
+
+    csv_budget = math.ceil(math.sqrt(len(data.rows)))
+    rand_budget = int(0.9 * len(data.rows))
+    treatments = ["progressive", "SimAnnealing", "bonr", "rand"]
+
+    id = f"base"
+    all_targets.append(id)
+    targets[id] = f"python3 gate.py -t base_stats $(ARGUMENT)"
+    for treatment in treatments:
+        for e in [9, 15, csv_budget]:
+            id = f"{treatment}{e}"
+            all_targets.append(id)
+            targets[id] = f"python3 gate.py -t {treatment}_stats -E {e} $(ARGUMENT)"
+    id = f"rand{rand_budget}"
+    all_targets.append(id)
+    targets[id] = f"python3 gate.py -t rand_stats -E {rand_budget} $(ARGUMENT)"
+
+    makefile_all = f"all: {' '.join(all_targets)}"
+    makefile_targets = ""
+
+    for target, command in targets.items():
+        makefile_targets += f"{target}:\n\t{command}\n\n"
+
+    makefile = f"{makefile_arg}\n\n{makefile_all}\n\n{makefile_targets}"
+
+    with open(f"Makefile", "w") as file:
+        file.write(makefile)
+
+
 def run_makefile(makefile_arg):
-    command = ["make", "-j", "10", makefile_arg]
+    command = ["make", "-j", "100", "-s", makefile_arg]
     try:
         subprocess.run(command, check=True)
-        print("Makefile executed successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Error: Makefile execution failed with return code {e.returncode}.")
         print(e.output.decode())  # Print the error output, if any
@@ -36,7 +72,7 @@ def combine_stats_files(directory_path):
         file_path = os.path.join(directory_path, filename)
         if os.path.isfile(file_path):
             with open(file_path, "r") as input_file:
-                combined_file_contents += "\n" + input_file.read()
+                combined_file_contents += input_file.read() + "\n\n"
                 files_to_remove.append(file_path)
                 # output_file.write(file_contents)
     for file_path in files_to_remove:
@@ -75,6 +111,7 @@ if __name__ == "__main__":
     csv_filename = find_csv_filename(makefile_arg[4:])
 
     delete_folder_contents("./stats")
+    generate_makefile(csv_filename)
     run_makefile(makefile_arg)
     combine_stats_files("./stats")
     egSlurp("./stats/stats.txt", csv_filename)

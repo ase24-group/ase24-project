@@ -7,17 +7,18 @@ USAGE:
   python3 gate.py [OPTIONS]
 
 OPTIONS:
-  -b --budget0  initial evals                   = 4
-  -B --Budget   subsequent evals                = 5
-  -c --cohen    small effect size               = .35
-  -f --file     csv data file name              = ../data/diabetes.csv
-  -h --help     show help                       = false
-  -k --k        low class frequency kludge      = 1
-  -m --m        low attribute frequency kludge  = 2
-  -s --seed     random number seed              = 31210
-  -t --todo     start up action                 = help
-  -T --Top      best section                    = .5
-  -o --output   output file path                = ""
+  -b --budget0     initial evals                   = 4
+  -B --Budget      subsequent evals                = 5
+  -E --ExpBudget   experimental budget             = None
+  -c --cohen       small effect size               = .35
+  -f --file        csv data file name              = ../data/diabetes.csv
+  -h --help        show help                       = false
+  -k --k           low class frequency kludge      = 1
+  -m --m           low attribute frequency kludge  = 2
+  -s --seed        random number seed              = 31210
+  -t --todo        start up action                 = help
+  -T --Top         best section                    = .5
+  -o --output      output file path                = ""
 """
 
 MYLO_DOC = """
@@ -82,7 +83,7 @@ class Config:
 
 
 config = None
-if sys.argv[0] == "gate.py":
+if sys.argv[0] == "gate.py" or sys.argv[0] == "main.py":
     config = Config(GATE_DOC)
 elif sys.argv[0] == "mylo.py":
     config = Config(MYLO_DOC)
