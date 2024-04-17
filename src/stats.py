@@ -1,4 +1,5 @@
 import sys, random
+from datetime import datetime
 
 
 class Sample:
@@ -144,3 +145,31 @@ def eg0(nums):
             print("#")
         last = num.rank
         print(all.bar(num, width=40, word="%20s", fmt="%5.2f"))
+
+
+def slurp(file):
+    nums, lst, last = [], [], None
+    with open(file) as fp:
+        for word in [of(x) for s in fp.readlines() for x in s.split()]:
+            if isinstance(word, float):
+                lst += [word]
+            else:
+                if len(lst) > 0:
+                    nums += [Sample(lst, last)]
+                lst, last = [], word
+    if len(lst) > 0:
+        nums += [Sample(lst, last)]
+    return nums
+
+
+def of(s):
+    try:
+        return float(s)
+    except ValueError:
+        return s
+
+
+def egSlurp(stats_file_path, csv_file_path):
+    print("file    : ", csv_file_path)
+    print("date    : ", datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
+    eg0(slurp(stats_file_path))
