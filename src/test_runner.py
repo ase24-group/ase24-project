@@ -20,10 +20,16 @@ def run(todo):
         traceback.print_exc()
         oops = True
 
-    if oops:
-        print(f"❌ FAIL {todo}\n")
+    ExpBudget = config.value.ExpBudget
+    if ExpBudget is None:
+        ExpBudget = ""
     else:
-        print(f"✅ PASS {todo}\n")
+        ExpBudget = f"_{ExpBudget}"
+
+    if oops:
+        print(f"❌ FAIL {todo}{ExpBudget}\n")
+    else:
+        print(f"✅ PASS {todo}{ExpBudget}\n")
 
     config.value = b4
 

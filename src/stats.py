@@ -170,6 +170,7 @@ def of(s):
 
 
 def egSlurp(stats_file_path, csv_file_path):
-    print("file    : ", csv_file_path)
     print("date    : ", datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
+    print("file    : ", csv_file_path)
+    print()
     eg0(slurp(stats_file_path))
