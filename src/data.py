@@ -7,7 +7,7 @@ from cols import Cols
 from node import Node
 from config import config
 from typing import List
-from progressive_scorer import progressive_score
+from progressive_scorer import progressive_score, exploitation_score, exploration_score
 from logger import logger, br_logger
 from utils import custom_normalize
 
@@ -93,7 +93,7 @@ class Data:
         for i, row in enumerate(dark):
             b = row.like(best, len(lite), 2)
             r = row.like(rest, len(lite), 2)
-            br_logger.info(f"b: {b}, r: {r}")
+            # br_logger.info(f"b: {b}, r: {r}")
             if b > r:
                 selected.add(row)
 
@@ -176,6 +176,44 @@ class Data:
                 data.rows, int(len(data.rows) ** config.value.Top + 0.5)
             )
             todo, _ = self.split(best, rest, self.rows, dark, score=score)
+
+            lite.append(dark.pop(todo))
+            data = self.clone(lite, sortD2H=True)
+
+        return data.rows[0]
+
+    def smo_exp_progressive(self, score=None):
+        random.shuffle(self.rows)
+
+        lite = utils.slice(self.rows, 0, config.value.budget0)
+        dark = utils.slice(self.rows, config.value.budget0 + 1)
+        data = self.clone(lite, sortD2H=True)
+
+        exp_values = []
+        for i in range(config.value.Budget):
+            exp_values.append(math.exp(0.25 * i))
+        norm_exp_values = custom_normalize(exp_values)
+
+        for i in range(config.value.Budget):
+            best, rest = self.best_rest(
+                data.rows, int(len(data.rows) ** config.value.Top + 0.5)
+            )
+            want_to_exploit, want_to_explore = (
+                norm_exp_values[i],
+                1 - norm_exp_values[i],
+            )
+            logger.info(
+                f"EXP Want to exploit: {want_to_exploit}, want to explore: {want_to_explore}\n"
+            )
+            # Pick the next sample based on the weighted sum of exploitation and exploration scores
+            todo, _ = self.split(
+                best,
+                rest,
+                self.rows,
+                dark,
+                score=lambda b, r: want_to_exploit * exploitation_score(b, r)
+                + want_to_explore * exploration_score(b, r),
+            )
 
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
