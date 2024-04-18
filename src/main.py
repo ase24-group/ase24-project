@@ -114,4 +114,4 @@ if __name__ == "__main__":
     generate_makefile(csv_filename)
     run_makefile(makefile_arg)
     combine_stats_files("./stats")
-    egSlurp("./stats/stats.txt", csv_filename)
+    egSlurp("./stats/stats.txt")

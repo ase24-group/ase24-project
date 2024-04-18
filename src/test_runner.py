@@ -26,10 +26,13 @@ def run(todo):
     else:
         ExpBudget = f"_{ExpBudget}"
 
+    experiments = ["base_stats", "progressive_stats", "SimAnnealing_stats", "bonr_stats", "rand_stats"]
+    file = sys.stdout if todo not in experiments else sys.stderr
+
     if oops:
-        print(f"❌ FAIL {todo}{ExpBudget}\n")
+        print(f"❌ FAIL {todo}{ExpBudget}\n", file=file)
     else:
-        print(f"✅ PASS {todo}{ExpBudget}\n")
+        print(f"✅ PASS {todo}{ExpBudget}\n", file=file)
 
     config.value = b4
 
