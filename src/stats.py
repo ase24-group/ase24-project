@@ -1,4 +1,5 @@
-import sys, random
+import sys, random, os
+from utils import get_filename_and_parent
 
 
 class Sample:
@@ -170,3 +171,28 @@ def of(s):
 
 def egSlurp(stats_file_path):
     eg0(slurp(stats_file_path))
+
+# Takes in all the SMO results from an input file and ranks them based on Scott-Knott
+# to an output file
+def write_scott_knott_results(csv_path):
+    csv_filename, csv_parent_folder = get_filename_and_parent(csv_path)
+
+    input_file = f"../results/stats/{csv_parent_folder}/{csv_filename}.stats.txt"
+
+    os.makedirs(f"../results/sk/{csv_parent_folder}", exist_ok=True)
+    sk_output = open(f"../results/sk/{csv_parent_folder}/{csv_filename}.sk.txt", "w")
+    sk_csv_output = open(f"../results/sk/{csv_parent_folder}/{csv_filename}.sk.csv", "w")
+    sk_csv_output.write(f"{', '.join( ['rank', 'treatment', 'median', 'iqr', 'plot', 'min', 'max'])}\n")
+
+    nums = slurp(input_file)
+    all = Sample([x for num in nums for x in num.has])
+    last = None
+    for num in sk(nums):
+        if num.rank != last:
+            sk_output.write("#\n")
+        last = num.rank
+        sk_output.write(f"{all.bar(num, width=40, word='%20s', fmt='%5.2f')}\n")
+        sk_csv_output.write(f"{all.bar(num, width=40, word='%20s', fmt='%5.2f')}\n")
+
+    sk_output.close()
+    sk_csv_output.close()

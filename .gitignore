@@ -3,5 +3,3 @@ __pycache__/
 .venv
 *.log
 clear_log_file.py
-src/Makefile
-src/stats/

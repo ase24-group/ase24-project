@@ -4,25 +4,20 @@ import subprocess
 import sys
 import math
 from data import Data
-from stats import egSlurp, slurp, Sample, sk
+from stats import write_scott_knott_results
 from datetime import datetime
+from utils import get_filename_and_parent
 
 
-# Removing the contents of the folder whose name is passed as argument
-def delete_folder_contents(folder_path):
+# Removing the folder whose name is passed as argument
+def delete_folder(folder_path):
     if os.path.exists(folder_path):
-        for item in os.listdir(folder_path):
-            item_path = os.path.join(folder_path, item)
-            if os.path.isfile(item_path):
-                os.remove(item_path)
-            elif os.path.isdir(item_path):
-                shutil.rmtree(item_path)
-    else:
-        print(f"Folder '{folder_path}' does not exist.")
+        shutil.rmtree(folder_path)
 
 
-def generate_makefile(csv_filename):
-    data = Data(csv_filename, fun=None, sortD2H=False)
+def generate_makefile(csv_path):
+    data = Data(csv_path, fun=None, sortD2H=False)
+    csv_filename, csv_parent_folder = get_filename_and_parent(csv_path)
 
     makefile_arg = "ARGUMENT := -f ../data/auto93.csv\n\nifdef ARG\n\tARGUMENT := $(ARG)\nendif"
     all_targets = []
@@ -52,12 +47,16 @@ def generate_makefile(csv_filename):
 
     makefile = f"{makefile_arg}\n\n{makefile_all}\n\n{makefile_targets}"
 
-    with open(f"Makefile", "w") as file:
+    os.makedirs(f"makefiles/{csv_parent_folder}", exist_ok=True)
+    with open(f"makefiles/{csv_parent_folder}/{csv_filename}.mk", "w") as file:
         file.write(makefile)
 
 
-def run_makefile(makefile_arg):
-    command = ["make", "-j", "100", "-s", makefile_arg]
+def run_makefile(makefile_arg, csv_path):
+    csv_filename, csv_parent_folder = get_filename_and_parent(csv_path)
+    makefile_path = f"makefiles/{csv_parent_folder}/{csv_filename}.mk"
+
+    command = ["make", "-f", makefile_path, "-j", "100", "-s", makefile_arg]
     try:
         subprocess.run(command, check=True)
     except subprocess.CalledProcessError as e:
@@ -65,21 +64,18 @@ def run_makefile(makefile_arg):
         print(e.output.decode())  # Print the error output, if any
 
 
-def combine_stats_files(directory_path):
+def combine_stats_files(csv_path):
     combined_file_contents = ""
-    files_to_remove = []
+    csv_filename, csv_parent_folder = get_filename_and_parent(csv_path)
+    directory_path = f"../results/stats/{csv_parent_folder}/{csv_filename}"
 
     for filename in os.listdir(directory_path):
         file_path = os.path.join(directory_path, filename)
         if os.path.isfile(file_path):
             with open(file_path, "r") as input_file:
-                combined_file_contents += input_file.read() + "\n\n"
-                files_to_remove.append(file_path)
-                # output_file.write(file_contents)
-    for file_path in files_to_remove:
-        os.remove(file_path)
+                combined_file_contents += f"{input_file.read()}\n\n"
 
-    with open(directory_path + "/stats.txt", "w") as output_file:
+    with open(f"../results/stats/{csv_parent_folder}/{csv_filename}.stats.txt", "w") as output_file:
         output_file.write(combined_file_contents)
 
 
@@ -98,26 +94,6 @@ def find_csv_filename(makefile_arg):
     return arg_components[i + 1]
 
 
-# Takes in all the SMO results from an input file and ranks them based on Scott-Knott
-# to an output file
-def write_scott_knott_results(input_file, csv_file):
-    output_file = "../output" + csv_file[7:]
-    # Emptying the file first
-    with open(output_file, "w") as file:
-        pass
-    with open(output_file, "a") as file:
-        file.write(f'date    : {datetime.now().strftime("%m/%d/%Y %H:%M:%S")}' + "\n")
-        file.write(f"file    : {csv_filename}" + "\n\n")
-        nums = slurp(input_file)
-        all = Sample([x for num in nums for x in num.has])
-        last = None
-        for num in sk(nums):
-            if num.rank != last:
-                file.write("#\n")
-            last = num.rank
-            file.write(all.bar(num, width=40, word="%20s", fmt="%5.2f")+"\n")
-    
-
 if __name__ == "__main__":
     makefile_arg = ""
     if len(sys.argv) < 2:
@@ -129,11 +105,12 @@ if __name__ == "__main__":
     else:
         makefile_arg = "ARG=" + sys.argv[1]
 
-    csv_filename = find_csv_filename(makefile_arg[4:])
+    csv_path = find_csv_filename(makefile_arg[4:])
+    csv_filename, csv_parent_folder = get_filename_and_parent(csv_path)
 
-    delete_folder_contents("./stats")
-    generate_makefile(csv_filename)
-    run_makefile(makefile_arg)
-    combine_stats_files("./stats")
-    # egSlurp("./stats/stats.txt")
-    write_scott_knott_results("./stats/stats.txt", csv_filename)
+    delete_folder(f"../results/stats/{csv_parent_folder}/{csv_filename}")
+    generate_makefile(csv_path)
+    run_makefile(makefile_arg, csv_path)
+    combine_stats_files(csv_path)
+    delete_folder(f"../results/stats/{csv_parent_folder}/{csv_filename}")
+    write_scott_knott_results(csv_path)

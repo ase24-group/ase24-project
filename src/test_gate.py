@@ -1,6 +1,6 @@
 import os, random, math
 from datetime import datetime
-from utils import coerce, output, output_gate20_info, align_list
+from utils import coerce, output, output_gate20_info, align_list, get_filename_and_parent
 from data import Data
 from box import Box
 from num import Num
@@ -419,53 +419,85 @@ class TestGate:
         data = Data(config.value.file, fun=None, sortD2H=False)
         sorted_d2hs = sorted([row.d2h(data) for row in data.rows])
 
-        os.makedirs("stats", exist_ok=True)
-        with open("stats/base.txt", "w") as file:
-            file.write(f"base {' '.join(map(str, sorted_d2hs))}")
+        csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
+        stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
+        treatment = "base"
+        os.makedirs(stats_dir, exist_ok=True)
+
+        with open(f"{stats_dir}/{treatment}.txt", "w") as file:
+            file.write(f"{treatment} {' '.join(map(str, sorted_d2hs))}")
 
     def progressive_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         repeats = 20
-        os.makedirs("stats", exist_ok=True)
 
         budget = config.value.ExpBudget
         config.value.Budget = budget - config.value.budget0
 
+        csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
+        csv_budget = math.ceil(math.sqrt(len(data.rows)))
+        stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
+        treatment = f"progressive_{str(budget)}"
+        if (budget == csv_budget):
+            treatment = f"progressive_sqrt"
+        os.makedirs(stats_dir, exist_ok=True)
+
         stats = [data.smo_progressive_scorer().d2h(data) for _ in range(repeats)]
-        with open(f"stats/progressive{str(budget)}.txt", "w") as file:
-            file.write(f"#progressive{str(budget)} {' '.join(map(str, stats))}")
+        with open(f"{stats_dir}/{treatment}.txt", "w") as file:
+            file.write(f"{treatment} {' '.join(map(str, stats))}")
 
     def SimAnnealing_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         repeats = 20
-        os.makedirs("stats", exist_ok=True)
 
         budget = config.value.ExpBudget
         config.value.Budget = budget - config.value.budget0
 
+        csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
+        csv_budget = math.ceil(math.sqrt(len(data.rows)))
+        stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
+        treatment = f"SimAnnealing_{str(budget)}"
+        if (budget == csv_budget):
+            treatment = f"SimAnnealing_sqrt"
+        os.makedirs(stats_dir, exist_ok=True)
+
         stats = [data.smo_sim_annealing().d2h(data) for _ in range(repeats)]
-        with open(f"stats/SimAnnealing{str(budget)}.txt", "w") as file:
-            file.write(f"#SimAnnealing{str(budget)} {' '.join(map(str, stats))}")
+        with open(f"{stats_dir}/{treatment}.txt", "w") as file:
+            file.write(f"{treatment} {' '.join(map(str, stats))}")
 
     def ExpProgressive_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         repeats = 20
-        os.makedirs("stats", exist_ok=True)
 
         budget = config.value.ExpBudget
         config.value.Budget = budget - config.value.budget0
 
+        csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
+        csv_budget = math.ceil(math.sqrt(len(data.rows)))
+        stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
+        treatment = f"ExpProgressive_{str(budget)}"
+        if (budget == csv_budget):
+            treatment = f"ExpProgressive_sqrt"
+        os.makedirs(stats_dir, exist_ok=True)
+
         stats = [data.smo_exp_progressive().d2h(data) for _ in range(repeats)]
-        with open(f"stats/ExpProgressive{str(budget)}.txt", "w") as file:
-            file.write(f"#ExpProgressive{str(budget)} {' '.join(map(str, stats))}")
+        with open(f"{stats_dir}/{treatment}.txt", "w") as file:
+            file.write(f"{treatment} {' '.join(map(str, stats))}")
 
     def bonr_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         repeats = 20
-        os.makedirs("stats", exist_ok=True)
 
         budget = config.value.ExpBudget
         config.value.Budget = budget - config.value.budget0
+
+        csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
+        csv_budget = math.ceil(math.sqrt(len(data.rows)))
+        stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
+        treatment = f"bonr_{str(budget)}"
+        if (budget == csv_budget):
+            treatment = f"bonr_sqrt"
+        os.makedirs(stats_dir, exist_ok=True)
 
         stats = [
             data.smo(
@@ -473,23 +505,33 @@ class TestGate:
             ).d2h(data)
             for _ in range(repeats)
         ]
-        with open(f"stats/bonr{str(budget)}.txt", "w") as file:
-            file.write(f"#bonr{str(budget)} {' '.join(map(str, stats))}")
+        with open(f"{stats_dir}/{treatment}.txt", "w") as file:
+            file.write(f"{treatment} {' '.join(map(str, stats))}")
 
     def rand_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         repeats = 20
-        os.makedirs("stats", exist_ok=True)
 
         budget = config.value.ExpBudget
         config.value.Budget = budget - config.value.budget0
+
+        csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
+        csv_budget = math.ceil(math.sqrt(len(data.rows)))
+        rand_budget = int(0.9 * len(data.rows))
+        stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
+        treatment = f"rand_{str(budget)}"
+        if (budget == csv_budget):
+            treatment = f"rand_sqrt"
+        if (budget == rand_budget):
+            treatment = f"rand_p90"
+        os.makedirs(stats_dir, exist_ok=True)
 
         stats = [
             data.clone(shuffle(data.rows[:budget]), sortD2H=True).rows[0].d2h(data)
             for _ in range(repeats)
         ]
-        with open(f"stats/rand{str(budget)}.txt", "w") as file:
-            file.write(f"#rand{str(budget)} {' '.join(map(str, stats))}")
+        with open(f"{stats_dir}/{treatment}.txt", "w") as file:
+            file.write(f"{treatment} {' '.join(map(str, stats))}")
 
     def gen_params(self):
         k_range = (1, 5)

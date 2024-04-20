@@ -1,4 +1,4 @@
-import fileinput, re, ast
+import fileinput, re, ast, os
 import random
 import math
 from typing import Tuple
@@ -150,3 +150,12 @@ def custom_normalize(values, start=0, end=1):
         for x in values
     ]
     return normalized_data
+
+
+def get_filename_and_parent(path):
+    filename_ext = os.path.basename(path)
+    filename = os.path.splitext(filename_ext)[0]
+    parent_folder = os.path.basename(os.path.dirname(path))
+
+    return filename, parent_folder
+
