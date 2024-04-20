@@ -1,0 +1,40 @@
+date    : 04/16/2024 20:34:04
+file    : ../data/auto93.csv
+repeats : 20
+seed    : 31210
+rows    : 398
+cols    : 8
+best    : 0.17
+tiny    : 0.06
+#base #progressive9 #exp_progressive9 #SimAnnealing9 #bonr9 #rand9 #progressive15 #exp_progressive15 #SimAnnealing15 #bonr15 #rand15 #progressive20 #exp_progressive20 #SimAnnealing20 #bonr20 #rand20 #progressive30 #exp_progressive30 #SimAnnealing30 #bonr30 #rand30 #rand358     
+#report22
+#
+ 0,             #rand358,  0.17,  0.00, *                   |                   ,  0.17,  0.93
+#
+ 1,   #exp_progressive20,  0.25,  0.09,    -*---            |                   ,  0.17,  0.93
+#
+ 2,              #bonr20,  0.26,  0.09,    -*---            |                   ,  0.17,  0.93
+ 2,               #rand9,  0.27,  0.00,      *              |                   ,  0.17,  0.93
+#
+ 3,      #SimAnnealing30,  0.27,  0.09,     -*---           |                   ,  0.17,  0.93
+ 3,              #bonr30,  0.31,  0.08,     ---*            |                   ,  0.17,  0.93
+ 3,       #progressive20,  0.31,  0.13,     ---*---         |                   ,  0.17,  0.93
+#
+ 4,   #exp_progressive30,  0.32,  0.18,    -----*----       |                   ,  0.17,  0.93
+ 4,              #rand30,  0.33,  0.00,         *           |                   ,  0.17,  0.93
+#
+ 5,       #progressive30,  0.33,  0.14,        -*-----      |                   ,  0.17,  0.93
+ 5,       #progressive15,  0.34,  0.09,        --*--        |                   ,  0.17,  0.93
+ 5,              #bonr15,  0.34,  0.14,      ----*--        |                   ,  0.17,  0.93
+ 5,              #rand20,  0.35,  0.00,          *          |                   ,  0.17,  0.93
+ 5,      #SimAnnealing20,  0.35,  0.11,      ----*-         |                   ,  0.17,  0.93
+ 5,              #rand15,  0.35,  0.00,          *          |                   ,  0.17,  0.93
+ 5,               #bonr9,  0.35,  0.10,        --*--        |                   ,  0.17,  0.93
+ 5,       #SimAnnealing9,  0.37,  0.14,     ------*-        |                   ,  0.17,  0.93
+ 5,      #SimAnnealing15,  0.37,  0.17,     ------*--       |                   ,  0.17,  0.93
+ 5,   #exp_progressive15,  0.38,  0.10,        ----*        |                   ,  0.17,  0.93
+ 5,        #progressive9,  0.38,  0.06,          --*        |                   ,  0.17,  0.93
+ 5,    #exp_progressive9,  0.39,  0.10,         ---*-       |                   ,  0.17,  0.93
+#
+ 6,                 base,  0.55,  0.20,              -------*---                ,  0.17,  0.93
+✅ PASS smo_progressive_scorer_stats

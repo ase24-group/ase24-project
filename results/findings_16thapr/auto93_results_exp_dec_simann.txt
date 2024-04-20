@@ -1,0 +1,39 @@
+date    : 04/16/2024 17:23:58
+file    : ../data/auto93.csv
+repeats : 20
+seed    : 31210
+rows    : 398
+cols    : 8
+best    : 0.17
+tiny    : 0.06
+#base #progressive9 #SimAnnealing9 #bonr9 #rand9 #progressive15 #SimAnnealing15 #bonr15 #rand15 #progressive20 #SimAnnealing20 #bonr20 #rand20 #progressive30 #SimAnnealing30 #bonr30 #rand30 #rand358 
+#report18
+#
+ 0,             #rand358,  0.17,  0.00, *                   |                   ,  0.17,  0.93
+#
+ 1,       #progressive30,  0.25,  0.13,  ---*---            |                   ,  0.17,  0.93
+#
+ 2,              #rand30,  0.26,  0.00,     *               |                   ,  0.17,  0.93
+#
+ 3,              #bonr30,  0.26,  0.12,  ---*--             |                   ,  0.17,  0.93
+ 3,               #rand9,  0.26,  0.00,     *               |                   ,  0.17,  0.93
+#
+ 4,              #bonr20,  0.27,  0.08,     -*--            |                   ,  0.17,  0.93
+ 4,              #rand15,  0.30,  0.00,        *            |                   ,  0.17,  0.93
+#
+ 5,      #SimAnnealing20,  0.32,  0.14,      --*----        |                   ,  0.17,  0.93
+ 5,              #rand20,  0.33,  0.00,         *           |                   ,  0.17,  0.93
+#
+ 6,      #SimAnnealing30,  0.33,  0.11,      ---*--         |                   ,  0.17,  0.93
+ 6,       #progressive20,  0.33,  0.17,     ----*----       |                   ,  0.17,  0.93
+ 6,               #bonr9,  0.33,  0.14,     ----*---        |                   ,  0.17,  0.93
+ 6,              #bonr15,  0.33,  0.10,        -*---        |                   ,  0.17,  0.93
+ 6,      #SimAnnealing15,  0.34,  0.09,        --*--        |                   ,  0.17,  0.93
+ 6,       #SimAnnealing9,  0.35,  0.11,        --*---       |                   ,  0.17,  0.93
+ 6,       #progressive15,  0.35,  0.09,        --*--        |                   ,  0.17,  0.93
+ 6,        #progressive9,  0.38,  0.06,          --*        |                   ,  0.17,  0.93
+#
+ 7,                 base,  0.55,  0.20,              -------*---                ,  0.17,  0.93
+✅ PASS smo_progressive_scorer_stats
+
+Testing scenario: Decrease the power of b in bonr in an exponential  manner (this acquisition fn is called SimAnnealing in the above results)

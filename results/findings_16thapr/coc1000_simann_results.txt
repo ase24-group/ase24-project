@@ -1,0 +1,27 @@
+#bonr30 #rand30 #rand900 
+#report14
+#
+ 0,             #rand900,  0.13,  0.00, *                   |                   ,  0.13,  0.78
+#
+ 1,      #SimAnnealing30,  0.20,  0.09,   --*---            |                   ,  0.13,  0.78
+#
+ 2,              #bonr30,  0.23,  0.09,     --*---          |                   ,  0.13,  0.78
+ 2,              #rand30,  0.24,  0.00,       *             |                   ,  0.13,  0.78
+ 2,      #SimAnnealing15,  0.25,  0.07,     ---*-           |                   ,  0.13,  0.78
+#
+ 3,               #rand9,  0.26,  0.00,        *            |                   ,  0.13,  0.78
+ 3,              #bonr15,  0.27,  0.07,        -*--         |                   ,  0.13,  0.78
+ 3,              #rand20,  0.27,  0.00,         *           |                   ,  0.13,  0.78
+ 3,       #SimAnnealing9,  0.28,  0.13,    -----*--         |                   ,  0.13,  0.78
+ 3,               #bonr9,  0.28,  0.12,         -*-----     |                   ,  0.13,  0.78
+ 3,      #SimAnnealing20,  0.29,  0.08,        --*--        |                   ,  0.13,  0.78
+#
+ 4,              #rand15,  0.29,  0.00,          *          |                   ,  0.13,  0.78
+ 4,              #bonr20,  0.30,  0.06,         --*         |                   ,  0.13,  0.78
+#
+ 5,                 base,  0.46,  0.15,                -----*---                ,  0.13,  0.78
+✅ PASS smo_progressive_scorer_stats
+
+Testing scenario:
+Acquisition function: lambda b, r: abs(((b+1)**norm_exp_values[i]) + (r+1)) / abs(b - r + 1e-300)
+norm_exp_values increased exponentially from 1 to 2 following the curve (e^.25x)
