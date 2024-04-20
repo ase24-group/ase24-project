@@ -4,7 +4,8 @@ import subprocess
 import sys
 import math
 from data import Data
-from stats import egSlurp
+from stats import egSlurp, slurp, Sample, sk
+from datetime import datetime
 
 
 # Removing the contents of the folder whose name is passed as argument
@@ -29,7 +30,7 @@ def generate_makefile(csv_filename):
 
     csv_budget = math.ceil(math.sqrt(len(data.rows)))
     rand_budget = int(0.9 * len(data.rows))
-    treatments = ["progressive", "SimAnnealing", "bonr", "rand"]
+    treatments = ["progressive", "SimAnnealing", "bonr", "rand", "ExpProgressive"]
 
     id = f"base"
     all_targets.append(id)
@@ -97,6 +98,26 @@ def find_csv_filename(makefile_arg):
     return arg_components[i + 1]
 
 
+# Takes in all the SMO results from an input file and ranks them based on Scott-Knott
+# to an output file
+def write_scott_knott_results(input_file, csv_file):
+    output_file = "../output" + csv_file[7:]
+    # Emptying the file first
+    with open(output_file, "w") as file:
+        pass
+    with open(output_file, "a") as file:
+        file.write(f'date    : {datetime.now().strftime("%m/%d/%Y %H:%M:%S")}' + "\n")
+        file.write(f"file    : {csv_filename}" + "\n\n")
+        nums = slurp(input_file)
+        all = Sample([x for num in nums for x in num.has])
+        last = None
+        for num in sk(nums):
+            if num.rank != last:
+                file.write("#\n")
+            last = num.rank
+            file.write(all.bar(num, width=40, word="%20s", fmt="%5.2f")+"\n")
+    
+
 if __name__ == "__main__":
     makefile_arg = ""
     if len(sys.argv) < 2:
@@ -114,4 +135,5 @@ if __name__ == "__main__":
     generate_makefile(csv_filename)
     run_makefile(makefile_arg)
     combine_stats_files("./stats")
-    egSlurp("./stats/stats.txt")
+    # egSlurp("./stats/stats.txt")
+    write_scott_knott_results("./stats/stats.txt", csv_filename)

@@ -447,6 +447,18 @@ class TestGate:
         with open(f"stats/SimAnnealing{str(budget)}.txt", "w") as file:
             file.write(f"#SimAnnealing{str(budget)} {' '.join(map(str, stats))}")
 
+    def ExpProgressive_stats(self):
+        data = Data(config.value.file, fun=None, sortD2H=False)
+        repeats = 20
+        os.makedirs("stats", exist_ok=True)
+
+        budget = config.value.ExpBudget
+        config.value.Budget = budget - config.value.budget0
+
+        stats = [data.smo_exp_progressive().d2h(data) for _ in range(repeats)]
+        with open(f"stats/ExpProgressive{str(budget)}.txt", "w") as file:
+            file.write(f"#ExpProgressive{str(budget)} {' '.join(map(str, stats))}")
+
     def bonr_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         repeats = 20
