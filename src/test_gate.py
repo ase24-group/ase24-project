@@ -493,7 +493,7 @@ class TestGate:
         sampled_d2h_history = {}
         b_exp_values = None
 
-        trials_to_plot = random.sample(list(range(20)), 5)
+        trials_to_plot = [0, 4, 9, 14, 19]
 
         for trial in range(repeats):
             best_d2h, d2h_history, b_exp_values = data.smo_sim_annealing()
@@ -549,7 +549,7 @@ class TestGate:
         stats = []
         sampled_d2h_history = {}
 
-        trials_to_plot = random.sample(list(range(20)), 5)
+        trials_to_plot = [0, 4, 9, 14, 19]
 
         for trial in range(repeats):
             best_d2h, d2h_history = data.smo(
@@ -588,7 +588,7 @@ class TestGate:
         stats = []
         sampled_d2h_history = {}
 
-        trials_to_plot = random.sample(list(range(20)), 5)
+        trials_to_plot = [0, 4, 9, 14, 19]
 
         for trial in range(repeats):
             best_d2h, d2h_history = data.smo(
