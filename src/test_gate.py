@@ -14,6 +14,9 @@ from config import config
 from stats import Sample, eg0
 from logger import logger
 import sys
+from matplotlib import pyplot as plt
+from matplotlib.figure import Figure
+from typing import List
 
 
 class TestGate:
@@ -478,12 +481,32 @@ class TestGate:
         csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
         csv_budget = math.ceil(math.sqrt(len(data.rows)))
         stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
+        plots_dir = f"../results/plots/{csv_parent_folder}/{csv_filename}"
         treatment = f"SimAnnealing_{str(budget)}"
         if budget == csv_budget:
             treatment = f"SimAnnealing_sqrt"
         os.makedirs(stats_dir, exist_ok=True)
+        os.makedirs(plots_dir, exist_ok=True)
 
-        stats = [data.smo_sim_annealing().d2h(data) for _ in range(repeats)]
+        # stats = [data.smo_sim_annealing().d2h(data) for _ in range(repeats)]
+        stats = []
+        best_repeat = 1
+        best_d2h_history = None
+        best_b_exp_values = None
+
+        for _ in range(repeats):
+            best_d2h, d2h_history, b_exp_values = data.smo_sim_annealing()
+            best_d2h = best_d2h.d2h(data)
+            stats.append(best_d2h)
+
+            if best_d2h < best_repeat:
+                best_d2h_history = d2h_history
+                best_b_exp_values = b_exp_values
+
+        sim_annealing_plot_performance(
+            config.value.Budget, best_d2h_history, best_b_exp_values
+        ).savefig(f"{plots_dir}/{treatment}.png")
+
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
             file.write(f"{treatment} {' '.join(map(str, stats))}")
 
@@ -596,3 +619,28 @@ def learn(data, row, my) -> None:
 def shuffle(rows):
     random.shuffle(rows)
     return rows
+
+
+def sim_annealing_plot_performance(
+    budget: int, d2h_history: List[float], b_exp_values: List[float]
+) -> Figure:
+    epochs = range(1, budget + 1)
+
+    fig = plt.figure()
+    plt.grid()
+
+    plt.scatter(epochs, d2h_history, label="Best D2H", color="blue")
+
+    plt.plot(
+        epochs,
+        b_exp_values,
+        label="b Exponent",
+        color="red",
+        linestyle="--",
+    )
+
+    plt.legend()
+    plt.xlabel("Epoch")
+    plt.title('"Simulated Annealing" Acquisition Performance')
+
+    return fig

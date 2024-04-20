@@ -18,7 +18,7 @@ class ProgressiveScorer:
     def __init__(self, budget: int) -> None:
         self.budget = budget
         self.progress: int = 0
-        
+
         self.progress_percentage = 0.85
 
         # Just explore for the first 2 epochs to get enough values in past_true_ys
@@ -135,7 +135,7 @@ class ProgressiveScorer:
 
         plt.legend()
         plt.xlabel("Epoch")
-        plt.title("Progressive Scorer Performance")
+        plt.title("Progressive Acquisition Performance")
 
         return fig
 
