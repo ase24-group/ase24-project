@@ -490,21 +490,21 @@ class TestGate:
 
         # stats = [data.smo_sim_annealing().d2h(data) for _ in range(repeats)]
         stats = []
-        best_repeat = 1
-        best_d2h_history = None
-        best_b_exp_values = None
+        sampled_d2h_history = {}
+        b_exp_values = None
 
-        for _ in range(repeats):
+        trials_to_plot = random.sample(list(range(20)), 5)
+
+        for trial in range(repeats):
             best_d2h, d2h_history, b_exp_values = data.smo_sim_annealing()
             best_d2h = best_d2h.d2h(data)
             stats.append(best_d2h)
 
-            if best_d2h < best_repeat:
-                best_d2h_history = d2h_history
-                best_b_exp_values = b_exp_values
+            if trial in trials_to_plot:
+                sampled_d2h_history[trial] = d2h_history
 
         sim_annealing_plot_performance(
-            config.value.Budget, best_d2h_history, best_b_exp_values
+            config.value.Budget, sampled_d2h_history, b_exp_values
         ).savefig(f"{plots_dir}/{treatment}.png")
 
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
@@ -539,17 +539,32 @@ class TestGate:
         csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
         csv_budget = math.ceil(math.sqrt(len(data.rows)))
         stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
+        plots_dir = f"../results/plots/{csv_parent_folder}/{csv_filename}"
         treatment = f"bonr_{str(budget)}"
         if budget == csv_budget:
             treatment = f"bonr_sqrt"
         os.makedirs(stats_dir, exist_ok=True)
+        os.makedirs(plots_dir, exist_ok=True)
 
-        stats = [
-            data.smo(
+        stats = []
+        sampled_d2h_history = {}
+
+        trials_to_plot = random.sample(list(range(20)), 5)
+
+        for trial in range(repeats):
+            best_d2h, d2h_history = data.smo(
                 score=lambda b, r: abs(b + r) / abs(b - r + sys.float_info.min)
-            ).d2h(data)
-            for _ in range(repeats)
-        ]
+            )
+            best_d2h = best_d2h.d2h(data)
+            stats.append(best_d2h)
+
+            if trial in trials_to_plot:
+                sampled_d2h_history[trial] = d2h_history
+
+        smo_plot_performance(config.value.Budget, sampled_d2h_history).savefig(
+            f"{plots_dir}/{treatment}.png"
+        )
+
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
             file.write(f"{treatment} {' '.join(map(str, stats))}")
 
@@ -569,9 +584,9 @@ class TestGate:
         os.makedirs(stats_dir, exist_ok=True)
 
         stats = [
-            data.smo(
-                score=lambda b, r: abs(b ** 2) / abs(r + sys.float_info.min)
-            ).d2h(data)
+            data.smo(score=lambda b, r: abs(b**2) / abs(r + sys.float_info.min)).d2h(
+                data
+            )
             for _ in range(repeats)
         ]
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
@@ -645,6 +660,27 @@ def shuffle(rows):
     return rows
 
 
+def smo_plot_performance(budget: int, d2h_history: List[float]) -> Figure:
+    epochs = range(1, budget + 1)
+
+    # Create a figure with two subplots, arranged side-by-side
+    fig, axs = plt.subplots(1, 1, figsize=(5, 5))  # Adjust figsize as needed
+
+    # Plot the first subplot (Best D2H)
+    for trial_num in d2h_history.keys():
+        axs.plot(epochs, d2h_history[trial_num], label=f"trial {trial_num}")
+
+    axs.legend(title="5/20 Randomly Sampled")
+    axs.set_xlabel("Budget Increment Beyond b0")
+    axs.set_ylabel("Best D2H")
+    axs.grid(True)
+    axs.set_ylim(0, max([x for sublist in d2h_history.values() for x in sublist]) * 1.3)
+
+    plt.tight_layout()  # Adjust subplot spacing
+
+    return fig
+
+
 def sim_annealing_plot_performance(
     budget: int, d2h_history: List[float], b_exp_values: List[float]
 ) -> Figure:
@@ -654,17 +690,21 @@ def sim_annealing_plot_performance(
     fig, axs = plt.subplots(1, 2, figsize=(10, 5))  # Adjust figsize as needed
 
     # Plot the first subplot (Best D2H)
-    axs[0].scatter(epochs, d2h_history, color="blue")
+    for trial_num in d2h_history.keys():
+        axs[0].plot(epochs, d2h_history[trial_num], label=f"trial {trial_num}")
+
+    axs[0].legend(title="5/20 Randomly Sampled")
     axs[0].set_xlabel("Budget Increment Beyond b0")
     axs[0].set_ylabel("Best D2H")
     axs[0].grid(True)
-    axs[0].set_ylim(0, max(d2h_history) * 1.3)
+    axs[0].set_ylim(
+        0, max([x for sublist in d2h_history.values() for x in sublist]) * 1.3
+    )
 
     # Plot the second subplot (b Exponent)
     axs[1].scatter(
         epochs,
         b_exp_values,
-        color="red",
     )
     axs[1].set_xlabel("Budget Increment Beyond b0")
     axs[1].set_ylabel("b Exponent")

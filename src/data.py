@@ -177,6 +177,9 @@ class Data:
         dark = utils.slice(self.rows, config.value.budget0 + 1)
 
         data = self.clone(lite, sortD2H=True)
+        
+        best_d2hs = []
+        
         for i in range(config.value.Budget):
             best, rest = self.best_rest(
                 data.rows, int(len(data.rows) ** config.value.Top + 0.5)
@@ -185,8 +188,10 @@ class Data:
 
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
+            
+            best_d2hs.append(data.rows[0].d2h(self))
 
-        return data.rows[0]
+        return data.rows[0], best_d2hs
 
     def smo_exp_progressive(self, score=None):
         random.shuffle(self.rows)
