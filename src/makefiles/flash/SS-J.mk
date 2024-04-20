@@ -4,7 +4,7 @@ ifdef ARG
 	ARGUMENT := $(ARG)
 endif
 
-all: base progressive9 progressive15 progressive62 SimAnnealing9 SimAnnealing15 SimAnnealing62 bonr9 bonr15 bonr62 rand9 rand15 rand62 ExpProgressive9 ExpProgressive15 ExpProgressive62 rand3456
+all: base progressive9 progressive15 progressive62 SimAnnealing9 SimAnnealing15 SimAnnealing62 bonr9 bonr15 bonr62 b29 b215 b262 rand9 rand15 rand62 ExpProgressive9 ExpProgressive15 ExpProgressive62 rand3456
 
 base:
 	python3 gate.py -t base_stats $(ARGUMENT)
@@ -35,6 +35,15 @@ bonr15:
 
 bonr62:
 	python3 gate.py -t bonr_stats -E 62 $(ARGUMENT)
+
+b29:
+	python3 gate.py -t b2_stats -E 9 $(ARGUMENT)
+
+b215:
+	python3 gate.py -t b2_stats -E 15 $(ARGUMENT)
+
+b262:
+	python3 gate.py -t b2_stats -E 62 $(ARGUMENT)
 
 rand9:
 	python3 gate.py -t rand_stats -E 9 $(ARGUMENT)
