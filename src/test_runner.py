@@ -2,6 +2,7 @@ import random, sys, traceback
 from test import test
 from box import Box
 from config import config
+from utils import get_filename_and_parent
 
 
 def run(todo):
@@ -26,13 +27,19 @@ def run(todo):
     else:
         ExpBudget = f"_{ExpBudget}"
 
-    experiments = ["base_stats", "progressive_stats", "SimAnnealing_stats", "bonr_stats", "rand_stats"]
-    file = sys.stdout if todo not in experiments else sys.stderr
+    experiments = ["base_stats", "progressive_stats", "SimAnnealing_stats", "ExpProgressive_stats", "bonr_stats", "rand_stats"]
+    csv_filename, _ = get_filename_and_parent(config.value.file)
 
-    if oops:
-        print(f"❌ FAIL {todo}{ExpBudget}\n", file=file)
+    if todo not in experiments:
+        if oops:
+            print(f"❌ FAIL {todo}\n")
+        else:
+            print(f"✅ PASS {todo}\n")
     else:
-        print(f"✅ PASS {todo}{ExpBudget}\n", file=file)
+        if oops:
+            print(f"❌ FAIL {csv_filename}_{todo}{ExpBudget}\n", file=sys.stderr)
+        else:
+            print(f"✅ PASS {csv_filename}_{todo}{ExpBudget}\n", file=sys.stderr)
 
     config.value = b4
 
