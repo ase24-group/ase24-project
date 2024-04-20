@@ -578,17 +578,32 @@ class TestGate:
         csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
         csv_budget = math.ceil(math.sqrt(len(data.rows)))
         stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
+        plots_dir = f"../results/plots/{csv_parent_folder}/{csv_filename}"
         treatment = f"b2_{str(budget)}"
         if budget == csv_budget:
             treatment = f"b2_sqrt"
         os.makedirs(stats_dir, exist_ok=True)
+        os.makedirs(plots_dir, exist_ok=True)
 
-        stats = [
-            data.smo(score=lambda b, r: abs(b**2) / abs(r + sys.float_info.min)).d2h(
-                data
+        stats = []
+        sampled_d2h_history = {}
+
+        trials_to_plot = random.sample(list(range(20)), 5)
+
+        for trial in range(repeats):
+            best_d2h, d2h_history = data.smo(
+                score=lambda b, r: abs(b**2) / abs(r + sys.float_info.min)
             )
-            for _ in range(repeats)
-        ]
+            best_d2h = best_d2h.d2h(data)
+            stats.append(best_d2h)
+
+            if trial in trials_to_plot:
+                sampled_d2h_history[trial] = d2h_history
+
+        smo_plot_performance(config.value.Budget, sampled_d2h_history).savefig(
+            f"{plots_dir}/{treatment}.png"
+        )
+
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
             file.write(f"{treatment} {' '.join(map(str, stats))}")
 
