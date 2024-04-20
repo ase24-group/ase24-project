@@ -50,7 +50,7 @@ def plot_bargraphs(stats, stats_filename, acquisition_functions):
     plt.legend()
     plt.grid(axis='y')
 
-    destination_filename = "../plots/bargraphs/" + ("/".join(stats_filename.split("/")[-2:]))[:-3] + "png"
+    destination_filename = "../results/plots/bargraphs/" + ("/".join(stats_filename.split("/")[-2:]))[:-3] + "png"
     print("Destination filename: ", destination_filename)
     plt.savefig(destination_filename)
 
