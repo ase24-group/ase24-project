@@ -1,5 +1,4 @@
 import sys, random
-from datetime import datetime
 
 
 class Sample:
@@ -169,8 +168,5 @@ def of(s):
         return s
 
 
-def egSlurp(stats_file_path, csv_file_path):
-    print("date    : ", datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
-    print("file    : ", csv_file_path)
-    print()
+def egSlurp(stats_file_path):
     eg0(slurp(stats_file_path))

@@ -457,8 +457,7 @@ class TestGate:
 
         stats = [
             data.smo(
-                score=lambda b, r: abs(b + r)
-                / abs(b - r + sys.float_info.min)
+                score=lambda b, r: abs(b + r) / abs(b - r + sys.float_info.min)
             ).d2h(data)
             for _ in range(repeats)
         ]
@@ -474,9 +473,7 @@ class TestGate:
         config.value.Budget = budget - config.value.budget0
 
         stats = [
-            data.clone(shuffle(data.rows[:budget]), sortD2H=True)
-            .rows[0]
-            .d2h(data)
+            data.clone(shuffle(data.rows[:budget]), sortD2H=True).rows[0].d2h(data)
             for _ in range(repeats)
         ]
         with open(f"stats/rand{str(budget)}.txt", "w") as file:

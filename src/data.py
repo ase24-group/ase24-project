@@ -7,7 +7,13 @@ from cols import Cols
 from node import Node
 from config import config
 from typing import List
-from progressive_scorer import progressive_score, exploitation_score, exploration_score
+from progressive_scorer import (
+    progressive_score,
+    exploitation_score,
+    exploration_score,
+    ProgressiveScorer,
+)
+from matplotlib import pyplot as plt
 from logger import logger, br_logger
 from utils import custom_normalize
 
@@ -228,23 +234,24 @@ class Data:
 
         data = self.clone(lite, sortD2H=True)
 
-        past_best_d2hs: List[float] = []
+        progressive_scorer = ProgressiveScorer(budget=config.value.Budget)
 
         for i in range(config.value.Budget):
             best, rest = self.best_rest(
                 data.rows, int(len(data.rows) ** config.value.Top + 0.5)
             )
-            past_best_d2hs.append(best.rows[0].d2h(self))
+            progressive_scorer.add_history(best.rows[0].d2h(self))
 
             logger.info(f"\n\nSMO PROGRESSIVE ITERATION {i}\n\n")
 
-            todo, _ = self.split_progressive_scorer(
-                best, rest, self.rows, dark, past_best_d2hs, i / config.value.Budget
+            todo, _ = self.split(
+                best, rest, self.rows, dark, score=progressive_scorer.score
             )
 
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
-
+        # progressive_scorer.plot_performance()
+        # plt.show()
         return data.rows[0]
 
     def smo_sim_annealing(self):
