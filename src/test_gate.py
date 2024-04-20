@@ -553,6 +553,30 @@ class TestGate:
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
             file.write(f"{treatment} {' '.join(map(str, stats))}")
 
+    def b2_stats(self):
+        data = Data(config.value.file, fun=None, sortD2H=False)
+        repeats = 20
+
+        budget = config.value.ExpBudget
+        config.value.Budget = budget - config.value.budget0
+
+        csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
+        csv_budget = math.ceil(math.sqrt(len(data.rows)))
+        stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
+        treatment = f"b2_{str(budget)}"
+        if budget == csv_budget:
+            treatment = f"b2_sqrt"
+        os.makedirs(stats_dir, exist_ok=True)
+
+        stats = [
+            data.smo(
+                score=lambda b, r: abs(b ** 2) / abs(r + sys.float_info.min)
+            ).d2h(data)
+            for _ in range(repeats)
+        ]
+        with open(f"{stats_dir}/{treatment}.txt", "w") as file:
+            file.write(f"{treatment} {' '.join(map(str, stats))}")
+
     def rand_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         repeats = 20

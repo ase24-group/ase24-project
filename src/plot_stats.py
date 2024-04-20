@@ -59,7 +59,7 @@ def plot_bargraphs(stats, stats_filename, acquisition_functions):
 
 if __name__ == "__main__":
     stats_filename = ""
-    acquisition_functions = ["progressive", "SimAnnealing", "bonr", "ExpProgressive"]
+    acquisition_functions = ["progressive", "SimAnnealing", "bonr", "b2", "ExpProgressive"]
     if len(sys.argv) != 2:
         print("Provide the filename of an output file as the command line argument")
     else:
