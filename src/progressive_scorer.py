@@ -18,6 +18,8 @@ class ProgressiveScorer:
     def __init__(self, budget: int) -> None:
         self.budget = budget
         self.progress: int = 0
+        
+        self.progress_percentage = 0.85
 
         # Just explore for the first 2 epochs to get enough values in past_true_ys
         self.initial_epochs_to_only_explore: int = 2  # must be >= 2
@@ -82,7 +84,7 @@ class ProgressiveScorer:
         if len(self.past_true_ys) < self.initial_epochs_to_only_explore:
             want_to_exploit = 0
             want_to_explore = 1
-        elif self.progress / self.budget >= 0.85:
+        elif self.progress / self.budget >= self.progress_percentage:
             want_to_exploit = 1
             want_to_explore = 0
         else:

@@ -252,7 +252,7 @@ class Data:
             data = self.clone(lite, sortD2H=True)
         # progressive_scorer.plot_performance()
         # plt.show()
-        return data.rows[0]
+        return data.rows[0], progressive_scorer
 
     def smo_sim_annealing(self):
         random.shuffle(self.rows)
