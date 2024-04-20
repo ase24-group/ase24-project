@@ -626,21 +626,34 @@ def sim_annealing_plot_performance(
 ) -> Figure:
     epochs = range(1, budget + 1)
 
-    fig = plt.figure()
-    plt.grid()
+    # Create a figure with two subplots, arranged side-by-side
+    fig, axs = plt.subplots(1, 2, figsize=(10, 5))  # Adjust figsize as needed
 
-    plt.scatter(epochs, d2h_history, label="Best D2H", color="blue")
+    # Plot the first subplot (Best D2H)
+    axs[0].scatter(epochs, d2h_history, color="blue")
+    axs[0].set_xlabel("Budget Increment Beyond b0")
+    axs[0].set_ylabel("Best D2H")
+    axs[0].grid(True)
+    axs[0].set_ylim(0, max(d2h_history) * 1.3)
 
-    plt.plot(
+    # Plot the second subplot (b Exponent)
+    axs[1].scatter(
         epochs,
         b_exp_values,
-        label="b Exponent",
         color="red",
-        linestyle="--",
     )
+    axs[1].set_xlabel("Budget Increment Beyond b0")
+    axs[1].set_ylabel("b Exponent")
+    axs[1].grid(True)
 
-    plt.legend()
-    plt.xlabel("Epoch")
-    plt.title('"Simulated Annealing" Acquisition Performance')
+    # axs[0].set_ylim([x - 1 for x in axs[1].get_ylim()])
+
+    # NOTE: No title because we will add it in overleaf
+    # Add overall title to the figure
+    # fig.suptitle('"Simulated Annealing" Acquisition Performance')
+
+    # plt.subplots_adjust(top=0.70)  # Adjust top spacing for title
+
+    plt.tight_layout()  # Adjust subplot spacing
 
     return fig
