@@ -18,6 +18,8 @@ We are proposing alternate acquisition functions that incorporates exploitation 
 ## Running experiments on `flash`
 To run our methods and generate results:
 ```bash
+python3 -m venv .venv
+pip install -r requirements.txt
 cd src
 make -j 8
 ```
@@ -28,3 +30,42 @@ All the results will be written into:
 | `results/sk/flash`    | Scott Knott results                              |
 | `results/stats/flash` | Intermediate results for Scott Knott             |
 | `results/plots/flash` | Graphical plots for select acquisition functions |
+
+## Comparing experiments
+Once the results are generated, the acquisition functions can be compared by running a Scott Knott analysis on their ranks across all datasets. This may be done by:
+```bash
+cd src
+make ranks
+```
+
+Here is the result of `make ranks`, which places `SimAnnealing_sqrt` above all other SMO variants:
+```
+#
+ 0,             rand_p90,  0.00,  0.00, *                   |                   ,  0.00,  8.00
+#
+ 1,    SimAnnealing_sqrt,  1.00,  1.00,      *----          |                   ,  0.00,  8.00
+#
+ 2,       SimAnnealing_9,  2.00,  1.00,           *----     |                   ,  0.00,  8.00
+ 2,      SimAnnealing_15,  2.00,  2.00,      -----*----     |                   ,  0.00,  8.00
+ 2,              b2_sqrt,  2.00,  2.00,      -----*----     |                   ,  0.00,  8.00
+ 2,                b2_15,  2.00,  1.00,           *----     |                   ,  0.00,  8.00
+ 2,  ExpProgressive_sqrt,  2.00,  2.00,      -----*----     |                   ,  0.00,  8.00
+ 2,                 b2_9,  2.00,  1.00,           *----     |                   ,  0.00,  8.00
+ 2,            bonr_sqrt,  2.00,  1.00,      -----*         |                   ,  0.00,  8.00
+#
+ 3,     progressive_sqrt,  2.00,  2.00,      -----*----     |                   ,  0.00,  8.00
+#
+ 4,               bonr_9,  3.00,  2.00,           -----*----|                   ,  0.00,  8.00
+ 4,     ExpProgressive_9,  3.00,  2.00,           -----*----|                   ,  0.00,  8.00
+ 4,       progressive_15,  3.00,  2.00,      ----------*    |                   ,  0.00,  8.00
+ 4,        progressive_9,  3.00,  2.00,           -----*----|                   ,  0.00,  8.00
+#
+ 5,              bonr_15,  3.00,  1.00,           -----*    |                   ,  0.00,  8.00
+ 5,    ExpProgressive_15,  3.00,  1.00,           -----*    |                   ,  0.00,  8.00
+#
+ 6,                 base,  5.00,  3.00,                -----|----*----          ,  0.00,  8.00
+ 6,            rand_sqrt,  5.00,  3.00,                -----|----*----          ,  0.00,  8.00
+#
+ 7,              rand_15,  5.00,  2.00,                     |----*----          ,  0.00,  8.00
+ 7,               rand_9,  6.00,  2.00,                     |    -----*----     ,  0.00,  8.00
+```
