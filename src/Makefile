@@ -34,3 +34,18 @@ SS-J:
 
 SS-K:
 	python3 main.py "-f ../data/flash/SS-K.csv"
+
+ranks:
+	tail -q -n +2 ../results/sk/flash/*.sk.csv | awk -F, '{ treatment[$$2] = treatment[$$2] " " $$1 } END { for (t in treatment) print t, treatment[t] }' > ranks.stats.txt
+	python3 -c "from stats import egSlurp; egSlurp('ranks.stats.txt')" > ../results/sk/flash/ranks.sk.txt
+	rm ranks.stats.txt
+	cat ../results/sk/flash/ranks.sk.txt
+
+ranks_stats:
+	tail -q -n +2 ../results/sk/flash/*.sk.csv | awk -F, '{ treatment[$$2] = treatment[$$2] " " $$1 } END { for (t in treatment) print t, treatment[t] }'
+
+ranks_sum:
+	tail -q -n +2 ../results/sk/flash/*.sk.csv | awk -F, '{rank[$$2]+=$$1} END {for (treatment in rank) print rank[treatment] ", " treatment}' | sort -n > ../results/sk/flash/ranks.sum.txt
+	cat ../results/sk/flash/ranks.sum.txt
+
+.SILENT: ranks ranks_stats ranks_sum
