@@ -27,7 +27,15 @@ def run(todo):
     else:
         ExpBudget = f"_{ExpBudget}"
 
-    experiments = ["base_stats", "progressive_stats", "SimAnnealing_stats", "ExpProgressive_stats", "bonr_stats", "b2_stats", "rand_stats"]
+    experiments = [
+        "base_stats",
+        "progressive_stats",
+        "SimAnnealing_stats",
+        "ExpProgressive_stats",
+        "bonr_stats",
+        "b2_stats",
+        "rand_stats",
+    ]
     csv_filename, _ = get_filename_and_parent(config.value.file)
 
     if todo not in experiments:

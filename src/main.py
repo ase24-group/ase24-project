@@ -19,7 +19,9 @@ def generate_makefile(csv_path):
     data = Data(csv_path, fun=None, sortD2H=False)
     csv_filename, csv_parent_folder = get_filename_and_parent(csv_path)
 
-    makefile_arg = "ARGUMENT := -f ../data/auto93.csv\n\nifdef ARG\n\tARGUMENT := $(ARG)\nendif"
+    makefile_arg = (
+        "ARGUMENT := -f ../data/auto93.csv\n\nifdef ARG\n\tARGUMENT := $(ARG)\nendif"
+    )
     all_targets = []
     targets = {}
 
@@ -75,7 +77,9 @@ def combine_stats_files(csv_path):
             with open(file_path, "r") as input_file:
                 combined_file_contents += f"{input_file.read()}\n\n"
 
-    with open(f"../results/stats/{csv_parent_folder}/{csv_filename}.stats.txt", "w") as output_file:
+    with open(
+        f"../results/stats/{csv_parent_folder}/{csv_filename}.stats.txt", "w"
+    ) as output_file:
         output_file.write(combined_file_contents)
 
 

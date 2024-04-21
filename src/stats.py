@@ -172,6 +172,7 @@ def of(s):
 def egSlurp(stats_file_path):
     eg0(slurp(stats_file_path))
 
+
 # Takes in all the SMO results from an input file and ranks them based on Scott-Knott
 # to an output file
 def write_scott_knott_results(csv_path):
@@ -181,8 +182,12 @@ def write_scott_knott_results(csv_path):
 
     os.makedirs(f"../results/sk/{csv_parent_folder}", exist_ok=True)
     sk_output = open(f"../results/sk/{csv_parent_folder}/{csv_filename}.sk.txt", "w")
-    sk_csv_output = open(f"../results/sk/{csv_parent_folder}/{csv_filename}.sk.csv", "w")
-    sk_csv_output.write(f"{', '.join( ['rank', 'treatment', 'median', 'iqr', 'plot', 'min', 'max'])}\n")
+    sk_csv_output = open(
+        f"../results/sk/{csv_parent_folder}/{csv_filename}.sk.csv", "w"
+    )
+    sk_csv_output.write(
+        f"{', '.join( ['rank', 'treatment', 'median', 'iqr', 'plot', 'min', 'max'])}\n"
+    )
 
     nums = slurp(input_file)
     all = Sample([x for num in nums for x in num.has])

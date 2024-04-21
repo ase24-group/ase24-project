@@ -158,4 +158,3 @@ def get_filename_and_parent(path):
     parent_folder = os.path.basename(os.path.dirname(path))
 
     return filename, parent_folder
-
