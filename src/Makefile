@@ -51,4 +51,7 @@ ranks_sum:
 ranks_plot:
 	ls ../results/stats/flash/* | xargs -n 1 python3 plot_boxplot.py
 
-.SILENT: ranks ranks_stats ranks_sum ranks_plot
+barcharts_plot:
+	ls ../results/sk/flash/*.sk.csv | xargs -n 1 python3 plot_stats.py > /dev/null
+
+.SILENT: ranks ranks_stats ranks_sum ranks_plot barcharts_plot
