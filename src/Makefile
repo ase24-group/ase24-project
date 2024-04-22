@@ -48,4 +48,7 @@ ranks_sum:
 	tail -q -n +2 ../results/sk/flash/*.sk.csv | awk -F, '{rank[$$2]+=$$1} END {for (treatment in rank) print rank[treatment] ", " treatment}' | sort -n > ../results/sk/flash/ranks.sum.txt
 	cat ../results/sk/flash/ranks.sum.txt
 
-.SILENT: ranks ranks_stats ranks_sum
+ranks_plot:
+	python3 plot_boxplot.py
+
+.SILENT: ranks ranks_stats ranks_sum ranks_plot

@@ -38,7 +38,10 @@ cd src
 make ranks
 ```
 
-Here is the result of `make ranks`, which places `SimAnnealing_sqrt` above all other SMO variants:
+### `make ranks`
+Writes Scott Knott results to:  
+[`results/sk/flash/ranks.sk.txt`](results/sk/flash/ranks.sk.txt)  
+> Scott Knott places `SimAnnealing_sqrt` above all other SMO variants
 ```
 #
  0,             rand_p90,  0.00,  0.00, *                   |                   ,  0.00,  8.00
@@ -69,3 +72,11 @@ Here is the result of `make ranks`, which places `SimAnnealing_sqrt` above all o
  7,              rand_15,  5.00,  2.00,                     |----*----          ,  0.00,  8.00
  7,               rand_9,  6.00,  2.00,                     |    -----*----     ,  0.00,  8.00
 ```
+
+### `make ranks_plot`
+A graphical boxplot for ranks across all datasets is written to:  
+[`results/plots/boxplots/flash/ranks.boxplot.png`](results/plots/boxplots/flash/ranks.boxplot.png)
+
+<p align="center">
+<img src="results/plots/boxplots/flash/ranks.boxplot.png" width="650px">
+</p>
