@@ -28,6 +28,7 @@ def parse_results_from_output(stats_filename, acquisition_functions):
 
     return acquisition_fn_map
 
+
 def sort_budgets(budgets):
     numbers = []
     for budget in budgets:

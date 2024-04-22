@@ -5,7 +5,9 @@ from utils import get_filename_and_parent
 # stats_file = "../results/stats/flash/ranks.stats.txt"
 
 if len(sys.argv) != 2:
-    print("Provide a stats file as the command line argument\nLook at '../results/stats/flash/' for possible inputs")
+    print(
+        "Provide a stats file as the command line argument\nLook at '../results/stats/flash/' for possible inputs"
+    )
     sys.exit(1)
 
 stats_file = sys.argv[1]
