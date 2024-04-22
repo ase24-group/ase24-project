@@ -54,13 +54,17 @@ box = plot.boxplot(
     [data[treatment] for treatment in sorted_treatments],
     vert=False,
     patch_artist=True,
-    medianprops=dict(color="goldenrod", linewidth=2),
+    medianprops=dict(color="black", linewidth=2),
 )
 
 # Add title and labels
 plot.title("Box Plot for Treatments")
 plot.ylabel("Treatments")
-plot.xlabel("Ranks")
+if filename == "ranks":
+    plot.xlabel("Ranks")
+else:
+    plot.xlabel("Distance to Heaven")
+
 
 # Add treatment labels to y-axis
 plot.yticks(range(1, len(sorted_treatments) + 1), sorted_treatments)
