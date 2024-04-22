@@ -78,7 +78,7 @@ def plot_bargraphs(stats, stats_filename, acquisition_functions):
         + "png"
     )
     print("Destination filename: ", destination_filename)
-    plt.savefig(destination_filename)
+    plt.savefig(destination_filename, bbox_inches="tight")
 
 
 if __name__ == "__main__":
