@@ -36,6 +36,7 @@ Once the results are generated, the acquisition functions can be compared by run
 ```bash
 cd src
 make ranks
+make ranks_plot
 ```
 
 ### `make ranks`
