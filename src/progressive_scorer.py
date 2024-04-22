@@ -134,7 +134,7 @@ class ProgressiveScorer:
         )
 
         plt.legend()
-        plt.xlabel("Epoch")
+        plt.xlabel("Budget Increment Beyond b0")
         # plt.title("Progressive Acquisition Performance")
 
         return fig
