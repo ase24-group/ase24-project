@@ -7,30 +7,42 @@ def parse_results_from_output(stats_filename, acquisition_functions):
     with open(stats_filename, "r") as file:
         for line in file:
             line_components = line.split(",")
-            if len(line_components) <= 1:
+            if (len(line_components) <= 1) or line_components[0] == "rank":
                 continue
             line_components = [x.strip() for x in line_components]
             rank, acqn, d2h = line_components[0], line_components[1], line_components[2]
             acquisition_fn, budget = "", ""
-            for i in range(len(acqn)):
-                if acqn[i].isalpha():
-                    acquisition_fn += acqn[i]
-                if acqn[i].isdigit():
-                    budget += acqn[i]
+            split_acqn = acqn.split("_")
+            # If the "treatment" doesn't contain both the acqn fn name and a budget, then skip
+            # this iteration
+            if len(split_acqn) < 2:
+                continue
+            acquisition_fn, budget = split_acqn[0], split_acqn[1]
 
             if acquisition_fn not in acquisition_functions:
                 continue
 
             if acquisition_fn_map.get(acquisition_fn) is None:
                 acquisition_fn_map[acquisition_fn] = {}
-            acquisition_fn_map[acquisition_fn][int(budget)] = float(d2h)
+            acquisition_fn_map[acquisition_fn][budget] = float(d2h)
 
     return acquisition_fn_map
+
+def sort_budgets(budgets):
+    numbers = []
+    for budget in budgets:
+        if budget.isnumeric():
+            numbers.append(int(budget))
+    numbers.sort()
+    sorted_budgets = [str(x) for x in numbers]
+    if "sqrt" in budgets:
+        sorted_budgets.append("sqrt")
+    return sorted_budgets
 
 
 def plot_bargraphs(stats, stats_filename, acquisition_functions):
     budgets = list(stats[acquisition_functions[0]].keys())
-    budgets.sort()
+    budgets = sort_budgets(budgets)
     print("Budgets: ", budgets)
     distances_to_heaven = [
         stats[func][budget] for func in acquisition_functions for budget in budgets
@@ -41,13 +53,13 @@ def plot_bargraphs(stats, stats_filename, acquisition_functions):
 
     # Plotting the bar graph
     plt.figure(figsize=(10, 6))
-    colors = ["blue", "orange", "green", "red"]
+    colors = ["blue", "orange", "green", "red", "purple"]
 
     for i, func in enumerate(acquisition_functions):
         plt.bar(
-            [(j + 1) + i * 0.2 for j in range(len(budgets))],
+            [(j + 1) + i * 0.15 for j in range(len(budgets))],
             [stats[func][b] for b in budgets],
-            width=0.2,
+            width=0.15,
             label=func,
             color=colors[i],
         )
