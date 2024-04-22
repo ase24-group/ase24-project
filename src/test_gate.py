@@ -520,12 +520,30 @@ class TestGate:
         csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
         csv_budget = math.ceil(math.sqrt(len(data.rows)))
         stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
+        plots_dir = f"../results/plots/{csv_parent_folder}/{csv_filename}"
         treatment = f"ExpProgressive_{str(budget)}"
         if budget == csv_budget:
             treatment = f"ExpProgressive_sqrt"
         os.makedirs(stats_dir, exist_ok=True)
+        os.makedirs(plots_dir, exist_ok=True)
 
-        stats = [data.smo_exp_progressive().d2h(data) for _ in range(repeats)]
+        stats = []
+        sampled_d2h_history = {}
+
+        trials_to_plot = [0, 4, 9, 14, 19]
+
+        for trial in range(repeats):
+            best_d2h, d2h_history, want_to_exploits = data.smo_exp_progressive()
+            best_d2h = best_d2h.d2h(data)
+            stats.append(best_d2h)
+
+            if trial in trials_to_plot:
+                sampled_d2h_history[trial] = d2h_history
+
+        exp_progressive_plot_performance(
+            config.value.Budget, sampled_d2h_history, want_to_exploits
+        ).savefig(f"{plots_dir}/{treatment}.png")
+
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
             file.write(f"{treatment} {' '.join(map(str, stats))}")
 
@@ -685,7 +703,7 @@ def smo_plot_performance(budget: int, d2h_history: List[float]) -> Figure:
     for trial_num in d2h_history.keys():
         axs.plot(epochs, d2h_history[trial_num], label=f"trial {trial_num}")
 
-    axs.legend(title="5/20 Randomly Sampled")
+    axs.legend(title="5/20 Trials")
     axs.set_xlabel("Budget Increment Beyond b0")
     axs.set_ylabel("Best D2H")
     axs.grid(True)
@@ -708,7 +726,7 @@ def sim_annealing_plot_performance(
     for trial_num in d2h_history.keys():
         axs[0].plot(epochs, d2h_history[trial_num], label=f"trial {trial_num}")
 
-    axs[0].legend(title="5/20 Randomly Sampled")
+    axs[0].legend(title="5/20 Trials")
     axs[0].set_xlabel("Budget Increment Beyond b0")
     axs[0].set_ylabel("Best D2H")
     axs[0].grid(True)
@@ -723,6 +741,46 @@ def sim_annealing_plot_performance(
     )
     axs[1].set_xlabel("Budget Increment Beyond b0")
     axs[1].set_ylabel("b Exponent")
+    axs[1].grid(True)
+
+    # axs[0].set_ylim([x - 1 for x in axs[1].get_ylim()])
+
+    # NOTE: No title because we will add it in overleaf
+    # Add overall title to the figure
+    # fig.suptitle('"Simulated Annealing" Acquisition Performance')
+
+    # plt.subplots_adjust(top=0.70)  # Adjust top spacing for title
+
+    plt.tight_layout()  # Adjust subplot spacing
+
+    return fig
+
+
+def exp_progressive_plot_performance(
+    budget: int, d2h_history: List[float], want_to_exploit: List[float]
+) -> Figure:
+    epochs = range(1, budget + 1)
+
+    # Create a figure with two subplots, arranged side-by-side
+    fig, axs = plt.subplots(1, 2, figsize=(10, 5))  # Adjust figsize as needed
+
+    # Plot the first subplot (Best D2H)
+    for trial_num in d2h_history.keys():
+        axs[0].plot(epochs, d2h_history[trial_num], label=f"trial {trial_num}")
+
+    axs[0].legend(title="5/20 Trials")
+    axs[0].set_xlabel("Budget Increment Beyond b0")
+    axs[0].set_ylabel("Best D2H")
+    axs[0].grid(True)
+    axs[0].set_ylim(
+        0, max([x for sublist in d2h_history.values() for x in sublist]) * 1.3
+    )
+
+    # Plot the second subplot (b Exponent)
+    axs[1].scatter(epochs, want_to_exploit, label="want to exploit")
+    axs[1].scatter(epochs, [1 - x for x in want_to_exploit], label="want to explore")
+    axs[1].legend()
+    axs[1].set_xlabel("Budget Increment Beyond b0")
     axs[1].grid(True)
 
     # axs[0].set_ylim([x - 1 for x in axs[1].get_ylim()])
