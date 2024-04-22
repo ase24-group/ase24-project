@@ -49,6 +49,6 @@ ranks_sum:
 	cat ../results/sk/flash/ranks.sum.txt
 
 ranks_plot:
-	python3 plot_boxplot.py
+	ls ../results/stats/flash/* | xargs -n 1 python3 plot_boxplot.py
 
 .SILENT: ranks ranks_stats ranks_sum ranks_plot

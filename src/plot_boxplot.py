@@ -1,9 +1,16 @@
 import matplotlib.pyplot as plot
-import os
+import os, sys
 from utils import get_filename_and_parent
 
-stats_file = "../results/stats/flash/ranks.stats.txt"
-_, parent_folder = get_filename_and_parent(stats_file)
+# stats_file = "../results/stats/flash/ranks.stats.txt"
+
+if len(sys.argv) != 2:
+    print("Provide a stats file as the command line argument\nLook at '../results/stats/flash/' for possible inputs")
+    sys.exit(1)
+
+stats_file = sys.argv[1]
+filename, parent_folder = get_filename_and_parent(stats_file)
+filename = filename.split(".")[0]
 
 # Read data from file
 with open(stats_file, "r") as file:
@@ -13,9 +20,10 @@ with open(stats_file, "r") as file:
 data = {}
 for line in lines:
     parts = line.split()
-    treatment = parts[0]
-    values = list(map(int, parts[1:]))
-    data[treatment] = values
+    if len(parts) != 0:
+        treatment = parts[0]
+        values = list(map(float, parts[1:]))
+        data[treatment] = values
 
 
 # Function to calculate the median without numpy
@@ -69,7 +77,7 @@ plots_dir = f"../results/plots/boxplots/{parent_folder}"
 os.makedirs(plots_dir, exist_ok=True)
 
 # Save the plot to a file
-plot.savefig(f"{plots_dir}/ranks.boxplot.png", bbox_inches="tight")
+plot.savefig(f"{plots_dir}/{filename}.boxplot.png", bbox_inches="tight")
 
 # Close the plot to release resources
 plot.close()
