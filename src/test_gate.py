@@ -547,6 +547,44 @@ class TestGate:
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
             file.write(f"{treatment} {' '.join(map(str, stats))}")
 
+    # Probability of Improvement acquisition function: usually used in Gaussian Process Models (GPM)
+    def PI_stats(self):
+        data = Data(config.value.file, fun=None, sortD2H=False)
+        repeats = 20
+
+        budget = config.value.ExpBudget
+        config.value.Budget = budget - config.value.budget0
+
+        csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
+        csv_budget = math.ceil(math.sqrt(len(data.rows)))
+        stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
+        plots_dir = f"../results/plots/{csv_parent_folder}/{csv_filename}"
+        treatment = f"PI_{str(budget)}"
+        if budget == csv_budget:
+            treatment = f"PI_sqrt"
+        os.makedirs(stats_dir, exist_ok=True)
+        os.makedirs(plots_dir, exist_ok=True)
+
+        stats = []
+        sampled_d2h_history = {}
+
+        trials_to_plot = [0, 4, 9, 14, 19]
+
+        for trial in range(repeats):
+            best_d2h, d2h_history = data.smo_GP()
+            best_d2h = best_d2h.d2h(data)
+            stats.append(best_d2h)
+
+            if trial in trials_to_plot:
+                sampled_d2h_history[trial] = d2h_history
+
+        smo_plot_performance(config.value.Budget, sampled_d2h_history).savefig(
+            f"{plots_dir}/{treatment}.png"
+        )
+
+        with open(f"{stats_dir}/{treatment}.txt", "w") as file:
+            file.write(f"{treatment} {' '.join(map(str, stats))}")
+
     def bonr_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         repeats = 20
