@@ -166,17 +166,13 @@ def get_cumulative_density(x, mean, sd):
     return cdf(z) if z >= 0 else 1 - cdf(-z)
 
 # debug this!
-def get_interpolated_distance(row, a, b, d2h_a, d2h_b):
-    dist_row_to_a = row.dist(a)
-    dist_row_to_b = row.dist(b)
-    dist_ab = a.dist(b)
-
+def get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, d2h_a, d2h_b):
     # Should we move these 3 lines to the cosine project fn?
-    projection_dist_a = cosine_project(dist_ab, dist_row_to_a, dist_row_to_b)
+    projection_dist_a = cosine_project(dist_ab, dist_row_a, dist_row_b)
     projection_dist_b = abs(dist_ab - projection_dist_a)
     projection_dist_a = abs(projection_dist_a)
 
-    if not (dist_row_to_a > dist_row_to_b) ^ (projection_dist_a > projection_dist_b):
+    if not (dist_row_a > dist_row_b) ^ (projection_dist_a > projection_dist_b):
         print("\n\nINCONSISTENCY OBSERVED!!! \n")
 
     # Weight of 'a' should be higher if the projection is closer to a and farther away from b
