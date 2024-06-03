@@ -14,8 +14,10 @@ from progressive_scorer import (
     ProgressiveScorer,
 )
 from matplotlib import pyplot as plt
+import numpy as np
 from logger import logger, br_logger
-from utils import custom_normalize
+from utils import custom_normalize, get_interpolated_distance
+from gpm_acquisitions import PI_score
 
 
 class Data:
@@ -79,6 +81,27 @@ class Data:
                 selected.add(row)
 
             tmp = score(b, r)
+            if tmp > max:
+                out, max = i, tmp
+        return out, selected
+    
+    def split_GP(self, lite, dark, score):
+        selected = Data(self.cols.names)
+        max = -1e30
+        out = 1
+
+        for i, row in enumerate(dark):
+            best_d2h = lite[0]
+            interpol_distances = []
+            for i in range(10):
+                # randomly pick 2 elements in lite and find the d2hs of these 2 elements.
+                indices = random.sample(range(len(lite)), 2)
+                a, b = lite[indices[0]], lite[indices[1]]
+                distance = get_interpolated_distance(row, a, b, a.d2h(self), b.d2h(self))
+                interpol_distances.append(distance)
+            mean, std = np.mean(interpol_distances), np.std(interpol_distances)
+
+            tmp = score(mean, std, best_d2h)
             if tmp > max:
                 out, max = i, tmp
         return out, selected
@@ -288,6 +311,7 @@ class Data:
                 ((b + 1) ** norm_exp_values[i]) + (r + 1)
             ) / abs(b - r + 1e-300)
 
+            # Are self.rows and lite the same? I think the 3rd param was supposed to be data.rows
             todo, _ = self.split(best, rest, self.rows, dark, score=exp_dec_score)
 
             lite.append(dark.pop(todo))
@@ -296,6 +320,30 @@ class Data:
             best_d2hs.append(data.rows[0].d2h(self))
 
         return data.rows[0], best_d2hs, norm_exp_values
+    
+    def smo_GP(self, score=None):
+        random.shuffle(self.rows)
+
+        lite = utils.slice(self.rows, 0, config.value.budget0)
+        dark = utils.slice(self.rows, config.value.budget0 + 1)
+
+        data = self.clone(lite, sortD2H=True)
+
+        best_d2hs = []
+
+        for _ in range(config.value.Budget):
+            # best, rest = self.best_rest(
+            #     data.rows, int(len(data.rows) ** config.value.Top + 0.5)
+            # )
+            # data.rows is lite, sorted by d2h
+            todo, _ = self.split_GP(data.rows, dark, score=PI_score)
+
+            lite.append(dark.pop(todo))
+            data = self.clone(lite, sortD2H=True)
+
+            best_d2hs.append(data.rows[0].d2h(self))
+
+        return data.rows[0], best_d2hs
 
     def farapart(self, rows, sortp=None, a=None):
         far = int((len(rows) * config.value.Far))

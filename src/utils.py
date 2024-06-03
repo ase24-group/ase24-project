@@ -158,3 +158,35 @@ def get_filename_and_parent(path):
     parent_folder = os.path.basename(os.path.dirname(path))
 
     return filename, parent_folder
+
+
+def get_cumulative_density(x, mean, sd):
+    cdf = lambda z: 1 - 0.5*2.718^(-0.717 * z - 0.416 * z * z)
+    z = (x - mean)/sd
+    return cdf(z) if z >= 0 else 1 - cdf(-z)
+
+# debug this!
+def get_interpolated_distance(row, a, b, d2h_a, d2h_b):
+    dist_row_to_a = row.dist(a)
+    dist_row_to_b = row.dist(b)
+    dist_ab = a.dist(b)
+
+    # Should we move these 3 lines to the cosine project fn?
+    projection_dist_a = cosine_project(dist_ab, dist_row_to_a, dist_row_to_b)
+    projection_dist_b = abs(dist_ab - projection_dist_a)
+    projection_dist_a = abs(projection_dist_a)
+
+    if not (dist_row_to_a > dist_row_to_b) ^ (projection_dist_a > projection_dist_b):
+        print("\n\nINCONSISTENCY OBSERVED!!! \n")
+
+    # Weight of 'a' should be higher if the projection is closer to a and farther away from b
+    a_weight = projection_dist_b/(projection_dist_a + projection_dist_b)
+    b_weight = projection_dist_a/(projection_dist_a + projection_dist_b)
+
+    d2h_row = (a_weight * d2h_a) + (b_weight * d2h_b)
+
+    return d2h_row 
+
+
+def cosine_project(ab, ra, rb):
+    return (ab**2 + ra**2 - rb**2)/(2*ab)
