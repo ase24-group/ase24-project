@@ -17,7 +17,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 from logger import logger, br_logger
 from utils import custom_normalize, get_interpolated_distance
-from gpm_acquisitions import PI_score
+from gpm_acquisitions import PI_score, UCB_score
 
 
 class Data:
@@ -84,8 +84,8 @@ class Data:
             if tmp > max:
                 out, max = i, tmp
         return out, selected
-    
-    def split_GP(self, lite, dark, score):
+       
+    def split_GP(self, lite, dark, acqn_fn):
         selected = Data(self.cols.names)
         max = -1e30
         out = 1
@@ -101,11 +101,19 @@ class Data:
                 interpol_distances.append(distance)
             mean, std = np.mean(interpol_distances), np.std(interpol_distances)
 
-            tmp = score(mean, std, best_d2h)
+            if acqn_fn == "PI":
+                tmp = PI_score(mean, std, best_d2h)
+            elif acqn_fn == "UCB":
+                tmp = UCB_score(mean, std, len(lite), len(self.cols.x))
+            else:
+                print("\n\nINVALID ACQUISITION FN!!! \n\n")
+                exit(1)
+
             if tmp > max:
                 out, max = i, tmp
         return out, selected
-
+    
+    
     def split_progressive_scorer(
         self,
         best,
@@ -321,7 +329,7 @@ class Data:
 
         return data.rows[0], best_d2hs, norm_exp_values
     
-    def smo_GP(self, score=None):
+    def smo_GP(self, acq_fn):
         random.shuffle(self.rows)
 
         lite = utils.slice(self.rows, 0, config.value.budget0)
@@ -335,8 +343,8 @@ class Data:
             # best, rest = self.best_rest(
             #     data.rows, int(len(data.rows) ** config.value.Top + 0.5)
             # )
-            # data.rows is lite, sorted by d2h
-            todo, _ = self.split_GP(data.rows, dark, score=PI_score)
+            # data.rows is lite, sorted by d2h            
+            todo, _ = self.split_GP(data.rows, dark, acqn_fn=acq_fn)
 
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
