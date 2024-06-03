@@ -86,7 +86,7 @@ Writes Scott Knott results to:
 
 ### `make ranks_plot`
 
-A graphical boxplot for ranks across all datasets is written to:  
+A graphical boxplot for ranks across all datasets is written to :  
 [`results/plots/boxplots/flash/ranks.boxplot.png`](results/plots/boxplots/flash/ranks.boxplot.png)
 
 <p align="center">
