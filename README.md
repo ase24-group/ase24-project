@@ -1,7 +1,9 @@
 # ase24-project
+
 This repo houses the end semester project for CSC 591 (Automated Software Engineering), Group 17, Spring 2024 @ NC State
 
 ## Group Members
+
 <table>
   <tr>
     <td align="center"><a href="https://github.com/ron-matt163"><img src="https://avatars.githubusercontent.com/u/56034964?v=4" width="75px;" alt=""/><br /><sub><b>Rohan Joseph Mathew</b></sub></a><br /></td>
@@ -11,12 +13,15 @@ This repo houses the end semester project for CSC 591 (Automated Software Engine
 </table>
 
 We are proposing alternate acquisition functions that incorporates exploitation in the later stages of the SMO algorithm rather than selecting new samples solely based on "interestingness".
-* `progressive`
-* `SimAnnealing`
-* `ExpProgressive`
+
+- `progressive`
+- `SimAnnealing`
+- `ExpProgressive`
 
 ## Running experiments on `flash`
+
 To run our methods and generate results:
+
 ```bash
 python3 -m venv .venv
 pip install -r requirements.txt
@@ -25,14 +30,16 @@ make -j 8
 ```
 
 All the results will be written into:
-| Folder                | Content                                          |
+| Folder | Content |
 |-----------------------|--------------------------------------------------|
-| `results/sk/flash`    | Scott Knott results                              |
-| `results/stats/flash` | Intermediate results for Scott Knott             |
+| `results/sk/flash` | Scott Knott results |
+| `results/stats/flash` | Intermediate results for Scott Knott |
 | `results/plots/flash` | Graphical plots for select acquisition functions |
 
 ## Comparing experiments
+
 Once the results are generated, the acquisition functions can be compared by running a Scott Knott analysis on their ranks across all datasets. This may be done by:
+
 ```bash
 cd src
 make ranks
@@ -40,9 +47,12 @@ make ranks_plot
 ```
 
 ### `make ranks`
+
 Writes Scott Knott results to:  
-[`results/sk/flash/ranks.sk.txt`](results/sk/flash/ranks.sk.txt)  
+[`results/sk/flash/ranks.sk.txt`](results/sk/flash/ranks.sk.txt)
+
 > Scott Knott places `SimAnnealing_sqrt` above all other SMO variants
+
 ```
 #
  0,             rand_p90,  0.00,  0.00, *                   |                   ,  0.00,  8.00
@@ -75,6 +85,7 @@ Writes Scott Knott results to:
 ```
 
 ### `make ranks_plot`
+
 A graphical boxplot for ranks across all datasets is written to:  
 [`results/plots/boxplots/flash/ranks.boxplot.png`](results/plots/boxplots/flash/ranks.boxplot.png)
 
