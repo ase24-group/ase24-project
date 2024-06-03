@@ -97,7 +97,8 @@ class Data:
                 # randomly pick 2 elements in lite and find the d2hs of these 2 elements.
                 indices = random.sample(range(len(lite)), 2)
                 a, b = lite[indices[0]], lite[indices[1]]
-                distance = get_interpolated_distance(row, a, b, a.d2h(self), b.d2h(self))
+                dist_row_a, dist_row_b, dist_ab = row.dist(a, self), row.dist(b, self), a.dist(b, self)
+                distance = get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, a.d2h(self), b.d2h(self))
                 interpol_distances.append(distance)
             mean, std = np.mean(interpol_distances), np.std(interpol_distances)
 
