@@ -19,6 +19,7 @@ OPTIONS:
   -t --todo        start up action                 = help
   -T --Top         best section                    = .5
   -o --output      output file path                = ""
+  -p --p           weights for distance            = 2
 """
 
 MYLO_DOC = """
