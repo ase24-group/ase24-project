@@ -161,7 +161,7 @@ def get_filename_and_parent(path):
 
 
 def get_cumulative_density(x, mean, sd):
-    cdf = lambda z: 1 - 0.5*2.718^(-0.717 * z - 0.416 * z * z)
+    cdf = lambda z: 1 - 0.5*2.718**(-0.717 * z - 0.416 * z * z)
     z = (x - mean)/sd
     return cdf(z) if z >= 0 else 1 - cdf(-z)
 
@@ -173,8 +173,8 @@ def get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, d2h_a, d2h_b):
     projection_dist_b = abs(dist_ab - projection_dist_a)
 
     if not (dist_row_a > dist_row_b) ^ (projection_dist_a > projection_dist_b):
-        print(f"\n\nINCONSISTENCY OBSERVED!!!")
-        print(f" dist_row_a: {dist_row_a}, dist_row_b: {dist_row_b}, dist_ab: {dist_ab}, projection_dist_a: {projection_dist_a}, projection_dist_b: {projection_dist_b} \n")
+        # print(f"\n\nINCONSISTENCY OBSERVED!!!")
+        # print(f" dist_row_a: {dist_row_a}, dist_row_b: {dist_row_b}, dist_ab: {dist_ab}, projection_dist_a: {projection_dist_a}, projection_dist_b: {projection_dist_b} \n")
         inconsistency = True
 
     # Weight of 'a' should be higher if the projection is closer to a and farther away from b

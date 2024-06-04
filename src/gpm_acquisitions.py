@@ -3,7 +3,7 @@ import math
 
 def PI_score(mean, std, best_d2h):
     exploit_explore_tradeoff = 0.01 # The paper says that this has to be manually chosen.
-    score = get_cumulative_density((mean - best_d2h - exploit_explore_tradeoff)/std)
+    score = get_cumulative_density((mean - best_d2h - exploit_explore_tradeoff)/std, mean, std)
     return score
 
 # TODO: check the results for both input dim and overall dim
