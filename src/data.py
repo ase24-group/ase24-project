@@ -89,18 +89,24 @@ class Data:
         selected = Data(self.cols.names)
         max = -1e30
         out = 1
+        total_count = 0
+        inconsistency_count = 0
 
         for i, row in enumerate(dark):
-            best_d2h = lite[0]
+            best_d2h = lite[0].d2h(self)
             interpol_distances = []
             for i in range(10):
+                total_count += 1
                 # randomly pick 2 elements in lite and find the d2hs of these 2 elements.
                 indices = random.sample(range(len(lite)), 2)
                 a, b = lite[indices[0]], lite[indices[1]]
                 dist_row_a, dist_row_b, dist_ab = row.dist(a, self), row.dist(b, self), a.dist(b, self)
-                distance = get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, a.d2h(self), b.d2h(self))
+                distance, inconsistency = get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, a.d2h(self), b.d2h(self))
+                if inconsistency:
+                    inconsistency_count += 1
                 interpol_distances.append(distance)
             mean, std = np.mean(interpol_distances), np.std(interpol_distances)
+            # print("Inconsistency ratio: ", inconsistency_count/total_count)
 
             if acqn_fn == "PI":
                 tmp = PI_score(mean, std, best_d2h)

@@ -27,7 +27,7 @@ def generate_makefile(csv_path):
 
     csv_budget = math.ceil(math.sqrt(len(data.rows)))
     rand_budget = int(0.9 * len(data.rows))
-    treatments = ["progressive", "SimAnnealing", "bonr", "b2", "rand", "ExpProgressive"]
+    treatments = ["progressive", "SimAnnealing", "bonr", "b2", "rand", "ExpProgressive", "PI", "UCB"]
 
     id = f"base"
     all_targets.append(id)
