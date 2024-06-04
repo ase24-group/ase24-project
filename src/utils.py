@@ -167,13 +167,15 @@ def get_cumulative_density(x, mean, sd):
 
 # debug this!
 def get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, d2h_a, d2h_b):
+    inconsistency = False
     # Should we move these 3 lines to the cosine project fn?
-    projection_dist_a = cosine_project(dist_ab, dist_row_a, dist_row_b)
+    projection_dist_a = abs(cosine_project(dist_ab, dist_row_a, dist_row_b))
     projection_dist_b = abs(dist_ab - projection_dist_a)
-    projection_dist_a = abs(projection_dist_a)
 
     if not (dist_row_a > dist_row_b) ^ (projection_dist_a > projection_dist_b):
-        print("\n\nINCONSISTENCY OBSERVED!!! \n")
+        print(f"\n\nINCONSISTENCY OBSERVED!!!")
+        print(f" dist_row_a: {dist_row_a}, dist_row_b: {dist_row_b}, dist_ab: {dist_ab}, projection_dist_a: {projection_dist_a}, projection_dist_b: {projection_dist_b} \n")
+        inconsistency = True
 
     # Weight of 'a' should be higher if the projection is closer to a and farther away from b
     a_weight = projection_dist_b/(projection_dist_a + projection_dist_b)
@@ -181,7 +183,7 @@ def get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, d2h_a, d2h_b):
 
     d2h_row = (a_weight * d2h_a) + (b_weight * d2h_b)
 
-    return d2h_row 
+    return d2h_row, inconsistency 
 
 
 def cosine_project(ab, ra, rb):
