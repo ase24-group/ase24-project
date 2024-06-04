@@ -260,7 +260,7 @@ class Data:
             todo, _ = self.split(
                 best,
                 rest,
-                self.rows,
+                data.rows,
                 dark,
                 score=lambda b, r: want_to_exploit * exploitation_score(b, r)
                 + want_to_explore * exploration_score(b, r),
@@ -292,7 +292,7 @@ class Data:
             logger.info(f"\n\nSMO PROGRESSIVE ITERATION {i}\n\n")
 
             todo, _ = self.split(
-                best, rest, self.rows, dark, score=progressive_scorer.score
+                best, rest, data.rows, dark, score=progressive_scorer.score
             )
 
             lite.append(dark.pop(todo))
@@ -327,7 +327,7 @@ class Data:
             ) / abs(b - r + 1e-300)
 
             # Are self.rows and lite the same? I think the 3rd param was supposed to be data.rows
-            todo, _ = self.split(best, rest, self.rows, dark, score=exp_dec_score)
+            todo, _ = self.split(best, rest, data.rows, dark, score=exp_dec_score)
 
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
