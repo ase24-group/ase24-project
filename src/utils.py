@@ -1,4 +1,4 @@
-import fileinput, re, ast, os
+import fileinput, re, ast, os, sys
 import random
 import math
 from typing import Tuple
@@ -195,4 +195,4 @@ def get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, d2h_a, d2h_b):
 
 
 def cosine_project(ab, ra, rb):
-    return (ab**2 + ra**2 - rb**2) / (2 * ab)
+    return (ab**2 + ra**2 - rb**2) / (2 * ab + sys.float_info.min)
