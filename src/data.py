@@ -224,7 +224,7 @@ class Data:
             best, rest = self.best_rest(
                 data.rows, int(len(data.rows) ** config.value.Top + 0.5)
             )
-            todo, _ = self.split(best, rest, self.rows, dark, score=score)
+            todo, _ = self.split(best, rest, data.rows, dark, score=score)
 
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
