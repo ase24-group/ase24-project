@@ -179,7 +179,7 @@ def get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, d2h_a, d2h_b):
     projection_dist_a = abs(cosine_project(dist_ab, dist_row_a, dist_row_b))
     projection_dist_b = abs(dist_ab - projection_dist_a)
 
-    if not (dist_row_a > dist_row_b) ^ (projection_dist_a > projection_dist_b):
+    if (dist_row_a > dist_row_b) ^ (projection_dist_a > projection_dist_b):
         # print(f"\n\nINCONSISTENCY OBSERVED!!!")
         # print(f" dist_row_a: {dist_row_a}, dist_row_b: {dist_row_b}, dist_ab: {dist_ab}, projection_dist_a: {projection_dist_a}, projection_dist_b: {projection_dist_b} \n")
         inconsistency = True
