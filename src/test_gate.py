@@ -432,10 +432,11 @@ class TestGate:
         csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
         stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
         treatment = "base"
+        stats_treatment = f"base,{str(len(data.rows))}"
         os.makedirs(stats_dir, exist_ok=True)
 
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
-            file.write(f"{treatment} {' '.join(map(str, sorted_d2hs))}")
+            file.write(f"{stats_treatment} {' '.join(map(str, sorted_d2hs))}")
 
     def progressive_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
@@ -451,6 +452,7 @@ class TestGate:
         treatment = f"progressive_{str(budget)}"
         if budget == csv_budget:
             treatment = f"progressive_sqrt"
+        stats_treatment = f"progressive,{str(budget)}"
         os.makedirs(stats_dir, exist_ok=True)
         os.makedirs(plots_dir, exist_ok=True)
 
@@ -470,7 +472,7 @@ class TestGate:
 
         # stats = [data.smo_progressive_scorer().d2h(data) for _ in range(repeats)]
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
-            file.write(f"{treatment} {' '.join(map(str, stats))}")
+            file.write(f"{stats_treatment} {' '.join(map(str, stats))}")
 
     def SimAnnealing_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
@@ -486,6 +488,7 @@ class TestGate:
         treatment = f"SimAnnealing_{str(budget)}"
         if budget == csv_budget:
             treatment = f"SimAnnealing_sqrt"
+        stats_treatment = f"SimAnnealing,{str(budget)}"
         os.makedirs(stats_dir, exist_ok=True)
         os.makedirs(plots_dir, exist_ok=True)
 
@@ -509,7 +512,7 @@ class TestGate:
         ).savefig(f"{plots_dir}/{treatment}.png")
 
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
-            file.write(f"{treatment} {' '.join(map(str, stats))}")
+            file.write(f"{stats_treatment} {' '.join(map(str, stats))}")
 
     def ExpProgressive_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
@@ -525,6 +528,7 @@ class TestGate:
         treatment = f"ExpProgressive_{str(budget)}"
         if budget == csv_budget:
             treatment = f"ExpProgressive_sqrt"
+        stats_treatment = f"ExpProgressive,{str(budget)}"
         os.makedirs(stats_dir, exist_ok=True)
         os.makedirs(plots_dir, exist_ok=True)
 
@@ -546,7 +550,7 @@ class TestGate:
         ).savefig(f"{plots_dir}/{treatment}.png")
 
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
-            file.write(f"{treatment} {' '.join(map(str, stats))}")
+            file.write(f"{stats_treatment} {' '.join(map(str, stats))}")
 
     # Probability of Improvement acquisition function: usually used in Gaussian Process Models (GPM)
     def PI_stats(self):
@@ -563,6 +567,7 @@ class TestGate:
         treatment = f"PI_{str(budget)}"
         if budget == csv_budget:
             treatment = f"PI_sqrt"
+        stats_treatment = f"PI,{str(budget)}"
         os.makedirs(stats_dir, exist_ok=True)
         os.makedirs(plots_dir, exist_ok=True)
 
@@ -584,7 +589,7 @@ class TestGate:
         )
 
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
-            file.write(f"{treatment} {' '.join(map(str, stats))}")
+            file.write(f"{stats_treatment} {' '.join(map(str, stats))}")
 
     # Gaussian Process Upper Confidence Bound fn
     def UCB_stats(self):
@@ -601,6 +606,7 @@ class TestGate:
         treatment = f"UCB_{str(budget)}"
         if budget == csv_budget:
             treatment = f"UCB_sqrt"
+        stats_treatment = f"UCB,{str(budget)}"
         os.makedirs(stats_dir, exist_ok=True)
         os.makedirs(plots_dir, exist_ok=True)
 
@@ -622,7 +628,7 @@ class TestGate:
         )
 
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
-            file.write(f"{treatment} {' '.join(map(str, stats))}")
+            file.write(f"{stats_treatment} {' '.join(map(str, stats))}")
 
     # Gaussian Process Expected Improvement fn
     def EI_stats(self):
@@ -639,6 +645,7 @@ class TestGate:
         treatment = f"EI_{str(budget)}"
         if budget == csv_budget:
             treatment = f"EI_sqrt"
+        stats_treatment = f"EI,{str(budget)}"
         os.makedirs(stats_dir, exist_ok=True)
         os.makedirs(plots_dir, exist_ok=True)
 
@@ -660,7 +667,7 @@ class TestGate:
         )
 
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
-            file.write(f"{treatment} {' '.join(map(str, stats))}")
+            file.write(f"{stats_treatment} {' '.join(map(str, stats))}")
 
     def bonr_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
@@ -676,6 +683,7 @@ class TestGate:
         treatment = f"bonr_{str(budget)}"
         if budget == csv_budget:
             treatment = f"bonr_sqrt"
+        stats_treatment = f"bonr,{str(budget)}"
         os.makedirs(stats_dir, exist_ok=True)
         os.makedirs(plots_dir, exist_ok=True)
 
@@ -699,7 +707,7 @@ class TestGate:
         )
 
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
-            file.write(f"{treatment} {' '.join(map(str, stats))}")
+            file.write(f"{stats_treatment} {' '.join(map(str, stats))}")
 
     def b2_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
@@ -715,6 +723,7 @@ class TestGate:
         treatment = f"b2_{str(budget)}"
         if budget == csv_budget:
             treatment = f"b2_sqrt"
+        stats_treatment = f"b2,{str(budget)}"
         os.makedirs(stats_dir, exist_ok=True)
         os.makedirs(plots_dir, exist_ok=True)
 
@@ -738,7 +747,7 @@ class TestGate:
         )
 
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
-            file.write(f"{treatment} {' '.join(map(str, stats))}")
+            file.write(f"{stats_treatment} {' '.join(map(str, stats))}")
 
     def rand_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
@@ -756,6 +765,7 @@ class TestGate:
             treatment = f"rand_sqrt"
         if budget == rand_budget:
             treatment = f"rand_p90"
+        stats_treatment = f"rand,{str(budget)}"
         os.makedirs(stats_dir, exist_ok=True)
 
         stats = [
@@ -763,7 +773,7 @@ class TestGate:
             for _ in range(repeats)
         ]
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
-            file.write(f"{treatment} {' '.join(map(str, stats))}")
+            file.write(f"{stats_treatment} {' '.join(map(str, stats))}")
 
     def gen_params(self):
         k_range = (1, 5)
