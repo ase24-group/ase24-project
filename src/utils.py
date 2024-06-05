@@ -176,8 +176,9 @@ def get_probability_density(x, mean, sd):
 def get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, d2h_a, d2h_b):
     inconsistency = False
     # Should we move these 3 lines to the cosine project fn?
-    projection_dist_a = abs(cosine_project(dist_ab, dist_row_a, dist_row_b))
+    projection_dist_a = cosine_project(dist_ab, dist_row_a, dist_row_b)
     projection_dist_b = abs(dist_ab - projection_dist_a)
+    projection_dist_a = abs(cosine_project(dist_ab, dist_row_a, dist_row_b))
 
     if (dist_row_a > dist_row_b) ^ (projection_dist_a > projection_dist_b):
         # print(f"\n\nINCONSISTENCY OBSERVED!!!")
