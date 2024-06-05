@@ -1,9 +1,19 @@
-from utils import get_cumulative_density
+from utils import get_cumulative_density, get_probability_density
 import math
 
 def PI_score(mean, std, best_d2h):
     exploit_explore_tradeoff = 0.01 # The paper says that this has to be manually chosen.
-    score = get_cumulative_density((mean - best_d2h - exploit_explore_tradeoff)/std, mean, std)
+    m = (mean - best_d2h - exploit_explore_tradeoff)/std
+    score = get_cumulative_density(m, mean, std)
+    return score
+
+# Expected improvement score
+def EI_score(mean, std, best_d2h):
+    exploit_explore_tradeoff = 0.01 # As recommended by Hoffman et al 2011
+    m = (mean - best_d2h - exploit_explore_tradeoff)/std
+    cum_density_coeff = (mean - best_d2h - exploit_explore_tradeoff)
+    score = (cum_density_coeff * get_cumulative_density(m, mean, std)) + (std * get_probability_density(m, mean, std))
+    
     return score
 
 # TODO: check the results for both input dim and overall dim
@@ -15,3 +25,4 @@ def UCB_score(mean, std, lite_size, dim):
     std_coeff = (v*gamma)**0.5
 
     return mean + std_coeff*std
+

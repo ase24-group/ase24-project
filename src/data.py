@@ -17,7 +17,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 from logger import logger, br_logger
 from utils import custom_normalize, get_interpolated_distance
-from gpm_acquisitions import PI_score, UCB_score
+from gpm_acquisitions import PI_score, UCB_score, EI_score
 
 
 class Data:
@@ -110,6 +110,8 @@ class Data:
 
             if acqn_fn == "PI":
                 tmp = PI_score(mean, std, best_d2h)
+            elif acqn_fn == "EI":
+                tmp = EI_score(mean, std, best_d2h)
             elif acqn_fn == "UCB":
                 tmp = UCB_score(mean, std, len(lite), len(self.cols.x))
             else:
