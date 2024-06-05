@@ -165,6 +165,11 @@ def get_cumulative_density(x, mean, sd):
     z = (x - mean)/sd
     return cdf(z) if z >= 0 else 1 - cdf(-z)
 
+def get_probability_density(x, mean, sd):
+    z = (x - mean)/sd
+    e = 2.718
+    return (0.399/sd) * (e ** (-z**2 / 2))
+
 # debug this!
 def get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, d2h_a, d2h_b):
     inconsistency = False
