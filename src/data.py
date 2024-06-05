@@ -84,7 +84,7 @@ class Data:
             if tmp > max:
                 out, max = i, tmp
         return out, selected
-       
+
     def split_GP(self, lite, dark, acqn_fn):
         selected = Data(self.cols.names)
         max = -1e30
@@ -100,8 +100,14 @@ class Data:
                 # randomly pick 2 elements in lite and find the d2hs of these 2 elements.
                 indices = random.sample(range(len(lite)), 2)
                 a, b = lite[indices[0]], lite[indices[1]]
-                dist_row_a, dist_row_b, dist_ab = row.dist(a, self), row.dist(b, self), a.dist(b, self)
-                distance, inconsistency = get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, a.d2h(self), b.d2h(self))
+                dist_row_a, dist_row_b, dist_ab = (
+                    row.dist(a, self),
+                    row.dist(b, self),
+                    a.dist(b, self),
+                )
+                distance, inconsistency = get_interpolated_distance(
+                    dist_row_a, dist_row_b, dist_ab, a.d2h(self), b.d2h(self)
+                )
                 if inconsistency:
                     inconsistency_count += 1
                 interpol_distances.append(distance)
@@ -121,8 +127,7 @@ class Data:
             if tmp > max:
                 out, max = i, tmp
         return out, selected
-    
-    
+
     def split_progressive_scorer(
         self,
         best,
@@ -337,7 +342,7 @@ class Data:
             best_d2hs.append(data.rows[0].d2h(self))
 
         return data.rows[0], best_d2hs, norm_exp_values
-    
+
     def smo_GP(self, acq_fn):
         random.shuffle(self.rows)
 
@@ -352,7 +357,7 @@ class Data:
             # best, rest = self.best_rest(
             #     data.rows, int(len(data.rows) ** config.value.Top + 0.5)
             # )
-            # data.rows is lite, sorted by d2h            
+            # data.rows is lite, sorted by d2h
             todo, _ = self.split_GP(data.rows, dark, acqn_fn=acq_fn)
 
             lite.append(dark.pop(todo))

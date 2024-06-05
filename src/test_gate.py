@@ -19,6 +19,7 @@ from matplotlib.figure import Figure
 from typing import List
 from gpm_acquisitions import PI_score
 
+
 class TestGate:
     def __init__(self):
         pass
@@ -660,7 +661,6 @@ class TestGate:
 
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
             file.write(f"{treatment} {' '.join(map(str, stats))}")
-
 
     def bonr_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)

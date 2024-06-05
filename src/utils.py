@@ -161,14 +161,16 @@ def get_filename_and_parent(path):
 
 
 def get_cumulative_density(x, mean, sd):
-    cdf = lambda z: 1 - 0.5*2.718**(-0.717 * z - 0.416 * z * z)
-    z = (x - mean)/sd
+    cdf = lambda z: 1 - 0.5 * 2.718 ** (-0.717 * z - 0.416 * z * z)
+    z = (x - mean) / sd
     return cdf(z) if z >= 0 else 1 - cdf(-z)
 
+
 def get_probability_density(x, mean, sd):
-    z = (x - mean)/sd
+    z = (x - mean) / sd
     e = 2.718
-    return (0.399/sd) * (e ** (-z**2 / 2))
+    return (0.399 / sd) * (e ** (-(z**2) / 2))
+
 
 # debug this!
 def get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, d2h_a, d2h_b):
@@ -183,13 +185,13 @@ def get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, d2h_a, d2h_b):
         inconsistency = True
 
     # Weight of 'a' should be higher if the projection is closer to a and farther away from b
-    a_weight = projection_dist_b/(projection_dist_a + projection_dist_b)
-    b_weight = projection_dist_a/(projection_dist_a + projection_dist_b)
+    a_weight = projection_dist_b / (projection_dist_a + projection_dist_b)
+    b_weight = projection_dist_a / (projection_dist_a + projection_dist_b)
 
     d2h_row = (a_weight * d2h_a) + (b_weight * d2h_b)
 
-    return d2h_row, inconsistency 
+    return d2h_row, inconsistency
 
 
 def cosine_project(ab, ra, rb):
-    return (ab**2 + ra**2 - rb**2)/(2*ab)
+    return (ab**2 + ra**2 - rb**2) / (2 * ab)

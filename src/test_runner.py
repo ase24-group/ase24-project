@@ -37,7 +37,7 @@ def run(todo):
         "rand_stats",
         "PI_stats",
         "EI_stats",
-        "UCB_stats"
+        "UCB_stats",
     ]
     csv_filename, _ = get_filename_and_parent(config.value.file)
 
