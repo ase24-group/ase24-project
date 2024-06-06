@@ -25,8 +25,7 @@ def generate_makefile(csv_path):
     all_targets = []
     targets = {}
 
-    csv_budget = math.ceil(math.sqrt(len(data.rows)))
-    rand_budget = int(0.9 * len(data.rows))
+    csv_budget = 40
     treatments = [
         "progressive",
         "SimAnnealing",
@@ -47,9 +46,11 @@ def generate_makefile(csv_path):
             id = f"{treatment}{e}"
             all_targets.append(id)
             targets[id] = f"python3 gate.py -t {treatment}_stats -E {e} $(ARGUMENT)"
-    id = f"rand{rand_budget}"
-    all_targets.append(id)
-    targets[id] = f"python3 gate.py -t rand_stats -E {rand_budget} $(ARGUMENT)"
+
+    # rand_budget = int(0.9 * len(data.rows))
+    # id = f"rand{rand_budget}"
+    # all_targets.append(id)
+    # targets[id] = f"python3 gate.py -t rand_stats -E {rand_budget} $(ARGUMENT)"
 
     makefile_all = f"all: {' '.join(all_targets)}"
     makefile_targets = ""
