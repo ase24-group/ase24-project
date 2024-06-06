@@ -1,39 +1,10 @@
-all: flash_stats
+DATASETS := $(wildcard ../data/cat_a/*.csv)
+TARGETS := $(DATASETS:../data/cat_a/%.csv=%)
 
-flash_stats: SS-A SS-B SS-C SS-D SS-E SS-F SS-G SS-H SS-I SS-J SS-K
+all: $(TARGETS)
 
-SS-A:
-	python3 main.py "-f ../data/flash/SS-A.csv"
-
-SS-B:
-	python3 main.py "-f ../data/flash/SS-B.csv"
-
-SS-C:
-	python3 main.py "-f ../data/flash/SS-C.csv"
-
-SS-D:
-	python3 main.py "-f ../data/flash/SS-D.csv"
-
-SS-E:
-	python3 main.py "-f ../data/flash/SS-E.csv"
-
-SS-F:
-	python3 main.py "-f ../data/flash/SS-F.csv"
-
-SS-G:
-	python3 main.py "-f ../data/flash/SS-G.csv"
-
-SS-H:
-	python3 main.py "-f ../data/flash/SS-H.csv"
-
-SS-I:
-	python3 main.py "-f ../data/flash/SS-I.csv"
-
-SS-J:
-	python3 main.py "-f ../data/flash/SS-J.csv"
-
-SS-K:
-	python3 main.py "-f ../data/flash/SS-K.csv"
+%: ../data/cat_a/%.csv
+	python3 main.py "-f $<"
 
 ranks:
 	tail -q -n +2 ../results/sk/flash/*.sk.csv | awk -F, '{ treatment[$$2] = treatment[$$2] " " $$1 } END { for (t in treatment) print t, treatment[t] }' > ../results/stats/flash/ranks.stats.txt
