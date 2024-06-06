@@ -2,34 +2,40 @@ Method            rank  frequency  labels-mu  labels-sigma
 #
  uncertain        0     25         40         5
  uncertain        1     22         31         20
- uncertain        2     12         40         5
+ uncertain        2     16         40         5
  uncertain        3     12         40         5
+ uncertain        5     3          40         5
 #
  EI               0     45         35         15
  EI               1     22         36         14
  EI               2     3          40         5
  EI               3     3          40         5
+ EI               4     3          40         5
  EI               5     3          40         5
+ EI               7     3          40         5
 #
  ExpProgressive   0     16         40         5
- ExpProgressive   1     29         37         15
+ ExpProgressive   1     32         37         14
  ExpProgressive   2     12         28         19
  ExpProgressive   3     12         25         22
- ExpProgressive   4     3          40         5
+ ExpProgressive   4     6          40         5
 #
  progressive      0     25         40         5
- progressive      1     29         34         17
+ progressive      1     32         34         16
  progressive      2     12         34         17
  progressive      3     6          28         22
+ progressive      5     3          40         5
 #
  PI               0     45         35         15
  PI               1     19         36         15
  PI               2     6          28         22
  PI               3     3          40         5
+ PI               4     3          40         5
  PI               5     3          40         5
+ PI               7     3          40         5
 #
  rand             12    3          40         5
- rand             0     25         17         19
+ rand             0     32         15         18
  rand             1     6          25         26
  rand             2     6          40         5
  rand             3     9          30         22
@@ -40,26 +46,29 @@ Method            rank  frequency  labels-mu  labels-sigma
  UCB              0     51         35         15
  UCB              1     12         40         5
  UCB              2     6          28         22
- UCB              3     3          40         5
+ UCB              3     6          40         5
  UCB              5     3          40         5
+ UCB              6     3          40         5
 #
  b2               0     32         38         12
- b2               1     19         27         19
+ b2               1     22         28         19
  b2               2     12         40         5
  b2               3     3          40         5
  b2               4     3          9          5
  b2               5     3          40         5
+ b2               6     3          40         5
 #
+ base             11    3          86058      5
  base             2     9          1665       1897
  base             15    3          1023       5
  base             4     12         2205       1465
  base             5     9          6164       3351
  base             6     12         1331       1728
  base             7     16         738        377
- base             8     9          2512       3756
+ base             8     12         18268      31664
  base             9     3          259        5
 #
  SimAnnealing     0     32         40         5
  SimAnnealing     1     25         30         19
- SimAnnealing     2     3          15         5
+ SimAnnealing     2     9          32         19
  SimAnnealing     3     12         34         17
