@@ -175,7 +175,7 @@ def get_probability_density(x, mean, sd):
 # debug this!
 def get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, d2h_a, d2h_b):
     inconsistency = False
-    # Should we move these 3 lines to the cosine project fn?
+    # Should we move these 3 lines into the cosine project fn?
     projection_dist_a = cosine_project(dist_ab, dist_row_a, dist_row_b)
     projection_dist_b = abs(dist_ab - projection_dist_a)
     projection_dist_a = abs(cosine_project(dist_ab, dist_row_a, dist_row_b))
@@ -186,8 +186,8 @@ def get_interpolated_distance(dist_row_a, dist_row_b, dist_ab, d2h_a, d2h_b):
         inconsistency = True
 
     # Weight of 'a' should be higher if the projection is closer to a and farther away from b
-    a_weight = projection_dist_b / (projection_dist_a + projection_dist_b)
-    b_weight = projection_dist_a / (projection_dist_a + projection_dist_b)
+    a_weight = projection_dist_b / (projection_dist_a + projection_dist_b) if (projection_dist_a + projection_dist_b) != 0 else 0.5
+    b_weight = 1 - a_weight
 
     d2h_row = (a_weight * d2h_a) + (b_weight * d2h_b)
 
