@@ -223,6 +223,7 @@ class Data:
 
     def smo(self, score=None):
         random.shuffle(self.rows)
+        lives = 5
 
         lite = utils.slice(self.rows, 0, config.value.budget0)
         dark = utils.slice(self.rows, config.value.budget0 + 1)
@@ -230,6 +231,7 @@ class Data:
         data = self.clone(lite, sortD2H=True)
 
         best_d2hs = []
+        selected_d2hs = []
 
         for i in range(config.value.Budget):
             best, rest = self.best_rest(
@@ -240,7 +242,19 @@ class Data:
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
 
-            best_d2hs.append(data.rows[0].d2h(self))
+            best_d2h, selected_d2h = data.rows[0].d2h(self), todo.d2h(self)
+            std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
+            best_d2hs.append(best_d2h)
+            selected_d2hs.append(selected_d2h)
+            
+            if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
+                if selected_d2h > best_d2h - 0.35*std_d2h:
+                    lives -= 1
+                else:
+                    lives += 5
+                
+                if lives == 0:
+                    break
 
         return data.rows[0], best_d2hs
 
@@ -257,6 +271,7 @@ class Data:
         norm_exp_values = custom_normalize(exp_values)
 
         best_d2hs = []
+        selected_d2hs = []
 
         for i in range(config.value.Budget):
             best, rest = self.best_rest(
@@ -282,17 +297,31 @@ class Data:
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
 
-            best_d2hs.append(data.rows[0].d2h(self))
+            best_d2h, selected_d2h = data.rows[0].d2h(self), todo.d2h(self)
+            std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
+            best_d2hs.append(best_d2h)
+            selected_d2hs.append(selected_d2h)
+            
+            if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
+                if selected_d2h > best_d2h - 0.35*std_d2h:
+                    lives -= 1
+                else:
+                    lives += 5
+                
+                if lives == 0:
+                    break
 
         return data.rows[0], best_d2hs, norm_exp_values
 
     def smo_progressive_scorer(self):
         random.shuffle(self.rows)
+        lives = 5
 
         lite = utils.slice(self.rows, 0, config.value.budget0)
         dark = utils.slice(self.rows, config.value.budget0 + 1)
 
         data = self.clone(lite, sortD2H=True)
+        best_d2hs, selected_d2hs = [], []
 
         progressive_scorer = ProgressiveScorer(budget=config.value.Budget)
 
@@ -310,12 +339,28 @@ class Data:
 
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
+
+            best_d2h, selected_d2h = data.rows[0].d2h(self), todo.d2h(self)
+            std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
+            best_d2hs.append(best_d2h)
+            selected_d2hs.append(selected_d2h)
+            
+            if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
+                if selected_d2h > best_d2h - 0.35*std_d2h:
+                    lives -= 1
+                else:
+                    lives += 5
+                
+                if lives == 0:
+                    break
+
         # progressive_scorer.plot_performance()
         # plt.show()
         return data.rows[0], progressive_scorer
 
     def smo_sim_annealing(self):
         random.shuffle(self.rows)
+        lives = 5
 
         lite = utils.slice(self.rows, 0, config.value.budget0)
         dark = utils.slice(self.rows, config.value.budget0 + 1)
@@ -328,7 +373,7 @@ class Data:
         norm_exp_values = custom_normalize(exp_values, 1, 2)
         # print("Norm exp values: ", norm_exp_values)
 
-        best_d2hs = []
+        best_d2hs, selected_d2hs = [], []
 
         for i in range(config.value.Budget):
             best, rest = self.best_rest(
@@ -345,12 +390,25 @@ class Data:
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
 
-            best_d2hs.append(data.rows[0].d2h(self))
+            best_d2h, selected_d2h = data.rows[0].d2h(self), todo.d2h(self)
+            std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
+            best_d2hs.append(best_d2h)
+            selected_d2hs.append(selected_d2h)
+            
+            if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
+                if selected_d2h > best_d2h - 0.35*std_d2h:
+                    lives -= 1
+                else:
+                    lives += 5
+                
+                if lives == 0:
+                    break
 
         return data.rows[0], best_d2hs, norm_exp_values
 
     def smo_GP(self, acq_fn):
         random.shuffle(self.rows)
+        lives = 5
 
         lite = utils.slice(self.rows, 0, config.value.budget0)
         dark = utils.slice(self.rows, config.value.budget0 + 1)
@@ -358,18 +416,27 @@ class Data:
         data = self.clone(lite, sortD2H=True)
 
         best_d2hs = []
+        selected_d2hs = []
 
-        for _ in range(config.value.Budget):
-            # best, rest = self.best_rest(
-            #     data.rows, int(len(data.rows) ** config.value.Top + 0.5)
-            # )
-            # data.rows is lite, sorted by d2h
+        for i in range(config.value.Budget):
             todo, _ = self.split_GP(data.rows, dark, acqn_fn=acq_fn)
 
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
 
-            best_d2hs.append(data.rows[0].d2h(self))
+            best_d2h, selected_d2h = data.rows[0].d2h(self), todo.d2h(self)
+            std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
+            best_d2hs.append(best_d2h)
+            selected_d2hs.append(selected_d2h)
+            
+            if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
+                if selected_d2h > best_d2h - 0.35*std_d2h:
+                    lives -= 1
+                else:
+                    lives += 5
+                
+                if lives == 0:
+                    break
 
         return data.rows[0], best_d2hs
 

@@ -21,6 +21,7 @@ OPTIONS:
   -o --output      output file path                = ""
   -p --p           weights for distance            = 2
   -a --any         todo elements to be considered  = 100
+  -e --earlyStop   early stop                      = 0
 """
 
 MYLO_DOC = """
