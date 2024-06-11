@@ -96,6 +96,8 @@ class Data:
         # lite is already sorted by d2h values
         lite_data = self.clone(lite)
         lite_rrp_tree, _ = lite_data.tree(True)
+        # print("\n\n LITE RRP TREE: \n\n")
+        # lite_rrp_tree.show()
 
         # random.shuffle(dark)
         # for i, row in enumerate(dark[:config.value.any]):
@@ -517,6 +519,7 @@ class Data:
                 tree = tree.rights
             elif tree.right is None:
                 tree = tree.lefts
+            # elif row.dist(tree.lefts.here.rows[len(tree.lefts.here.rows)/2], self) <= row.dist(tree.lefts.here.rows[len(tree.lefts.here.rows)/2], self):
             elif row.dist(tree.left, self) <= row.dist(tree.right, self):
                 tree = tree.lefts
             else:
