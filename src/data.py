@@ -74,10 +74,9 @@ class Data:
         max = -1e30
         out = 1
 
-        
         # random.shuffle(dark)
         # for i, row in enumerate(dark[:config.value.any]):
-        for i, row in enumerate(dark):        
+        for i, row in enumerate(dark):
             b = row.like(best, len(lite), 2)
             r = row.like(rest, len(lite), 2)
             if b > r:
@@ -234,13 +233,13 @@ class Data:
             std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
             best_d2hs.append(best_d2h)
             selected_d2hs.append(selected_d2h)
-            
+
             if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
-                if selected_d2h > best_d2h - 0.35*std_d2h:
+                if selected_d2h > best_d2h - 0.35 * std_d2h:
                     lives -= 1
                 else:
                     lives += 5
-                
+
                 if lives == 0:
                     break
 
@@ -290,13 +289,13 @@ class Data:
             std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
             best_d2hs.append(best_d2h)
             selected_d2hs.append(selected_d2h)
-            
+
             if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
-                if selected_d2h > best_d2h - 0.35*std_d2h:
+                if selected_d2h > best_d2h - 0.35 * std_d2h:
                     lives -= 1
                 else:
                     lives += 5
-                
+
                 if lives == 0:
                     break
 
@@ -333,13 +332,13 @@ class Data:
             std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
             best_d2hs.append(best_d2h)
             selected_d2hs.append(selected_d2h)
-            
+
             if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
-                if selected_d2h > best_d2h - 0.35*std_d2h:
+                if selected_d2h > best_d2h - 0.35 * std_d2h:
                     lives -= 1
                 else:
                     lives += 5
-                
+
                 if lives == 0:
                     break
 
@@ -383,13 +382,13 @@ class Data:
             std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
             best_d2hs.append(best_d2h)
             selected_d2hs.append(selected_d2h)
-            
+
             if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
-                if selected_d2h > best_d2h - 0.35*std_d2h:
+                if selected_d2h > best_d2h - 0.35 * std_d2h:
                     lives -= 1
                 else:
                     lives += 5
-                
+
                 if lives == 0:
                     break
 
@@ -417,13 +416,13 @@ class Data:
             std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
             best_d2hs.append(best_d2h)
             selected_d2hs.append(selected_d2h)
-            
+
             if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
-                if selected_d2h > best_d2h - 0.35*std_d2h:
+                if selected_d2h > best_d2h - 0.35 * std_d2h:
                     lives -= 1
                 else:
                     lives += 5
-                
+
                 if lives == 0:
                     break
 
@@ -511,7 +510,7 @@ class Data:
             new.sortD2H()
 
         return new
-    
+
     def find_nearest_rrp_cluster(self, row, tree):
         while not (tree.left is None and tree.right is None):
             if tree.left is None:
