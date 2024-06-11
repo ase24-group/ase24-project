@@ -74,7 +74,9 @@ class Data:
         max = -1e30
         out = 1
 
-        for i, row in enumerate(dark):
+        random.shuffle(dark)
+        for i, row in enumerate(dark[:config.value.any]):
+        # for i, row in enumerate(dark):        
             b = row.like(best, len(lite), 2)
             r = row.like(rest, len(lite), 2)
             if b > r:
@@ -92,7 +94,9 @@ class Data:
         total_count = 0
         inconsistency_count = 0
 
-        for i, row in enumerate(dark):
+        random.shuffle(dark)
+        for i, row in enumerate(dark[:config.value.any]):
+        # for i, row in enumerate(dark):
             best_d2h = lite[0].d2h(self)
             interpol_distances = []
             for i in range(10):
@@ -141,7 +145,9 @@ class Data:
         max = -1e30
         out = 1
 
-        for i, row in enumerate(dark):
+        random.shuffle(dark)
+        for i, row in enumerate(dark[:config.value.any]):
+        # for i, row in enumerate(dark):
             b = row.like(best, len(lite), 2)
             r = row.like(rest, len(lite), 2)
             # br_logger.info(f"b: {b}, r: {r}")
