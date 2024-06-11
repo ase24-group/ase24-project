@@ -22,6 +22,8 @@ OPTIONS:
   -p --p           weights for distance            = 2
   -a --any         todo elements to be considered  = 100
   -e --earlyStop   early stop                      = 0
+  -F --Far         how far to search for faraway?  = .95
+  -H --Half        #items to use in clustering     = 256
 """
 
 MYLO_DOC = """
