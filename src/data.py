@@ -95,14 +95,14 @@ class Data:
         inconsistency_count = 0
         # lite is already sorted by d2h values
         lite_data = self.clone(lite)
-        lite_rrp_tree = lite_data.tree(True)
+        lite_rrp_tree, _ = lite_data.tree(True)
 
         # random.shuffle(dark)
         # for i, row in enumerate(dark[:config.value.any]):
         for i, row in enumerate(dark):
             best_d2h = lite[0].d2h(self)
 
-            nearest_rrp_cluster, _ = self.find_nearest_rrp_cluster(row, lite_rrp_tree)
+            nearest_rrp_cluster = self.find_nearest_rrp_cluster(row, lite_rrp_tree)
             mean, std = nearest_rrp_cluster.data_y_stats(self)
 
             if acqn_fn == "PI":
@@ -226,13 +226,13 @@ class Data:
             )
             todo, _ = self.split(best, rest, data.rows, dark, score=score)
 
-            lite.append(dark.pop(todo))
-            data = self.clone(lite, sortD2H=True)
-
-            best_d2h, selected_d2h = data.rows[0].d2h(self), todo.d2h(self)
-            std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
+            best_d2h, selected_d2h = data.rows[0].d2h(self), dark[todo].d2h(self)
+            std_d2h = np.std(selected_d2h) if len(selected_d2hs) > 0 else 1
             best_d2hs.append(best_d2h)
             selected_d2hs.append(selected_d2h)
+
+            lite.append(dark.pop(todo))
+            data = self.clone(lite, sortD2H=True)
 
             if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
                 if selected_d2h > best_d2h - 0.35 * std_d2h:
@@ -282,13 +282,13 @@ class Data:
                 + want_to_explore * exploration_score(b, r),
             )
 
-            lite.append(dark.pop(todo))
-            data = self.clone(lite, sortD2H=True)
-
-            best_d2h, selected_d2h = data.rows[0].d2h(self), todo.d2h(self)
-            std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
+            best_d2h, selected_d2h = data.rows[0].d2h(self), dark[todo].d2h(self)
+            std_d2h = np.std(selected_d2h) if len(selected_d2hs) > 0 else 1
             best_d2hs.append(best_d2h)
             selected_d2hs.append(selected_d2h)
+
+            lite.append(dark.pop(todo))
+            data = self.clone(lite, sortD2H=True)
 
             if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
                 if selected_d2h > best_d2h - 0.35 * std_d2h:
@@ -325,13 +325,13 @@ class Data:
                 best, rest, data.rows, dark, score=progressive_scorer.score
             )
 
-            lite.append(dark.pop(todo))
-            data = self.clone(lite, sortD2H=True)
-
-            best_d2h, selected_d2h = data.rows[0].d2h(self), todo.d2h(self)
-            std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
+            best_d2h, selected_d2h = data.rows[0].d2h(self), dark[todo].d2h(self)
+            std_d2h = np.std(selected_d2h) if len(selected_d2hs) > 0 else 1
             best_d2hs.append(best_d2h)
             selected_d2hs.append(selected_d2h)
+
+            lite.append(dark.pop(todo))
+            data = self.clone(lite, sortD2H=True)
 
             if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
                 if selected_d2h > best_d2h - 0.35 * std_d2h:
@@ -375,13 +375,13 @@ class Data:
             # Are self.rows and lite the same? I think the 3rd param was supposed to be data.rows
             todo, _ = self.split(best, rest, data.rows, dark, score=exp_dec_score)
 
-            lite.append(dark.pop(todo))
-            data = self.clone(lite, sortD2H=True)
-
-            best_d2h, selected_d2h = data.rows[0].d2h(self), todo.d2h(self)
-            std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
+            best_d2h, selected_d2h = data.rows[0].d2h(self), dark[todo].d2h(self)
+            std_d2h = np.std(selected_d2h) if len(selected_d2hs) > 0 else 1
             best_d2hs.append(best_d2h)
             selected_d2hs.append(selected_d2h)
+
+            lite.append(dark.pop(todo))
+            data = self.clone(lite, sortD2H=True)
 
             if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
                 if selected_d2h > best_d2h - 0.35 * std_d2h:
@@ -409,13 +409,13 @@ class Data:
         for i in range(config.value.Budget):
             todo, _ = self.split_GP(data.rows, dark, acqn_fn=acq_fn)
 
-            lite.append(dark.pop(todo))
-            data = self.clone(lite, sortD2H=True)
-
-            best_d2h, selected_d2h = data.rows[0].d2h(self), todo.d2h(self)
-            std_d2h = np.std(selected_d2h) if len(selected_d2h) > 0 else 1
+            best_d2h, selected_d2h = data.rows[0].d2h(self), dark[todo].d2h(self)
+            std_d2h = np.std(selected_d2h) if len(selected_d2hs) > 0 else 1
             best_d2hs.append(best_d2h)
             selected_d2hs.append(selected_d2h)
+
+            lite.append(dark.pop(todo))
+            data = self.clone(lite, sortD2H=True)
 
             if bool(config.value.earlyStop) and (config.value.budget0 + i > 10):
                 if selected_d2h > best_d2h - 0.35 * std_d2h:
@@ -514,12 +514,12 @@ class Data:
     def find_nearest_rrp_cluster(self, row, tree):
         while not (tree.left is None and tree.right is None):
             if tree.left is None:
-                tree = tree.right
+                tree = tree.rights
             elif tree.right is None:
-                tree = tree.left
+                tree = tree.lefts
             elif row.dist(tree.left, self) <= row.dist(tree.right, self):
-                tree = tree.left
+                tree = tree.lefts
             else:
-                tree = tree.right
+                tree = tree.rights
 
         return tree
