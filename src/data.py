@@ -74,9 +74,10 @@ class Data:
         max = -1e30
         out = 1
 
-        random.shuffle(dark)
-        for i, row in enumerate(dark[:config.value.any]):
-        # for i, row in enumerate(dark):        
+        
+        # random.shuffle(dark)
+        # for i, row in enumerate(dark[:config.value.any]):
+        for i, row in enumerate(dark):        
             b = row.like(best, len(lite), 2)
             r = row.like(rest, len(lite), 2)
             if b > r:
@@ -93,30 +94,17 @@ class Data:
         out = 1
         total_count = 0
         inconsistency_count = 0
+        # lite is already sorted by d2h values
+        lite_data = self.clone(lite)
+        lite_rrp_tree = lite_data.tree(True)
 
-        random.shuffle(dark)
-        for i, row in enumerate(dark[:config.value.any]):
-        # for i, row in enumerate(dark):
+        # random.shuffle(dark)
+        # for i, row in enumerate(dark[:config.value.any]):
+        for i, row in enumerate(dark):
             best_d2h = lite[0].d2h(self)
-            interpol_distances = []
-            for i in range(10):
-                total_count += 1
-                # randomly pick 2 elements in lite and find the d2hs of these 2 elements.
-                indices = random.sample(range(len(lite)), 2)
-                a, b = lite[indices[0]], lite[indices[1]]
-                dist_row_a, dist_row_b, dist_ab = (
-                    row.dist(a, self),
-                    row.dist(b, self),
-                    a.dist(b, self),
-                )
-                distance, inconsistency = get_interpolated_distance(
-                    dist_row_a, dist_row_b, dist_ab, a.d2h(self), b.d2h(self)
-                )
-                if inconsistency:
-                    inconsistency_count += 1
-                interpol_distances.append(distance)
-            mean, std = np.mean(interpol_distances), np.std(interpol_distances)
-            # print("Inconsistency ratio: ", inconsistency_count/total_count)
+
+            nearest_rrp_cluster, _ = self.find_nearest_rrp_cluster(row, lite_rrp_tree)
+            mean, std = nearest_rrp_cluster.data_y_stats(self)
 
             if acqn_fn == "PI":
                 tmp = PI_score(mean, std, best_d2h)
@@ -145,9 +133,9 @@ class Data:
         max = -1e30
         out = 1
 
-        random.shuffle(dark)
-        for i, row in enumerate(dark[:config.value.any]):
-        # for i, row in enumerate(dark):
+        # random.shuffle(dark)
+        # for i, row in enumerate(dark[:config.value.any]):
+        for i, row in enumerate(dark):
             b = row.like(best, len(lite), 2)
             r = row.like(rest, len(lite), 2)
             # br_logger.info(f"b: {b}, r: {r}")
@@ -260,6 +248,7 @@ class Data:
 
     def smo_exp_progressive(self, score=None):
         random.shuffle(self.rows)
+        lives = 5
 
         lite = utils.slice(self.rows, 0, config.value.budget0)
         dark = utils.slice(self.rows, config.value.budget0 + 1)
@@ -476,6 +465,7 @@ class Data:
             nonlocal evals
 
             node = Node(data)
+            # Is the leaf size 2n**.5, change this to 2 or something larger
             if len(data.rows) > (2 * (len(self.rows) ** 0.5)):
                 (
                     lefts,
@@ -521,3 +511,16 @@ class Data:
             new.sortD2H()
 
         return new
+    
+    def find_nearest_rrp_cluster(self, row, tree):
+        while not (tree.left is None and tree.right is None):
+            if tree.left is None:
+                tree = tree.right
+            elif tree.right is None:
+                tree = tree.left
+            elif row.dist(tree.left, self) <= row.dist(tree.right, self):
+                tree = tree.left
+            else:
+                tree = tree.right
+
+        return tree

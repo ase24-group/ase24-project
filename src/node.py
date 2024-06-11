@@ -1,4 +1,5 @@
 import utils
+import numpy as np
 
 
 class Node:
@@ -47,3 +48,11 @@ class Node:
             + utils.pad_numbers(self.here.mid().cells)
         )
         print(("    ") * max_depth + " _      " + str(self.here.cols.names))
+
+    # Returns the mean and standard deviation d2h of the 
+    def data_y_stats(self, data):
+        d2hs = []
+        for row in self.here.rows:
+            d2hs.append(row.d2h(data))
+
+        return np.mean(d2hs), np.std(d2hs)
