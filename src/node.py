@@ -49,7 +49,7 @@ class Node:
         )
         print(("    ") * max_depth + " _      " + str(self.here.cols.names))
 
-    # Returns the mean and standard deviation d2h of the 
+    # Returns the mean and standard deviation d2h of the data in the current node
     def data_y_stats(self, data):
         d2hs = []
         for row in self.here.rows:
