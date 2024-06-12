@@ -1,4 +1,4 @@
-D="../results/sk/cat_a"
+D="../results/sk/cat_a_b"
 for f in $D/*.txt
 do  
   echo ""
