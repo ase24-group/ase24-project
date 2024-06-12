@@ -1,9 +1,10 @@
-DATASETS := $(wildcard ../data/cat_a/*.csv)
-TARGETS := $(DATASETS:../data/cat_a/%.csv=%)
+DATADIR ?= ../data/cat_a/cat_a_1
+DATASETS := $(wildcard $(DATADIR)/*.csv)
+TARGETS := $(DATASETS:$(DATADIR)/%.csv=%)
 
 all: $(TARGETS)
 
-%: ../data/cat_a/%.csv
+%: $(DATADIR)/%.csv
 	python3 main.py "-f $<"
 
 ranks:

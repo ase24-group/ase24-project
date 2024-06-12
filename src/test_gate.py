@@ -769,7 +769,7 @@ class TestGate:
         os.makedirs(stats_dir, exist_ok=True)
 
         stats = [
-            data.clone(shuffle(data.rows[:budget]), sortD2H=True).rows[0].d2h(data)
+            data.clone(shuffle(data.rows)[:budget], sortD2H=True).rows[0].d2h(data)
             for _ in range(repeats)
         ]
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:

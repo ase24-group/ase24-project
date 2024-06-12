@@ -1,4 +1,4 @@
-import random, sys, traceback
+import random, sys, traceback, time, os
 from test import test
 from box import Box
 from config import config
@@ -14,18 +14,16 @@ def run(todo):
     random.seed(config.value.seed)
     test_fun = getattr(test, todo, None)
 
+    elapsed_time = 0
     try:
+        start_time = time.time()
         oops = test_fun() == False
+        end_time = time.time()
+        elapsed_time = end_time - start_time
     except Exception as err:
         print(f"Python Error: {err}")
         traceback.print_exc()
         oops = True
-
-    ExpBudget = config.value.ExpBudget
-    if ExpBudget is None:
-        ExpBudget = ""
-    else:
-        ExpBudget = f"_{ExpBudget}"
 
     experiments = [
         "base_stats",
@@ -39,7 +37,7 @@ def run(todo):
         "EI_stats",
         "UCB_stats",
     ]
-    csv_filename, _ = get_filename_and_parent(config.value.file)
+    csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
 
     if todo not in experiments:
         if oops:
@@ -47,10 +45,27 @@ def run(todo):
         else:
             print(f"✅ PASS {todo}\n")
     else:
-        if oops:
-            print(f"❌ FAIL {csv_filename}_{todo}{ExpBudget}\n", file=sys.stderr)
+        ExpBudget = config.value.ExpBudget
+        if ExpBudget is None:
+            ExpBudget = ""
         else:
-            print(f"✅ PASS {csv_filename}_{todo}{ExpBudget}\n", file=sys.stderr)
+            ExpBudget = f"_{ExpBudget}"
+
+        treatment = todo.removesuffix("_stats")
+        experiment = f"{csv_filename}_{treatment}{ExpBudget}"
+        if oops:
+            print(f"❌ FAIL {experiment}\n", file=sys.stderr)
+        else:
+            print(f"✅ PASS {experiment}\n", file=sys.stderr)
+
+            times_dir = f"../results/times/{csv_parent_folder}"
+            os.makedirs(times_dir, exist_ok=True)
+
+            with open(f"{times_dir}/{experiment}.time.txt", "w") as file:
+                budget = ExpBudget.removeprefix("_")
+                info = [csv_filename, treatment, budget, str(round(elapsed_time, 4))]
+                file.write(f"{','.join(info)}")
+
 
     config.value = b4
 
