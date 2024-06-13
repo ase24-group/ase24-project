@@ -8,16 +8,16 @@ all: $(TARGETS)
 	python3 main.py "-f $<"
 
 ranks:
-	tail -q -n +2 ../results/sk/cat_a_b/*.sk.csv | awk -F, '{ treatment[$$2] = treatment[$$2] " " $$1 } END { for (t in treatment) print t, treatment[t] }' > ../results/stats/cat_a_b/ranks.stats.txt
+	cat ../results/sk/cat_a_b/*.sk.txt | grep -v '^#' | awk -F, '{ treatment[$$2 "," $$3] = treatment[$$2 "," $$3] " " $$1 } END { for (t in treatment) print t, treatment[t] }' > ../results/stats/cat_a_b/ranks.stats.txt
 	python3 -c "from stats import egSlurp; egSlurp('../results/stats/cat_a_b/ranks.stats.txt')" > ../results/sk/cat_a_b/ranks.sk.txt
 	cat ../results/sk/cat_a_b/ranks.sk.txt
 
 ranks_stats:
-	tail -q -n +2 ../results/sk/cat_a_b/*.sk.csv | awk -F, '{ treatment[$$2] = treatment[$$2] " " $$1 } END { for (t in treatment) print t, treatment[t] }' > ../results/stats/cat_a_b/ranks.stats.txt
+	cat ../results/sk/cat_a_b/*.sk.txt | grep -v '^#' | awk -F, '{ treatment[$$2 "," $$3] = treatment[$$2 "," $$3] " " $$1 } END { for (t in treatment) print t, treatment[t] }' > ../results/stats/cat_a_b/ranks.stats.txt
 	cat ../results/stats/cat_a_b/ranks.stats.txt
 
 ranks_sum:
-	tail -q -n +2 ../results/sk/cat_a_b/*.sk.csv | awk -F, '{rank[$$2]+=$$1} END {for (treatment in rank) print rank[treatment] ", " treatment}' | sort -n > ../results/sk/cat_a_b/ranks.sum.txt
+	cat ../results/sk/cat_a_b/*.sk.txt | grep -v '^#' | awk -F, '{rank[$$2 "," $$3] += $$1} END {for (treatment in rank) print rank[treatment] ", " treatment}' | sort -n > ../results/sk/cat_a_b/ranks.sum.txt
 	cat ../results/sk/cat_a_b/ranks.sum.txt
 
 ranks_plot:
