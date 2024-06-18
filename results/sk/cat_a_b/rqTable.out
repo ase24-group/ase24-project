@@ -1,0 +1,58 @@
+Method            rank  frequency  labels-mu  labels-sigma
+#
+ uncertain        0     67         39         10
+ uncertain        1     48         38         11
+ uncertain        2     12         40         5
+ uncertain        3     6          25         26
+ uncertain        4     3          9          5
+#
+ EI               0     77         37         13
+ EI               1     35         38         12
+ EI               2     12         40         5
+ EI               3     12         34         17
+#
+ ExpProgressive   0     64         38         12
+ ExpProgressive   1     48         36         14
+ ExpProgressive   2     9          40         5
+ ExpProgressive   3     12         17         20
+ ExpProgressive   4     3          40         5
+#
+ PI               0     80         37         13
+ PI               1     32         38         12
+ PI               2     16         40         5
+ PI               3     9          40         5
+#
+ progressive      0     77         39         10
+ progressive      1     35         37         14
+ progressive      2     9          40         5
+ progressive      3     16         28         21
+#
+ rand             0     80         40         5
+ rand             1     38         31         18
+ rand             2     16         40         5
+ rand             3     3          40         5
+#
+ UCB              0     83         37         13
+ UCB              1     32         40         5
+ UCB              2     19         40         5
+ UCB              3     3          40         5
+#
+ b2               0     70         37         13
+ b2               1     38         31         18
+ b2               2     12         40         5
+ b2               3     12         25         22
+ b2               4     3          9          5
+#
+ base             2     3          2866       5
+ base             3     25         3214       2958
+ base             4     61         5995       14672
+ base             5     32         11742      26374
+ base             6     6          5047       7009
+ base             7     3          192        5
+ base             8     6          348        219
+#
+ SimAnnealing     0     96         37         13
+ SimAnnealing     1     29         34         16
+ SimAnnealing     2     6          28         22
+ SimAnnealing     3     3          15         5
+ SimAnnealing     4     3          40         5

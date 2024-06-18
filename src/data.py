@@ -112,7 +112,7 @@ class Data:
             elif acqn_fn == "EI":
                 tmp = EI_score(mean, std, best_d2h)
             elif acqn_fn == "UCB":
-                tmp = UCB_score(mean, std, len(lite), len(self.cols.x))
+                tmp = UCB_score(mean, std, len(lite), len(dark), len(self.cols.x))
             else:
                 print("\n\nINVALID ACQUISITION FN!!! \n\n")
                 exit(1)
