@@ -1,0 +1,1 @@
+SQL_AllMeasurements,UCB,40,5231.313

@@ -1,0 +1,1 @@
+SQL_AllMeasurements,EI,9,2356.0286

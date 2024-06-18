@@ -1,0 +1,1 @@
+SQL_AllMeasurements,b2,15,1556.3817

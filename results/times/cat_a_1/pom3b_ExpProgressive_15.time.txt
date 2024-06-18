@@ -1,0 +1,1 @@
+pom3b,ExpProgressive,15,130.3005

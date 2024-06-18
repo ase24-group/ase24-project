@@ -1,0 +1,1 @@
+rs-6d-c3_obj1,SimAnnealing,40,780.8419

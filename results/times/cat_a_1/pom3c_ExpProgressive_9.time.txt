@@ -1,0 +1,1 @@
+pom3c,ExpProgressive,9,64.4807

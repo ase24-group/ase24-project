@@ -1,0 +1,1 @@
+SQL_AllMeasurements,progressive,40,2644.2517

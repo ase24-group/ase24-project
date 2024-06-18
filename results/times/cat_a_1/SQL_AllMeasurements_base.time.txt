@@ -1,0 +1,1 @@
+SQL_AllMeasurements,base,,38.3289

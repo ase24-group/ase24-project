@@ -1,0 +1,1 @@
+SS-G,SimAnnealing,9,36.0606
