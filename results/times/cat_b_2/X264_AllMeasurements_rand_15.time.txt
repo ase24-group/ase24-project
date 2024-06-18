@@ -1,0 +1,1 @@
+X264_AllMeasurements,rand,15,0.5995

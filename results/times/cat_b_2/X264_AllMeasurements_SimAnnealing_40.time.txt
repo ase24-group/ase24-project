@@ -1,0 +1,1 @@
+X264_AllMeasurements,SimAnnealing,40,488.8044

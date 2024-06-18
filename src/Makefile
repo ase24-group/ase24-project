@@ -1,4 +1,4 @@
-DATADIR ?= ../data/cat_a/cat_a_1
+DATADIR ?= ../data/cat_b/cat_b_2
 DATASETS := $(wildcard $(DATADIR)/*.csv)
 TARGETS := $(DATASETS:$(DATADIR)/%.csv=%)
 

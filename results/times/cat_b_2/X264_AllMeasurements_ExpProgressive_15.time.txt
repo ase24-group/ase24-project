@@ -1,0 +1,1 @@
+X264_AllMeasurements,ExpProgressive,15,177.474
