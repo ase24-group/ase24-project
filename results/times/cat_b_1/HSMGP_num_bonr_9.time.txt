@@ -1,0 +1,1 @@
+HSMGP_num,bonr,9,576.4074

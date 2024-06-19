@@ -1,0 +1,1 @@
+Apache_AllMeasurements,EI,15,389.7364

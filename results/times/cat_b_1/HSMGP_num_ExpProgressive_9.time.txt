@@ -1,0 +1,1 @@
+HSMGP_num,ExpProgressive,9,575.9325

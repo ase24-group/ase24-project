@@ -1,0 +1,1 @@
+Apache_AllMeasurements,PI,9,215.8408

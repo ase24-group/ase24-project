@@ -1,0 +1,1 @@
+Apache_AllMeasurements,rand,40,0.9763

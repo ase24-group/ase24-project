@@ -1,0 +1,1 @@
+HSMGP_num,rand,40,19.1059

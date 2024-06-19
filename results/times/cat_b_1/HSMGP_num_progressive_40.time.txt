@@ -1,0 +1,1 @@
+HSMGP_num,progressive,40,1859.5489

@@ -1,0 +1,1 @@
+HSMGP_num,base,,19.1676

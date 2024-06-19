@@ -1,0 +1,1 @@
+wc+rs-3d-c4-obj1,SimAnnealing,40,95.4737

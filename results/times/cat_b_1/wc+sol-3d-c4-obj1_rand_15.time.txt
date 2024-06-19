@@ -1,0 +1,1 @@
+wc+sol-3d-c4-obj1,rand,15,0.82

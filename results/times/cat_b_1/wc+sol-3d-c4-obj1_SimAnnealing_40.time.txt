@@ -1,0 +1,1 @@
+wc+sol-3d-c4-obj1,SimAnnealing,40,94.8757
