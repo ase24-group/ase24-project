@@ -1,0 +1,1 @@
+SS-J,SimAnnealing,15,286.2571
