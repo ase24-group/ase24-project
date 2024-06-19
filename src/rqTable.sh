@@ -13,7 +13,7 @@ done | gawk -F, '/^$/{++para; next} {a[$2][$1]++;  N[$2][$1][para]=$3 } END {
      for(i in a) {
        print "#"
         for (j in a[i]) 
-          print i,j,int(100*a[i][j]/43),  int(.5+mu(N[i][j])), int(+5+sd(N[i][j])) }}
+          print i,j,int(100*a[i][j]/47),  int(.5+mu(N[i][j])), int(+5+sd(N[i][j])) }}
 
    function mu(a,   i,n) {
      for(i in a) n+= a[i]
