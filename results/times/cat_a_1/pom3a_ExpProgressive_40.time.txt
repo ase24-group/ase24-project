@@ -1,1 +1,1 @@
-pom3a,ExpProgressive,40,263.6791
+pom3a,ExpProgressive,40,256.1163

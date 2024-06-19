@@ -1,1 +1,1 @@
-SS-H,progressive,9,33.3644
+SS-H,progressive,9,32.093

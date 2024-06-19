@@ -1,1 +1,1 @@
-SQL_AllMeasurements,UCB,9,2390.6108
+SQL_AllMeasurements,UCB,9,2245.3644

@@ -1,1 +1,1 @@
-rs-6d-c3_obj2,SimAnnealing,15,346.2087
+rs-6d-c3_obj2,SimAnnealing,15,358.1617

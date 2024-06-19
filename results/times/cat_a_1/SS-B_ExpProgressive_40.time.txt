@@ -1,1 +1,1 @@
-SS-B,ExpProgressive,40,96.3048
+SS-B,ExpProgressive,40,84.727

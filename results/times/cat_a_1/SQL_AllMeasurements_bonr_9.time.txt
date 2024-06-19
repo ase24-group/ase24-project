@@ -1,1 +1,1 @@
-SQL_AllMeasurements,bonr,9,938.1359
+SQL_AllMeasurements,bonr,9,973.2354

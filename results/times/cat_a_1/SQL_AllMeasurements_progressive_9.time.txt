@@ -1,1 +1,1 @@
-SQL_AllMeasurements,progressive,9,952.5443
+SQL_AllMeasurements,progressive,9,1001.6601

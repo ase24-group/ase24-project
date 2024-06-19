@@ -1,1 +1,1 @@
-pom3c,progressive,15,118.9003
+pom3c,progressive,15,120.2383

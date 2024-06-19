@@ -1,1 +1,1 @@
-coc1000,progressive,40,531.5709
+coc1000,progressive,40,547.6089

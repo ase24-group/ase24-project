@@ -1,1 +1,1 @@
-healthCloseIsses12mths0001-hard,rand,9,35.6112
+healthCloseIsses12mths0001-hard,rand,9,29.2167

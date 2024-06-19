@@ -1,1 +1,1 @@
-rs-6d-c3_obj2,ExpProgressive,40,750.7552
+rs-6d-c3_obj2,ExpProgressive,40,737.235

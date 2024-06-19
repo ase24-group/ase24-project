@@ -1,1 +1,1 @@
-SS-D,progressive,15,48.1995
+SS-D,progressive,15,39.9547

@@ -1,1 +1,1 @@
-SQL_AllMeasurements,b2,40,2618.4543
+SQL_AllMeasurements,b2,40,2453.7903

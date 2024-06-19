@@ -1,1 +1,1 @@
-SS-E,ExpProgressive,15,104.0484
+SS-E,ExpProgressive,15,92.2877

@@ -1,1 +1,1 @@
-SS-B,ExpProgressive,15,37.4303
+SS-B,ExpProgressive,15,34.9331

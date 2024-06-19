@@ -1,1 +1,1 @@
-rs-6d-c3_obj1,base,,11.8499
+rs-6d-c3_obj1,base,,7.6219

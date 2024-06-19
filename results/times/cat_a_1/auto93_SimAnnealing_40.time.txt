@@ -1,1 +1,1 @@
-auto93,SimAnnealing,40,163.1278
+auto93,SimAnnealing,40,158.627

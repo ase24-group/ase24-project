@@ -1,1 +1,1 @@
-rs-6d-c3_obj1,bonr,9,218.7387
+rs-6d-c3_obj1,bonr,9,205.466

@@ -1,1 +1,1 @@
-SQL_AllMeasurements,rand,40,42.5848
+SQL_AllMeasurements,rand,40,46.6448

@@ -1,1 +1,1 @@
-SS-D,progressive,9,37.0076
+SS-D,progressive,9,28.4386

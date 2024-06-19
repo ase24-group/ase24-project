@@ -1,1 +1,1 @@
-pom3a,rand,9,2.6812
+pom3a,rand,9,1.6201

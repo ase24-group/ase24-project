@@ -1,1 +1,1 @@
-pom3c,SimAnnealing,9,81.1713
+pom3c,SimAnnealing,9,58.0054

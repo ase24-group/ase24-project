@@ -1,1 +1,1 @@
-SQL_AllMeasurements,EI,40,5241.7272
+SQL_AllMeasurements,EI,40,5065.5371

@@ -1,1 +1,1 @@
-SQL_AllMeasurements,PI,9,2395.3566
+SQL_AllMeasurements,PI,9,2269.4336

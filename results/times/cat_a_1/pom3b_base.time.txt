@@ -1,1 +1,1 @@
-pom3b,base,,1.8912
+pom3b,base,,1.7579

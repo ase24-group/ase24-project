@@ -1,1 +1,1 @@
-SS-F,SimAnnealing,15,41.9794
+SS-F,SimAnnealing,15,28.2316

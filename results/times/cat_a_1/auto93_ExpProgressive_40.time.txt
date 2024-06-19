@@ -1,1 +1,1 @@
-auto93,ExpProgressive,40,165.5803
+auto93,ExpProgressive,40,160.8972

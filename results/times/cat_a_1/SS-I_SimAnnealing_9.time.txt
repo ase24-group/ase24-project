@@ -1,1 +1,1 @@
-SS-I,SimAnnealing,9,96.1825
+SS-I,SimAnnealing,9,79.1765

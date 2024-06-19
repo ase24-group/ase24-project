@@ -1,1 +1,1 @@
-SS-F,progressive,40,84.6393
+SS-F,progressive,40,84.1067

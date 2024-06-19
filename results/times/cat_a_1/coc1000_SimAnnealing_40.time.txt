@@ -1,1 +1,1 @@
-coc1000,SimAnnealing,40,544.3792
+coc1000,SimAnnealing,40,587.568

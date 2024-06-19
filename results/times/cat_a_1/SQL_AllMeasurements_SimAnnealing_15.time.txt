@@ -1,1 +1,1 @@
-SQL_AllMeasurements,SimAnnealing,15,1595.0612
+SQL_AllMeasurements,SimAnnealing,15,1479.3456

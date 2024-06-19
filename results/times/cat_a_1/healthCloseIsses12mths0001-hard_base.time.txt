@@ -1,1 +1,1 @@
-healthCloseIsses12mths0001-hard,base,,32.5608
+healthCloseIsses12mths0001-hard,base,,25.8523

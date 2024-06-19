@@ -1,1 +1,1 @@
-SS-E,progressive,15,100.5734
+SS-E,progressive,15,100.4478

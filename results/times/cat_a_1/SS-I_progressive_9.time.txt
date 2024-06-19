@@ -1,1 +1,1 @@
-SS-I,progressive,9,83.9853
+SS-I,progressive,9,88.8258

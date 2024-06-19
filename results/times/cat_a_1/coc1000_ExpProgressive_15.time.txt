@@ -1,1 +1,1 @@
-coc1000,ExpProgressive,15,240.3435
+coc1000,ExpProgressive,15,223.4561

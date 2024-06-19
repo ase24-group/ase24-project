@@ -1,1 +1,1 @@
-SS-D,SimAnnealing,9,33.9142
+SS-D,SimAnnealing,9,21.7815

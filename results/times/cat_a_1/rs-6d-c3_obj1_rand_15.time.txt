@@ -1,1 +1,1 @@
-rs-6d-c3_obj1,rand,15,11.2056
+rs-6d-c3_obj1,rand,15,8.3475

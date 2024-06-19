@@ -1,1 +1,1 @@
-healthCloseIsses12mths0001-hard,progressive,15,768.301
+healthCloseIsses12mths0001-hard,progressive,15,786.2742
