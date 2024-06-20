@@ -1,0 +1,63 @@
+Method            rank  frequency  labels-mu  labels-sigma
+#                                             
+ uncertain        0     47         36         14
+ uncertain        1     26         40         5
+ uncertain        2     16         40         5
+ uncertain        3     7          30         22
+ uncertain        4     2          40         5
+#                                             
+ EI               0     47         36         14
+ EI               1     23         40         5
+ EI               2     21         34         17
+ EI               3     2          40         5
+ EI               4     2          40         5
+ EI               5     2          40         5
+#                                             
+ ExpProgressive   0     45         39         10
+ ExpProgressive   1     23         40         5
+ ExpProgressive   2     19         36         15
+ ExpProgressive   3     7          30         22
+ ExpProgressive   4     4          40         5
+#                                             
+ PI               0     54         38         12
+ PI               1     26         38         12
+ PI               2     11         35         16
+ PI               3     2          40         5
+ PI               4     4          40         5
+#                                             
+ progressive      0     42         37         13
+ progressive      1     30         38         13
+ progressive      2     14         40         5
+ progressive      3     9          34         17
+ progressive      4     2          15         5
+#                                             
+ rand             0     54         37         13
+ rand             1     21         40         5
+ rand             2     16         36         14
+ rand             4     7          40         5
+#                                             
+ UCB              0     54         35         15
+ UCB              1     23         38         12
+ UCB              2     14         40         5
+ UCB              3     2          40         5
+ UCB              4     4          40         5
+#                                             
+ b2               0     42         37         14
+ b2               1     33         35         15
+ b2               2     9          40         5
+ b2               3     11         28         21
+ b2               4     2          40         5
+#                                             
+ base             12    2          192        5
+ base             2     7          1627       1087
+ base             3     19         4078       2854
+ base             4     14         1722       1342
+ base             5     38         7889       15887
+ base             6     14         1520       1835
+ base             8     4          43076      60788
+#                                             
+ SimAnnealing     0     52         34         15
+ SimAnnealing     1     30         32         17
+ SimAnnealing     2     11         30         18
+ SimAnnealing     3     2          40         5
+ SimAnnealing     4     2          15         5
