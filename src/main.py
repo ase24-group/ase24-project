@@ -42,7 +42,7 @@ def generate_makefile(csv_path):
     all_targets.append(id)
     targets[id] = f"python3 gate.py -t base_stats $(ARGUMENT)"
     for treatment in treatments:
-        for e in [9, 15, csv_budget]:
+        for e in [10, 20, 30, 40]:
             id = f"{treatment}{e}"
             all_targets.append(id)
             targets[id] = f"python3 gate.py -t {treatment}_stats -E {e} $(ARGUMENT)"
