@@ -1,0 +1,59 @@
+Method            rank  frequency  labels-mu  labels-sigma
+#                                             
+ uncertain        0     48         34         12
+ uncertain        1     26         33         9
+ uncertain        2     20         22         17
+ uncertain        3     4          20         19
+#                                             
+ EI               0     62         30         12
+ EI               1     17         34         12
+ EI               2     13         32         12
+ EI               3     4          20         5
+ EI               4     2          20         5
+#                                             
+ ExpProgressive   0     37         34         12
+ ExpProgressive   1     33         35         11
+ ExpProgressive   2     17         23         15
+ ExpProgressive   3     11         20         19
+#                                             
+ progressive      0     48         34         10
+ progressive      1     17         34         12
+ progressive      2     22         24         15
+ progressive      3     11         18         15
+#                                             
+ PI               0     62         31         12
+ PI               1     13         37         10
+ PI               2     15         33         12
+ PI               3     6          23         10
+ PI               4     2          20         5
+#                                             
+ rand             0     53         30         13
+ rand             1     28         34         13
+ rand             2     8          28         14
+ rand             3     6          33         10
+ rand             4     2          20         5
+#                                             
+ UCB              0     62         31         12
+ UCB              1     11         32         13
+ UCB              2     17         33         12
+ UCB              3     6          17         10
+ UCB              4     2          20         5
+#                                             
+ b2               0     53         30         14
+ b2               1     22         31         10
+ b2               2     13         28         16
+ b2               3     8          20         13
+ b2               6     2          10         5
+#                                             
+ base             2     6          1584       1012
+ base             3     17         2474       1792
+ base             4     26         2428       2803
+ base             5     22         2033       3066
+ base             6     15         24598      35651
+ base             7     11         5061       4838
+#                                             
+ SimAnnealing     0     64         32         13
+ SimAnnealing     1     20         30         13
+ SimAnnealing     2     11         24         13
+ SimAnnealing     3     2          20         5
+ SimAnnealing     4     2          20         5
