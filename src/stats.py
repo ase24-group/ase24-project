@@ -182,12 +182,6 @@ def write_scott_knott_results(csv_path):
 
     os.makedirs(f"../results/sk/{csv_parent_folder}", exist_ok=True)
     sk_output = open(f"../results/sk/{csv_parent_folder}/{csv_filename}.sk.txt", "w")
-    sk_csv_output = open(
-        f"../results/sk/{csv_parent_folder}/{csv_filename}.sk.csv", "w"
-    )
-    sk_csv_output.write(
-        f"{', '.join( ['rank', 'treatment', 'median', 'iqr', 'plot', 'min', 'max'])}\n"
-    )
 
     nums = slurp(input_file)
     all = Sample([x for num in nums for x in num.has])
@@ -197,7 +191,5 @@ def write_scott_knott_results(csv_path):
             sk_output.write("#\n")
         last = num.rank
         sk_output.write(f"{all.bar(num, width=40, word='%20s', fmt='%5.2f')}\n")
-        sk_csv_output.write(f"{all.bar(num, width=40, word='%20s', fmt='%5.2f')}\n")
 
     sk_output.close()
-    sk_csv_output.close()
