@@ -46,7 +46,7 @@ sorted_treatments = sorted(data.keys(), key=lambda x: -medians[x])
 
 # Define colors based on treatment names
 colors = {
-    "SimAnnealing": "salmon",
+    "focus": "salmon",
     "progressive": "olivedrab",
     "ExpProgressive": "dodgerblue",
 }

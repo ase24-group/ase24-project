@@ -28,7 +28,7 @@ def generate_makefile(csv_path):
     csv_budget = 40
     treatments = [
         "progressive",
-        "SimAnnealing",
+        "focus",
         "bonr",
         "b2",
         "rand",

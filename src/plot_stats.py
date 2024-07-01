@@ -86,7 +86,7 @@ if __name__ == "__main__":
     stats_filename = ""
     acquisition_functions = [
         "progressive",
-        "SimAnnealing",
+        "focus",
         "bonr",
         "b2",
         "ExpProgressive",

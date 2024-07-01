@@ -28,7 +28,7 @@ def run(todo):
     experiments = [
         "baseline_stats",
         "progressive_stats",
-        "SimAnnealing_stats",
+        "focus_stats",
         "ExpProgressive_stats",
         "bonr_stats",
         "b2_stats",

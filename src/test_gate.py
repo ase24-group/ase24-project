@@ -351,12 +351,12 @@ class TestGate:
             )
 
             random.seed(config.value.seed)
-            logger.info("SimAnnealing")
-            print("#SimAnnealing" + str(budget), end=" ")
+            logger.info("focus")
+            print("#focus" + str(budget), end=" ")
             stats.append(
                 Sample(
                     [data.smo_sim_annealing().d2h(data) for _ in range(repeats)],
-                    txt="#SimAnnealing" + str(budget),
+                    txt="#focus" + str(budget),
                 )
             )
 
@@ -474,7 +474,7 @@ class TestGate:
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
             file.write(f"{stats_treatment} {' '.join(map(str, stats))}")
 
-    def SimAnnealing_stats(self):
+    def focus_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         repeats = 20
 
@@ -485,10 +485,10 @@ class TestGate:
         csv_budget = math.ceil(math.sqrt(len(data.rows)))
         stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
         plots_dir = f"../results/plots/{csv_parent_folder}/{csv_filename}"
-        treatment = f"SimAnnealing_{str(budget)}"
+        treatment = f"focus_{str(budget)}"
         if budget == csv_budget:
-            treatment = f"SimAnnealing_sqrt"
-        stats_treatment = f"SimAnnealing,{str(budget)}"
+            treatment = f"focus_sqrt"
+        stats_treatment = f"focus,{str(budget)}"
         os.makedirs(stats_dir, exist_ok=True)
         os.makedirs(plots_dir, exist_ok=True)
 
