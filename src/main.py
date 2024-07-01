@@ -35,7 +35,8 @@ def generate_makefile(csv_path):
         "ExpProgressive",
         "PI",
         "EI",
-        "UCB",
+        "UCB_plus",
+        "UCB_minus"
     ]
 
     id = f"base"

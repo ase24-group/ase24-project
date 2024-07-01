@@ -24,8 +24,7 @@ def EI_score(mean, std, best_d2h):
     return score
 
 
-# TODO: check the results for both input dim and overall dim
-def UCB_score(mean, std, lite_size, dark_size, dim):
+def get_UCB_coefficients(lite_size, dark_size):
     delta = 0.1
     v = 1
     D = lite_size + dark_size
@@ -34,4 +33,13 @@ def UCB_score(mean, std, lite_size, dark_size, dim):
     # revisit the std coeff
     std_coeff = (v * gamma) ** 0.5
 
+    return std_coeff 
+
+# TODO: check the results for both input dim and overall dim
+def UCB_plus_score(mean, std, lite_size, dark_size, dim):
+    std_coeff = get_UCB_coefficients(lite_size, dark_size)
     return mean + std_coeff * std
+
+def UCB_minus_score(mean, std, lite_size, dark_size, dim):
+    std_coeff = get_UCB_coefficients(lite_size, dark_size)
+    return mean - std_coeff * std

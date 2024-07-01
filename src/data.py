@@ -17,7 +17,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 from logger import logger, br_logger
 from utils import custom_normalize, get_interpolated_distance
-from gpm_acquisitions import PI_score, UCB_score, EI_score
+from gpm_acquisitions import PI_score, UCB_plus_score, UCB_minus_score, EI_score
 
 
 class Data:
@@ -118,8 +118,10 @@ class Data:
                 tmp = PI_score(mean, std, best_d2h)
             elif acqn_fn == "EI":
                 tmp = EI_score(mean, std, best_d2h)
-            elif acqn_fn == "UCB":
-                tmp = UCB_score(mean, std, len(lite), len(dark), len(self.cols.x))
+            elif acqn_fn == "UCB_plus":
+                tmp = UCB_plus_score(mean, std, len(lite), len(dark), len(self.cols.x))
+            elif acqn_fn == "UCB_minus":
+                tmp = UCB_minus_score(mean, std, len(lite), len(dark), len(self.cols.x))
             else:
                 print("\n\nINVALID ACQUISITION FN!!! \n\n")
                 exit(1)
