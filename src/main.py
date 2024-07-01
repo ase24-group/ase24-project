@@ -39,9 +39,9 @@ def generate_makefile(csv_path):
         "UCB_minus"
     ]
 
-    id = f"base"
+    id = f"baseline"
     all_targets.append(id)
-    targets[id] = f"python3 gate.py -t base_stats $(ARGUMENT)"
+    targets[id] = f"python3 gate.py -t baseline_stats $(ARGUMENT)"
     for treatment in treatments:
         for e in [10, 20, 30, 40]:
             id = f"{treatment}{e}"

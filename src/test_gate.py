@@ -425,14 +425,14 @@ class TestGate:
         random.shuffle(stats)
         eg0(stats)
 
-    def base_stats(self):
+    def baseline_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)
         sorted_d2hs = sorted([row.d2h(data) for row in data.rows])
 
         csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
         stats_dir = f"../results/stats/{csv_parent_folder}/{csv_filename}"
-        treatment = "base"
-        stats_treatment = f"base,{str(len(data.rows))}"
+        treatment = "baseline"
+        stats_treatment = f"baseline,{str(len(data.rows))}"
         os.makedirs(stats_dir, exist_ok=True)
 
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:

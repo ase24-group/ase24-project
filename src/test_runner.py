@@ -26,7 +26,7 @@ def run(todo):
         oops = True
 
     experiments = [
-        "base_stats",
+        "baseline_stats",
         "progressive_stats",
         "SimAnnealing_stats",
         "ExpProgressive_stats",
