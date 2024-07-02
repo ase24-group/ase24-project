@@ -1,4 +1,4 @@
-for i in ../results/sk/cat_a_b_baseline/*.sk.txt; do
+for i in ../results/sk/cat_a_b/*.sk.txt; do
   echo "#"
   cat $i \
   | sed 's/[ \t]//g'  \
