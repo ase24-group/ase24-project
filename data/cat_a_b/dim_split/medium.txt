@@ -1,0 +1,16 @@
+SS-S.csv
+sol-6d-c2-obj1.csv
+SS-K.csv
+wc-6d-c1-obj1.csv
+rs-6d-c3_obj1.csv
+SS-J.csv
+rs-6d-c3_obj2.csv
+pom3b.csv
+Apache_AllMeasurements.csv
+pom3a.csv
+pom3c.csv
+pom3d.csv
+Wine_quality.csv
+SS-P.csv
+SS-X.csv
+SS-O.csv
