@@ -31,7 +31,7 @@ def combine_stats_files(csv_path):
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Please specify the csv path")
-        print('python3 results.py <csv_path>')
+        print("python3 results.py <csv_path>")
         exit(1)
 
     csv_path = sys.argv[1]

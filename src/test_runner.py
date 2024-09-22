@@ -36,7 +36,7 @@ def run(todo):
         "PI_stats",
         "EI_stats",
         "UCB_plus_stats",
-        "UCB_minus_stats"
+        "UCB_minus_stats",
     ]
     csv_filename, csv_parent_folder = get_filename_and_parent(config.value.file)
 
@@ -66,7 +66,6 @@ def run(todo):
                 budget = ExpBudget.removeprefix("_")
                 info = [csv_filename, treatment, budget, str(round(elapsed_time, 4))]
                 file.write(f"{','.join(info)}")
-
 
     config.value = b4
 

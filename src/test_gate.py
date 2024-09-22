@@ -669,7 +669,6 @@ class TestGate:
         with open(f"{stats_dir}/{treatment}.txt", "w") as file:
             file.write(f"{stats_treatment} {' '.join(map(str, stats))}")
 
-
     # Gaussian Process Expected Improvement fn
     def EI_stats(self):
         data = Data(config.value.file, fun=None, sortD2H=False)

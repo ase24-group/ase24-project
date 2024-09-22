@@ -36,7 +36,7 @@ def generate_makefile(csv_path):
         "PI",
         "EI",
         "UCB_plus",
-        "UCB_minus"
+        "UCB_minus",
     ]
 
     id = f"baseline"

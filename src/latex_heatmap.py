@@ -1,17 +1,26 @@
 import csv
 
+
 def read_csv(file_path):
-    with open(file_path, newline='') as csvfile:
+    with open(file_path, newline="") as csvfile:
         reader = csv.reader(csvfile)
         data = list(reader)
     return data
+
 
 def normalize_data(data):
     values = [[int(cell) for cell in row[1:]] for row in data[1:]]
     max_value = max(max(row) for row in values)
     # normalized = [[cell / max_value for cell in row] for row in values]
-    normalized = [[(cell - custom_min) / (max_value - custom_min) if cell > custom_min else 0 for cell in row] for row in values]
+    normalized = [
+        [
+            (cell - custom_min) / (max_value - custom_min) if cell > custom_min else 0
+            for cell in row
+        ]
+        for row in values
+    ]
     return normalized, max_value
+
 
 def color_cell(red_value, value):
     if int(value) == 0:
@@ -21,6 +30,7 @@ def color_cell(red_value, value):
         return f"\\cellcolor{{red!{int(red_intensity)}}}\\textcolor{{white}}{{{int(value)}}}"
     else:
         return f"\\cellcolor{{red!{int(red_intensity)}}}{int(value)}"
+
 
 def generate_latex_table(data, normalized, max_value):
     header = data[0]
@@ -39,8 +49,9 @@ def generate_latex_table(data, normalized, max_value):
     latex_code += "\\end{tabular}"
     return latex_code
 
+
 # Read the CSV data
-file_path = '../results/sk/cat_a_b/dim_split/high/rq_high.budget.csv'
+file_path = "../results/sk/cat_a_b/dim_split/high/rq_high.budget.csv"
 data = read_csv(file_path)
 
 custom_min = 35
