@@ -37,7 +37,7 @@ def find_lowest_rank_and_budget(filename, target):
     return lowest_rank, lowest_budget, mean_d2h, std_d2h
 
 
-def plot_stats_per_dataset(focus_map, rand_map, baseline_map):
+def plot_stats_per_dataset(focus_map, rand_map, baseline_map, value_type):
     focus_vals = [focus_map[file] for file in sorted_files]
     rand_vals = [rand_map[file] for file in sorted_files]
     baseline_vals = [baseline_map[file] for file in sorted_files]
@@ -54,8 +54,8 @@ def plot_stats_per_dataset(focus_map, rand_map, baseline_map):
 
     # Customize the plot
     plt.xlabel("File Index")
-    plt.ylabel("Best d2h")
-    plt.title("Best d2h for Focus and Rand across Sorted Files")
+    plt.ylabel(f"Best {value_type}")
+    plt.title(f"Best {value_type} for Focus and Rand across Sorted Files")
     plt.legend()
 
     # Add grid for better readability
@@ -83,7 +83,7 @@ def write_stats_to_file(
         for filename in filenames:
             file.write(
                 f"{filename:<50}, "
-                f"{files_to_dim_map[filename]:<25}"
+                f"{files_to_dim_map[filename]:<25}, "
                 f"{focus_stats['best rank'][filename]:<25}, "
                 f"{focus_stats['d2h'][filename]:<25}, "
                 f"{focus_stats['std'][filename]:<25}, "
@@ -171,10 +171,10 @@ if __name__ == "__main__":
     )
 
     plot_stats_per_dataset(
-        focus_dataset_bestd2h_map, rand_dataset_bestd2h_map, baseline_dataset_d2h_map
+        focus_dataset_bestd2h_map, rand_dataset_bestd2h_map, baseline_dataset_d2h_map, 'd2hs'
     )
     plot_stats_per_dataset(
-        focus_dataset_bestrank_map, rand_dataset_bestrank_map, baseline_dataset_rank_map
+        focus_dataset_bestrank_map, rand_dataset_bestrank_map, baseline_dataset_rank_map, 'ranks'
     )
 
 
