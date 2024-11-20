@@ -12,13 +12,9 @@ This repo houses the end semester project for CSC 591 (Automated Software Engine
   </tr>
 </table>
 
-We are proposing alternate acquisition functions that incorporates exploitation in the later stages of the SMO algorithm rather than selecting new samples solely based on "interestingness".
+We are proposing an alternate acquisition function, `FOCUS` that adaptively    shifts from exploration to exploitation as more  data is collected. Unlike standard   acquisition functions like `UCB`, `FOCUS` makes no use of standard deviations or means. This makes it run an order of magnitude faster and scale better for larger problems.
 
-- `progressive`
-- `SimAnnealing`
-- `ExpProgressive`
-
-## Running experiments on `flash`
+## Running experiments on a single machine
 
 To run our methods and generate results:
 
@@ -26,69 +22,36 @@ To run our methods and generate results:
 python3 -m venv .venv
 pip install -r requirements.txt
 cd src
-make -j 8
+make DATADIR=../data/cat_a_b
+```
+
+## Running experiments on an HPC cluster
+
+You may also run our experiments as a slurm job:
+
+```bash
+cd src
+sbatch job.config
+```
+
+Once the job has completed, generate the results using:
+
+```bash
+find ../data/cat_a_b -maxdepth 1 -type f | xargs -I{} python3 results.py {}
 ```
 
 All the results will be written into:
 | Folder | Content |
-|-----------------------|--------------------------------------------------|
-| `results/sk/flash` | Scott Knott results |
-| `results/stats/flash` | Intermediate results for Scott Knott |
-| `results/plots/flash` | Graphical plots for select acquisition functions |
+|-------------------------|--------------------------------------------------|
+| `results/sk/cat_a_b`    | Scott Knott results |
+| `results/stats/cat_a_b` | Intermediate results for Scott Knott |
+| `results/plots/cat_a_b` | Graphical plots for select acquisition functions |
 
 ## Comparing experiments
 
-Once the results are generated, the acquisition functions can be compared by running a Scott Knott analysis on their ranks across all datasets. This may be done by:
+Once the results are generated, the acquisition functions can be compared using the following script:
 
 ```bash
 cd src
-make ranks
-make ranks_plot
+./rq.sh > ../results/sk/cat_a_b/rq.out
 ```
-
-### `make ranks`
-
-Writes Scott Knott results to:  
-[`results/sk/flash/ranks.sk.txt`](results/sk/flash/ranks.sk.txt)
-
-> Scott Knott places `SimAnnealing_sqrt` above all other SMO variants
-
-```
-#
- 0,             rand_p90,  0.00,  0.00, *                   |                   ,  0.00,  8.00
-#
- 1,    SimAnnealing_sqrt,  1.00,  1.00,      *----          |                   ,  0.00,  8.00
-#
- 2,       SimAnnealing_9,  2.00,  1.00,           *----     |                   ,  0.00,  8.00
- 2,      SimAnnealing_15,  2.00,  2.00,      -----*----     |                   ,  0.00,  8.00
- 2,              b2_sqrt,  2.00,  2.00,      -----*----     |                   ,  0.00,  8.00
- 2,                b2_15,  2.00,  1.00,           *----     |                   ,  0.00,  8.00
- 2,  ExpProgressive_sqrt,  2.00,  2.00,      -----*----     |                   ,  0.00,  8.00
- 2,                 b2_9,  2.00,  1.00,           *----     |                   ,  0.00,  8.00
- 2,            bonr_sqrt,  2.00,  1.00,      -----*         |                   ,  0.00,  8.00
-#
- 3,     progressive_sqrt,  2.00,  2.00,      -----*----     |                   ,  0.00,  8.00
-#
- 4,               bonr_9,  3.00,  2.00,           -----*----|                   ,  0.00,  8.00
- 4,     ExpProgressive_9,  3.00,  2.00,           -----*----|                   ,  0.00,  8.00
- 4,       progressive_15,  3.00,  2.00,      ----------*    |                   ,  0.00,  8.00
- 4,        progressive_9,  3.00,  2.00,           -----*----|                   ,  0.00,  8.00
-#
- 5,              bonr_15,  3.00,  1.00,           -----*    |                   ,  0.00,  8.00
- 5,    ExpProgressive_15,  3.00,  1.00,           -----*    |                   ,  0.00,  8.00
-#
- 6,                 base,  5.00,  3.00,                -----|----*----          ,  0.00,  8.00
- 6,            rand_sqrt,  5.00,  3.00,                -----|----*----          ,  0.00,  8.00
-#
- 7,              rand_15,  5.00,  2.00,                     |----*----          ,  0.00,  8.00
- 7,               rand_9,  6.00,  2.00,                     |    -----*----     ,  0.00,  8.00
-```
-
-### `make ranks_plot`
-
-A graphical boxplot for ranks across all datasets is written to :  
-[`results/plots/boxplots/flash/ranks.boxplot.png`](results/plots/boxplots/flash/ranks.boxplot.png)
-
-<p align="center">
-<img src="results/plots/boxplots/flash/ranks.boxplot.png" width="650px">
-</p>
