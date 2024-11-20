@@ -171,10 +171,16 @@ if __name__ == "__main__":
     )
 
     plot_stats_per_dataset(
-        focus_dataset_bestd2h_map, rand_dataset_bestd2h_map, baseline_dataset_d2h_map, 'd2hs'
+        focus_dataset_bestd2h_map,
+        rand_dataset_bestd2h_map,
+        baseline_dataset_d2h_map,
+        "d2hs",
     )
     plot_stats_per_dataset(
-        focus_dataset_bestrank_map, rand_dataset_bestrank_map, baseline_dataset_rank_map, 'ranks'
+        focus_dataset_bestrank_map,
+        rand_dataset_bestrank_map,
+        baseline_dataset_rank_map,
+        "ranks",
     )
 
 
